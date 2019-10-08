@@ -3,6 +3,7 @@
   "app.components.ChatTextField.textField.placeholder": "Send a message",
   "app.components.VideosManagement.videoMenu.queue": "Queue",
   "app.components.VideosManagement.videoMenu.add": "Add",
+  "app.components.VideosManagement.videoMenu.history": "History",
   "boilerplate.components.Footer.author.message": "Made with love by {author}.",
   "boilerplate.components.Footer.license.message": "This project is licensed under the MIT license.",
   "boilerplate.components.Header.features": "Features",

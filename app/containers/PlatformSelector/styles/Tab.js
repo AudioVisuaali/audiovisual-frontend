@@ -1,6 +1,10 @@
+/**
+ *
+ */
+
 import styled from 'styled-components';
 
-export default styled.button`
+const Tab = styled.button`
   width: 80px;
   height: 100px;
   background-color: ${p =>
@@ -13,7 +17,7 @@ export default styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
+  margin: 0 10px 10px 0;
   padding: 0 4px;
   font-size: 12px;
 
@@ -30,3 +34,5 @@ export default styled.button`
     margin-bottom: 6px;
   }
 `;
+
+export default Tab;

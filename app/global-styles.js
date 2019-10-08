@@ -7,6 +7,8 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
+    background-color: #282828;
   }
 
   body {
@@ -18,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #282828;
     height: 100vh;
     width: 100vw;
   }

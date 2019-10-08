@@ -18,6 +18,7 @@ import DynamicVideoContainer from './styles/DynamicVideoContainer';
 import ChatTextField from '../../components/ChatTextField';
 import VideosManagement from '../VideosManagement';
 import VideoInformation from '../VideoInformation';
+import ChatSelector from './ChatSelector';
 
 const smallPlayerOffset = 150;
 const playerConfig = {
@@ -82,7 +83,7 @@ class FeaturePage extends React.Component {
             autoHide
             autoHideTimeout={1000}
             autoHideDuration={200}
-            universal={true}
+            universal
           >
             <VideoContainer style={VideoPlayerStyle}>
               <DynamicVideoContainer dynamic={smallPlayer}>
@@ -100,6 +101,7 @@ class FeaturePage extends React.Component {
         </Primary>
         <Secondary>
           <VideoInformation />
+          <ChatSelector></ChatSelector>
           <ChatContainer>asd</ChatContainer>
           <ChatFieldContainer>
             <ChatTextField></ChatTextField>

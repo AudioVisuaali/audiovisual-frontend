@@ -6,11 +6,8 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
-import messages from './messages';
-
-import Wrapper from './styles/Wrapper';
+import Menu from './styles/Menu';
 import Tab from './styles/Tab';
 import Youtube from './platforms/Youtube';
 import Twitch from './platforms/Twitch';
@@ -62,7 +59,7 @@ const PlatformSelector = ({ onClick }) => {
 
   return (
     // <FormattedMessage {...messages.header} />
-    <Wrapper>
+    <Menu>
       {platforms.map((platform, i) => {
         const { SVG, name } = platform;
         return (
@@ -75,12 +72,12 @@ const PlatformSelector = ({ onClick }) => {
           </Tab>
         );
       })}
-    </Wrapper>
+    </Menu>
   );
 };
 
 PlatformSelector.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default PlatformSelector;

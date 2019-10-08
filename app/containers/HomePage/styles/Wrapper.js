@@ -8,4 +8,12 @@ export default styled.div`
   justify-content: center;
 
   background-image: radial-gradient(#282828, #121212);
+
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+
+  opacity: ${props => (props.transparent ? '0' : '1')};
 `;

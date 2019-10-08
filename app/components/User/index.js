@@ -16,18 +16,20 @@ const Wrapper = styled.div`
   align-items: center;
   color: #fff;
   font-size: 9px;
-  width: 70px;
+  width: 60px;
   padding: 12px 12px 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
 
   & span {
-    width: 60px;
+    width: 50px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   & svg {
-    width: 32px;
+    width: 20px;
   }
 `;
 

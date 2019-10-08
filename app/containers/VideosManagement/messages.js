@@ -17,4 +17,8 @@ export default defineMessages({
     id: `${scope}.videoMenu.add`,
     defaultMessage: 'Add',
   },
+  history: {
+    id: `${scope}.videoMenu.history`,
+    defaultMessage: 'History',
+  },
 });

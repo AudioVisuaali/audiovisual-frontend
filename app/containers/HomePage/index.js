@@ -4,7 +4,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import history from '../../utils/history';
@@ -20,10 +20,14 @@ const FullWidth = {
 };
 
 export const HomePage = () => {
-  const redirectToRoom = () => history.push('/room/12345');
+  const [isTransparent, setIsTransparent] = useState(false);
+  const redirectToRoom = () => {
+    setIsTransparent(true);
+    setTimeout(() => history.push('/room/12345'), 200);
+  };
 
   return (
-    <Wrapper>
+    <Wrapper transparent={isTransparent}>
       <Helmet>
         <title>Home Page</title>
         <meta name="description" content="Visuals application homepage" />

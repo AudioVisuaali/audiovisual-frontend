@@ -8,4 +8,5 @@ export default styled.input`
   border-radius: 4px;
   width: 100%;
   max-width: 420px;
+  margin-bottom: 20px;
 `;
