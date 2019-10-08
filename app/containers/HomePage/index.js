@@ -1,39 +1,45 @@
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError
-} from 'containers/App/selectors';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import HomePage from './HomePage';
+/*
+ * HomePage
+ *
+ * This is the first thing users see of our App, at the '/' route
+ */
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-  onSubmitForm: (evt) => {
-    if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    dispatch(loadRepos());
-  }
-});
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
-const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError()
-});
+import history from '../../utils/history';
+import Wrapper from './styles/Wrapper';
+import Logo from './styles/Logo';
+import Container from './styles/Container';
+import Button from './styles/Button';
+import Label from './styles/Label';
+import TextField from './styles/TextField';
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const FullWidth = {
+  width: '100%',
+};
 
-const withReducer = injectReducer({ key: 'home', reducer });
-const withSaga = injectSaga({ key: 'home', saga });
+export const HomePage = () => {
+  const redirectToRoom = () => history.push('/room/12345');
 
-export default compose(withReducer, withSaga, withConnect)(HomePage);
-export { mapDispatchToProps };
+  return (
+    <Wrapper>
+      <Helmet>
+        <title>Home Page</title>
+        <meta name="description" content="Visuals application homepage" />
+      </Helmet>
+      <Container>
+        <Logo>Visuals</Logo>
+
+        <Label>Display name</Label>
+        <TextField style={FullWidth} />
+
+        <Button style={FullWidth} onClick={redirectToRoom}>
+          Create Room
+        </Button>
+      </Container>
+    </Wrapper>
+  );
+};
+
+export default HomePage;

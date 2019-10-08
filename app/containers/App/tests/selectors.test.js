@@ -20,7 +20,7 @@ describe('selectGlobal', () => {
 describe('makeSelectCurrentUser', () => {
   const currentUserSelector = makeSelectCurrentUser();
   it('should select the current user', () => {
-    const username = 'flexdinesh';
+    const username = 'mxstbr';
     const mockedState = {
       global: {
         currentUser: username,

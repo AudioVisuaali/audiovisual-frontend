@@ -1,17 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'react-testing-library';
+import { IntlProvider } from 'react-intl';
 
 import FeaturePage from '../index';
 
 describe('<FeaturePage />', () => {
   it('should render its heading', () => {
-    const renderedComponent = shallow(<FeaturePage />);
-    expect(renderedComponent.contains(<h1>Features</h1>)).toBe(true);
-  });
+    const {
+      container: { firstChild },
+    } = render(
+      <IntlProvider locale="en">
+        <FeaturePage />
+      </IntlProvider>,
+    );
 
-  it('should never re-render the component', () => {
-    const renderedComponent = shallow(<FeaturePage />);
-    const inst = renderedComponent.instance();
-    expect(inst.shouldComponentUpdate()).toBe(false);
+    expect(firstChild).toMatchSnapshot();
   });
 });
