@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export default styled.div`
+const Menu = styled.div`
   display: flex;
   padding: 0 20px;
 `;
+
+export default Menu;

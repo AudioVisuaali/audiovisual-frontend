@@ -21,6 +21,8 @@ const Tab = styled.button`
   padding: 0 4px;
   font-size: 12px;
 
+  transition: all 100ms ease-in-out;
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.3);
   }

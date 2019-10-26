@@ -5,22 +5,19 @@
  */
 
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import ReactPlayer from 'react-player';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectVideoAdder from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+import Label from 'components/Label';
+import PlatformSelector from 'containers/PlatformSelector';
+
 // import messages from './messages';
-import PlatformSelector from '../PlatformSelector';
 import Input from './styles/Input';
-import Label from '../../components/Label';
+import Wrapper from './styles/Wrapper';
+import AddVideo from './styles/AddVideo';
 import URLContainer from './styles/URLContainer';
 import PreviewContainer from './styles/PreviewContainer';
 
@@ -30,27 +27,70 @@ const playerConfig = {
   },
 };
 
-export function VideoAdder() {
-  useInjectReducer({ key: 'videoAdder', reducer });
-  useInjectSaga({ key: 'videoAdder', saga });
-
-  // const [selectedPlatform, setSelectedPlatform] = useState('youtube');
+export function VideoAdder({ socket }) {
+  const [isVideoAddable, setIsVideoAddable] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState('youtube');
   const [videoLink, setVideoLink] = useState('');
+  const [subtitleLink, setSubtitleLink] = useState('');
 
   const handleInputChange = e => {
-    setVideoLink(e.target.value);
+    const { value } = e.target;
+    setVideoLink(value);
+    setIsVideoAddable(ReactPlayer.canPlay(value));
   };
+
+  const handlePlatformChange = platform => {
+    setSelectedPlatform(platform);
+    setVideoLink('');
+  };
+
+  const addVideoHandler = () => {
+    if (!isVideoAddable) return;
+
+    const video = {
+      url: videoLink,
+      subtitle: subtitleLink,
+    };
+
+    socket('add-video', video);
+    setVideoLink('');
+
+    if (selectedPlatform !== 'mp4') return;
+
+    setSubtitleLink('');
+  };
+
+  const handleOnTranslation = e => setSubtitleLink(e.target.value);
+
+  const isAddDisabled = !(videoLink && isVideoAddable);
 
   return (
     // <FormattedMessage {...messages.header} />
-    <div>
-      <PlatformSelector /* onClick={setSelectedPlatform} */ />
+    <Wrapper>
+      <PlatformSelector onClick={handlePlatformChange} />
       <URLContainer>
         <Label>Video URL</Label>
         <div>
           <Input value={videoLink} onChange={handleInputChange} />
+          <AddVideo
+            disabled={isAddDisabled}
+            type="button"
+            onClick={addVideoHandler}
+          >
+            Add to queue
+          </AddVideo>
         </div>
-        <Label>Preview</Label>
+
+        {selectedPlatform === 'mp4' && (
+          <>
+            <Label>Translation URL</Label>
+            <div>
+              <Input value={subtitleLink} onChange={handleOnTranslation} />
+            </div>
+          </>
+        )}
+
+        <Label>Preview - {selectedPlatform}</Label>
         <PreviewContainer>
           <ReactPlayer
             width="100%"
@@ -60,17 +100,14 @@ export function VideoAdder() {
           />
         </PreviewContainer>
       </URLContainer>
-    </div>
+    </Wrapper>
   );
 }
 
 VideoAdder.propTypes = {
+  socket: PropTypes.func,
   // dispatch: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = createStructuredSelector({
-  videoAdder: makeSelectVideoAdder(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -79,7 +116,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 

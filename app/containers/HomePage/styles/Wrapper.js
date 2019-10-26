@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.div`
+const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -9,11 +9,9 @@ export default styled.div`
 
   background-image: radial-gradient(#282828, #121212);
 
-  -webkit-transition: opacity 200ms ease-in-out;
-  -moz-transition: opacity 200ms ease-in-out;
-  -ms-transition: opacity 200ms ease-in-out;
-  -o-transition: opacity 200ms ease-in-out;
   transition: opacity 200ms ease-in-out;
 
   opacity: ${props => (props.transparent ? '0' : '1')};
 `;
+
+export default Wrapper;

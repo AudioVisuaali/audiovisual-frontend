@@ -1,0 +1,12 @@
+export const MESSAGE_USER = 'user';
+export const MESSAGE_VIDEO_IS_PLAYING = 'is-playing';
+export const MESSAGE_VIDEO_SEEK = 'video-seek';
+export const MESSAGE_VIDEO_SKIP = 'video-skip';
+export const MESSAGE_VIDEO_NEXT = 'video-next';
+export const MESSAGE_VIDEO_ADD = 'video-add';
+export const MESSAGE_VIDEO_DELETE = 'video-delete';
+export const MESSAGE_USER_USERNAME_CHANGE = 'user-username-change';
+export const MESSAGE_USER_JOIN = 'user-join';
+export const MESSAGE_USER_LEAVE = 'user-leave';
+export const MESSAGE_VIDEO_PLAY_ORDER = 'video-play-order';
+export const MESSAGE_REORDER = 'reorder';

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.input`
+const TextField = styled.input`
   opacity: 0.6;
   border: 1px solid #fff;
   background-color: transparent;
@@ -8,13 +8,19 @@ export default styled.input`
   color: #fff;
   font-size: 14px;
   margin-bottom: 2em;
+  border-radius: 5px;
+
+  transition: all 200ms ease-in-out;
 
   &:hover {
     opacity: 1;
   }
 
-  &:active {
+  &:active,
+  :focus {
     opacity: 1;
-    color: inherit;
+    color: #fff;
   }
 `;
+
+export default TextField;

@@ -24,13 +24,30 @@ const GlobalStyle = createGlobalStyle`
     width: 100vw;
   }
 
-  button:hover {
-    cursor: pointer;
+  button {
+    font-family: inherit;
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   *:focus {
     color: #fff;
     outline-width: 0;
+  }
+
+  @media screen and (max-width: 760px) {
+    html,
+    body {
+      height: auto;
+      overflow: visible;
+    }
+    
+    & #app {
+      height: auto;
+      width: 100vw;
+    }
   }
 `;
 

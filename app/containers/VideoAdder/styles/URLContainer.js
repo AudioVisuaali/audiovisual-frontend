@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
-export default styled.div`
+const URLContainer = styled.div`
   margin: 0 40px 0 20px;
 `;
+
+export default URLContainer;

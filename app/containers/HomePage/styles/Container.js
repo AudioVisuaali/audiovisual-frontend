@@ -24,14 +24,5 @@ export default styled.div`
   margin: 10px 10px 30px;
 
   animation: fadeIn ease 1s;
-  -webkit-animation: fadeIn ease 1s;
-  -moz-animation: fadeIn ease 1s;
-  -o-animation: fadeIn ease 1s;
-  -ms-animation: fadeIn ease 1s;
-
-  @keyframes fadeIn ${keyFrames}
-  @-moz-keyframes fadeIn ${keyFrames}
-  @-webkit-keyframes fadeIn ${keyFrames}
-  @-o-keyframes fadeIn ${keyFrames}
-  @-ms-keyframes fadeIn ${keyFrames}
+  @keyframes fadeIn ${keyFrames};
 `;

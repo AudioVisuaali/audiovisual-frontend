@@ -9,21 +9,61 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
-import messages from './messages';
+import {
+  WS_ACTION_PLAY_ORDER,
+  WS_ACTION_SKIP,
+} from 'containers/WebSocket/constants';
+import {
+  makeSelectPlayOrder,
+  makeSelectCurrentlyPlaying,
+} from 'containers/WebSocket/selectors';
+import VideoAdder from 'containers/VideoAdder';
+import History from 'containers/History';
+import Queue from 'containers/Queue';
+import Menu from 'components/Menu';
+import Tab from 'components/Tab';
+import ListSVG from 'svgs/List';
+import RandomSVG from 'svgs/Random';
+import ForwardSVG from 'svgs/Forward';
+
 import Wrapper from './styles/Wrapper';
-import Menu from '../../components/Menu';
-import Tab from '../../components/Tab';
 import Contents from './styles/Contents';
-import VideoAdder from '../VideoAdder';
 import MenusWrapper from './styles/MenusWrapper';
 import MenuWrapper from './styles/MenuWrapper';
-import ListSVG from './List';
-import RandomSVG from './Random';
+import messages from './messages';
 
-export function VideosManagement() {
+const PLAY_ORDER_LINEAR = 'linear';
+const PLAY_ORDER_RANDOM = 'random';
+
+export function VideosManagement({ playing, playOrder, socket }) {
   const [activeTab, setActiveTab] = useState(0);
-  const [playOrder, setPlayOrder] = useState(0);
+
+  const handleSkip = () => {
+    if (!playing) return;
+
+    socket(WS_ACTION_SKIP, playing.unique);
+  };
+
+  const handlePlayOrder = type => {
+    if (type === playOrder) return;
+
+    socket(WS_ACTION_PLAY_ORDER, type);
+  };
+
+  const getTab = key => {
+    switch (key) {
+      case 0:
+        return <Queue socket={socket} />;
+      case 1:
+        return <VideoAdder socket={socket} />;
+
+      default:
+        return <History socket={socket} />;
+    }
+  };
+
   return (
     <Wrapper>
       <MenusWrapper>
@@ -42,22 +82,33 @@ export function VideosManagement() {
         </MenuWrapper>
         <MenuWrapper>
           <Menu>
-            <Tab active={playOrder === 0} onClick={() => setPlayOrder(0)}>
+            <Tab onClick={handleSkip}>
+              <ForwardSVG />
+            </Tab>
+            <Tab
+              active={playOrder === PLAY_ORDER_LINEAR}
+              onClick={() => handlePlayOrder(PLAY_ORDER_LINEAR)}
+            >
               <ListSVG />
             </Tab>
-            <Tab active={playOrder === 1} onClick={() => setPlayOrder(1)}>
+            <Tab
+              active={playOrder === PLAY_ORDER_RANDOM}
+              onClick={() => handlePlayOrder(PLAY_ORDER_RANDOM)}
+            >
               <RandomSVG />
             </Tab>
           </Menu>
         </MenuWrapper>
       </MenusWrapper>
-      <Contents>{activeTab === 1 && <VideoAdder />}</Contents>
+      <Contents>{getTab(activeTab)}</Contents>
     </Wrapper>
   );
 }
 
 VideosManagement.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  socket: PropTypes.func,
+  playOrder: PropTypes.string.isRequired,
+  playing: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -66,8 +117,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+const mapStateToProps = createStructuredSelector({
+  playOrder: makeSelectPlayOrder(),
+  playing: makeSelectCurrentlyPlaying(),
+});
+
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 

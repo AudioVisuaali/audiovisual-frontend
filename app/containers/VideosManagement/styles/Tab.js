@@ -17,6 +17,11 @@ const Button = styled.button`
   & svg {
     width: 12px;
   }
+
+  @media screen and (max-width: 760px) {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
 `;
 
 const Active = styled.span`

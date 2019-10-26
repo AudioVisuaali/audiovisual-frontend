@@ -6,8 +6,6 @@ const buttonStyles = css`
   padding: 0.25em 2em;
   text-decoration: none;
   border-radius: 4px;
-  -webkit-font-smoothing: antialiased;
-  -webkit-touch-callout: none;
   user-select: none;
   cursor: pointer;
   outline: 0;

@@ -1,13 +1,8 @@
-/**
- * A link to a certain page, an anchor tag
- */
-
 import styled from 'styled-components';
 
-const Label = styled.span`
-  color: #aaa;
+const Label = styled.label`
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 2px;
-  color: #aaa;
   display: block;
 `;
 

@@ -7,14 +7,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Youtube from 'svgs/Youtube';
+import Twitch from 'svgs/Twitch';
+import Vimeo from 'svgs/Vimeo';
+import SoundCloud from 'svgs/SoundCloud';
+import Streamable from 'svgs/Streamable';
+import Mp4 from 'svgs/Mp4';
+
 import Menu from './styles/Menu';
 import Tab from './styles/Tab';
-import Youtube from './platforms/Youtube';
-import Twitch from './platforms/Twitch';
-import Vimeo from './platforms/Vimeo';
-import SoundCloud from './platforms/SoundCloud';
-import Streamable from './platforms/Streamable';
-import Mp4 from './platforms/Mp4';
 
 const platforms = [
   {
@@ -64,6 +65,8 @@ const PlatformSelector = ({ onClick }) => {
         const { SVG, name } = platform;
         return (
           <Tab
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
             active={activePlatform === i}
             onClick={() => handlePlatformSelect(i)}
           >

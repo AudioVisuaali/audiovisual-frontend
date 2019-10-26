@@ -18,7 +18,7 @@ import GlobalStyle from '../../global-styles';
 
 const App = () => (
   <>
-    <Helmet titleTemplate="%s - Visuals" defaultTitle="React.js Boilerplate">
+    <Helmet titleTemplate="%s - Visuals" defaultTitle="Visuals">
       <meta name="description" content="Visuals for watching vidoes together" />
     </Helmet>
     <Switch>
