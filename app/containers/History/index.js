@@ -58,7 +58,7 @@ export function History({ socket, history }) {
             user={video.addedBy}
           />
         ))}
-        {!showMoreAmount && (
+        {showMoreAmount && (
           <ShowMore onClick={handleAddShowMax}>
             Show More ({showMoreAmount})
           </ShowMore>
