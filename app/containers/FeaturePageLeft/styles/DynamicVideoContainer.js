@@ -1,71 +1,43 @@
 import styled from 'styled-components';
+import device from 'styles/device';
+import fadeIn from 'styles/animations/fadeIn';
+import fadeAndSlideInFromTop from 'styles/animations/fadeAndSlideInFromTop';
 
-const slideFromTop = `{
-  0% {
-    opacity: 0;
-    transform: translateY(-0.5em);
+const fixed = `
+  position: fixed;
+  z-index: 999;
+  top: 30px;
+  right: 30px;
+
+  width: 800px;
+  height: 450px;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+
+  animation: ${fadeAndSlideInFromTop} ease 500ms;
+
+  @media screen and ${device.desktop} {
+    width: 600px;
+    height: 337px;
   }
 
-  10% {
-    opacity: 0;
-    transform: translateY(-0.5em);
+  @media screen and ${device.laptopL} {
+    width: 400px;
+    height: 225px;
   }
 
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  @media screen and ${device.tablet} {
+    width: 300px;
+    height: 167px;
   }
-}`;
+`;
 
-const fadeIn = `{
-  0% {
-    opacity: 0;
-  }
+const normal = `
+  width: 100%;
+  height: 100%;
 
-  10% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}`;
+  animation: ${fadeIn} ease 450ms;
+`;
 
 export default styled.div`
-  ${props =>
-    props.dynamic
-      ? `
-        position: fixed;
-        right: 30px;
-        top: 30px;
-        width: 800px;
-        height: 450px;
-        box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
-        z-index: 999;
-
-        @media screen and (max-width: 2000px) {
-          width: 600px;
-          height: 337px;
-        }
-
-        @media screen and (max-width: 2000px) {
-          width: 400px;
-          height: 225px;
-        }
-
-        @media screen and (max-width: 500px) {
-          width: 300px;
-          height: 167px;
-        }
-
-        animation: slideFromTop ease 500ms;
-        @keyframes slideFromTop ${slideFromTop}
-      `
-      : `
-        width: 100%;
-        height: 100%;
-
-        animation: fadeIn ease 450ms;
-        @keyframes fadeIn ${fadeIn}
-    `}
+  ${props => (props.dynamic ? fixed : normal)}
 `;

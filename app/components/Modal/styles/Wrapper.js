@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+import fadeIn from 'styles/animations/fadeIn';
+import fadeOut from 'styles/animations/fadeOut';
+
+const fadingOut = `
+  animation: ${fadeOut} 200ms;
+  opacity: 0;
+`;
 
 const Wrapper = styled.div`
   position: fixed;
@@ -7,26 +14,14 @@ const Wrapper = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  animation: fadeIn 200ms;
+  animation: ${fadeIn} 200ms;
 
-  ${props =>
-    props.fadingOut &&
-    `
-  animation: fadeOut 200ms;
-  opacity: 0;
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  `}
+  ${props => props.fadingOut && fadingOut}
 `;
 
 export default Wrapper;

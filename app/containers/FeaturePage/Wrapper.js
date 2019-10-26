@@ -1,32 +1,15 @@
 import styled from 'styled-components';
-
-const slideFromTop = `{
-  0% {
-    opacity: 0;
-    transform: translateY(-0.5em);
-  }
-
-  10% {
-    opacity: 0;
-    transform: translateY(-0.5em);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}`;
+import device from 'styles/device';
+import fadeIn from 'styles/animations/fadeIn';
 
 export default styled.div`
   display: flex;
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     height: auto;
   }
 
-  animation: fadeIn ease 1s;
-
-  @keyframes fadeIn ${slideFromTop}
+  animation: ${fadeIn} ease 1s;
 `;

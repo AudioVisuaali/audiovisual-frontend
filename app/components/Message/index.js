@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { dateToDoublePercision } from 'utils/time';
+import device from 'styles/device';
 
 const Wrapper = styled.div`
   padding: 0 10px 0 5px;
@@ -28,16 +29,18 @@ const InnerWrapper = styled.div`
 `;
 
 const UserSVGContainer = styled.div`
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 100%;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.2);
+
   width: 30px;
   height: 30px;
   margin-right: 10px;
-  flex-shrink: 0;
 
   & svg {
     color: rgba(255, 255, 255, 0.4);
@@ -58,30 +61,31 @@ const MessageContainer = styled.div`
 
 const MessageContent = styled.div`
   color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
   font-weight: 300;
   margin-top: 2px;
-  font-size: 12px;
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     font-size: 10px;
   }
 `;
 
 const Username = styled.div`
   color: rgba(255, 255, 255, 0.6);
-  font-weight: 500;
   font-size: 12px;
+  font-weight: 500;
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     font-size: 10px;
   }
 `;
 
 const Time = styled.span`
-  font-size: 10px;
   color: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
   font-weight: 300;
-  @media screen and (max-width: 760px) {
+
+  @media screen and ${device.tablet} {
     font-size: 8px;
   }
 `;

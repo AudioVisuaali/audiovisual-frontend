@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import device from 'styles/device';
 
 const Thumbnail = styled.div`
   margin-right: 20px;
@@ -22,7 +23,7 @@ const Thumbnail = styled.div`
     display: block;
   }
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     width: 120px;
     height: 68px;
   }

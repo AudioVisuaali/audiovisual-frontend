@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import device from 'styles/device';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -37,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
     outline-width: 0;
   }
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     html,
     body {
       height: auto;

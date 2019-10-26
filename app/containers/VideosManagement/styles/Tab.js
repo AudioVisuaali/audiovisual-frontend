@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import device from 'styles/device';
 
 const Wrapper = styled.div`
   position: relative;
@@ -18,7 +19,7 @@ const Button = styled.button`
     width: 12px;
   }
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     font-size: 14px;
     padding: 8px 12px;
   }

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import device from 'styles/device';
+import fadeIn from 'styles/animations/fadeIn';
 
 const Messages = styled.div`
   padding-bottom: 5px;
@@ -7,9 +9,9 @@ const Messages = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 
-  animation: fadeIn 0.6s;
+  animation: ${fadeIn} 0.6s;
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     min-height: 400px;
   }
 `;

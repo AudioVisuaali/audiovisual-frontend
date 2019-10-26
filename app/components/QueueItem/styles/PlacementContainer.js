@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import device from 'styles/device';
 
 const PlacementContainer = styled.div`
   color: #888;
@@ -8,7 +9,7 @@ const PlacementContainer = styled.div`
     height: 30px;
   }
 
-  @media screen and (max-width: 760px) {
+  @media screen and ${device.tablet} {
     & svg {
       width: 20px;
       height: 20px;
