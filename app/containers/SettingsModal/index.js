@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
+import LocaleToggle from 'containers/LocaleToggle';
 import Modal from 'components/Modal';
 
 import messages from './messages';
 import Input from './Input';
+import Label from './Label';
+import Section from './Section';
 
 const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
   const [name, setName] = useState(currentUser ? currentUser.username : '');
@@ -21,7 +24,19 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
       onSave={handleSave}
       onClose={onClose}
     >
-      <Input value={name} onChange={handleInputField} />
+      <Section>
+        <Label>
+          <FormattedMessage {...messages.changeLanguage} />
+        </Label>
+        <LocaleToggle />
+      </Section>
+
+      <Section>
+        <Label>
+          <FormattedMessage {...messages.changeUsername} />
+        </Label>
+        <Input value={name} onChange={handleInputField} />
+      </Section>
     </Modal>
   );
 };

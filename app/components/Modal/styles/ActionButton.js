@@ -7,6 +7,7 @@ const ActionButton = styled.button`
   margin-left: 8px;
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
+  min-width: 75px;
 `;
 
 export default ActionButton;

@@ -21,4 +21,8 @@ export default defineMessages({
     id: `${scope}.createRoomButton`,
     defaultMessage: 'Create Room',
   },
+  codedWithLove: {
+    id: `${scope}.codedWithLove`,
+    defaultMessage: `This website is {coded} with 💖 in the night of the night`,
+  },
 });

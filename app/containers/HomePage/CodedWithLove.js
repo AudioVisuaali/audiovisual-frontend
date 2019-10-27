@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import A from 'components/A';
+import { injectIntl } from 'react-intl';
+
+import messages from './messages';
 
 const Wrapper = styled.h4`
   margin-top: 50px;
@@ -18,14 +22,21 @@ const Coded = styled.span`
   }
 `;
 
-const CodedWithLove = () => (
-  <Wrapper>
-    This website is
-    <Coded>
-      <A href="https://github.com/AudioVisuaali/"> {'</>'} </A>
-    </Coded>
-    with 💖 in the night of the night
-  </Wrapper>
+const CodedLink = () => (
+  <Coded>
+    <A href="https://github.com/AudioVisuaali/"> {'</>'} </A>
+  </Coded>
 );
 
-export default CodedWithLove;
+const CodedWithLove = ({ intl }) => {
+  const str = intl.formatMessage(messages.codedWithLove, {
+    coded: <CodedLink />,
+  });
+  return <Wrapper>{str}</Wrapper>;
+};
+
+CodedWithLove.propTypes = {
+  intl: PropTypes.object,
+};
+
+export default injectIntl(CodedWithLove);

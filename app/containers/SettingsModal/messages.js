@@ -13,4 +13,12 @@ export default defineMessages({
     id: `${scope}.title`,
     defaultMessage: 'Settings',
   },
+  changeLanguage: {
+    id: `${scope}.changeLanguage`,
+    defaultMessage: 'Change language',
+  },
+  changeUsername: {
+    id: `${scope}.changeUsername`,
+    defaultMessage: 'Change username',
+  },
 });

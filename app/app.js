@@ -76,8 +76,13 @@ if (!window.Intl) {
   })
     .then(() =>
       Promise.all([
+        // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+        // https://en.wikipedia.org/wiki/ISO_639-3
         import('intl/locale-data/jsonp/en.js'),
-        import('intl/locale-data/jsonp/de.js'),
+        import('intl/locale-data/jsonp/fi.js'),
+        import('intl/locale-data/jsonp/sv.js'),
+        import('intl/locale-data/jsonp/nn.js'),
+        import('intl/locale-data/jsonp/fr.js'),
       ]),
     ) // eslint-disable-line prettier/prettier
     .then(() => render(translationMessages))

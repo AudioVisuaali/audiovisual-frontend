@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import uuid from 'uuid/v4';
 
+import LocaleToggle from 'containers/LocaleToggle';
 import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
 
@@ -65,6 +66,7 @@ export const HomePage = () => {
         <Button style={FullWidth} onClick={redirectToRoom}>
           <FormattedMessage {...messages.createRoomButton} />
         </Button>
+        <LocaleToggle centered />
         <CodedWithLove />
       </Container>
     </Wrapper>

@@ -12,8 +12,9 @@ require('@formatjs/intl-pluralrules/dist/locale-data/en');
 
 const enTranslationMessages = require('./translations/en.json');
 const fiTranslationMessages = require('./translations/fi.json');
-const norTranslationMessages = require('./translations/nor.json');
 const sweTranslationMessages = require('./translations/swe.json');
+const norTranslationMessages = require('./translations/nor.json');
+const frTranslationMessages = require('./translations/fr.json');
 
 const DEFAULT_LOCALE = 'en';
 
@@ -23,6 +24,7 @@ const appLocales = [
   'fi',
   'swe',
   'nor',
+  'fr'
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -45,6 +47,7 @@ const translationMessages = {
   fi: formatTranslationMessages('fi', fiTranslationMessages),
   swe: formatTranslationMessages('swe', sweTranslationMessages),
   nor: formatTranslationMessages('nor', norTranslationMessages),
+  fr: formatTranslationMessages('fr', frTranslationMessages),
 };
 
 exports.appLocales = appLocales;
