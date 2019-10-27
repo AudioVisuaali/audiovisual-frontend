@@ -6,9 +6,11 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import CrossSVG from 'svgs/Times';
 
+import messages from './messages';
 import Wrapper from './styles/Wrapper';
 import ModalWrapper from './styles/ModalWrapper';
 import CloseCross from './styles/CloseCross';
@@ -36,8 +38,12 @@ function Modal({ children, onClose, onSave, title }) {
         <Title>{title}</Title>
         <Content>{children}</Content>
         <Actions>
-          <ActionButton onClick={handleClose}>Close</ActionButton>
-          <ActionButton onClick={onSave}>Save</ActionButton>
+          <ActionButton onClick={handleClose}>
+            <FormattedMessage {...messages.close} />
+          </ActionButton>
+          <ActionButton onClick={onSave}>
+            <FormattedMessage {...messages.save} />
+          </ActionButton>
         </Actions>
       </ModalWrapper>
     </Wrapper>

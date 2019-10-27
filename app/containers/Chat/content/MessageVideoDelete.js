@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import A from 'components/A';
-import Wrapper from './styles/Wrapper';
-import Bolded from './styles/Bolded';
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
+import Wrapper from '../styles/Wrapper';
+import Bolded from '../styles/Bolded';
 
-const MessageVideoNext = ({ message }) => (
+const MessageVideoDelete = ({ message }) => (
   <Wrapper>
-    Now playing{' '}
+    <FormattedMessage {...messages.deletedText} />{' '}
     <A href={message.content.url}>
       <Bolded>{message.content.title}</Bolded>
     </A>
   </Wrapper>
 );
 
-MessageVideoNext.propTypes = {
+MessageVideoDelete.propTypes = {
   message: PropTypes.shape({
-    createdAt: PropTypes.string.isRequired,
     content: PropTypes.shape({
       url: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
@@ -26,4 +27,4 @@ MessageVideoNext.propTypes = {
   }),
 };
 
-export default MessageVideoNext;
+export default MessageVideoDelete;

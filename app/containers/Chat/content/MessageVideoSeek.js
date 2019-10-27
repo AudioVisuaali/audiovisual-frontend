@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { formatToReadable, secondsToClockFormat } from 'utils/time';
-import Wrapper from './styles/Wrapper';
-import Bolded from './styles/Bolded';
+import messages from '../messages';
+import Wrapper from '../styles/Wrapper';
+import Bolded from '../styles/Bolded';
 
 const MessageVideoSeek = ({ message }) => {
   const format = formatToReadable(secondsToClockFormat(message.content));
   return (
     <Wrapper>
-      seeked to <Bolded>{format}</Bolded>
+      <FormattedMessage {...messages.seekedTo} /> <Bolded>{format}</Bolded>
     </Wrapper>
   );
 };

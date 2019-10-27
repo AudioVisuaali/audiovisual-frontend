@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from './styles/Wrapper';
-import Bolded from './styles/Bolded';
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
+import Wrapper from '../styles/Wrapper';
+import Bolded from '../styles/Bolded';
 
 const MessageUserUsernameChange = ({ message }) => (
   <Wrapper>
-    was now known as <Bolded>{message.content.username}</Bolded>
+    <FormattedMessage {...messages.wasKnownAs} />{' '}
+    <Bolded>{message.content.username}</Bolded>
   </Wrapper>
 );
 

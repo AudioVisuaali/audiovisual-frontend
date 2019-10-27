@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from './styles/Wrapper';
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
+import Wrapper from '../styles/Wrapper';
 
-const MessageUserJoin = () => <Wrapper>Joined</Wrapper>;
+const MessageUserJoin = () => (
+  <Wrapper>
+    <FormattedMessage {...messages.joinedText} />
+  </Wrapper>
+);
 
 MessageUserJoin.propTypes = {
   message: PropTypes.shape({

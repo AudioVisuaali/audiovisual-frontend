@@ -9,8 +9,8 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.VideoInformation';
 
 export default defineMessages({
-  users: {
-    id: `${scope}.users`,
+  viewers: {
+    id: `${scope}.viewers`,
     defaultMessage: 'Users',
   },
 });

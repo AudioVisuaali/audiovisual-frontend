@@ -6,11 +6,13 @@
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
 import uuid from 'uuid/v4';
 
 import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
 
+import messages from './messages';
 import Wrapper from './styles/Wrapper';
 import Logo from './styles/Logo';
 import Container from './styles/Container';
@@ -46,8 +48,12 @@ export const HomePage = () => {
       </Helmet>
       <Container>
         <Logo>Visuals</Logo>
-        <Description>Watch videos together. Anywhere. Whenever.</Description>
-        <Label>Display name</Label>
+        <Description>
+          <FormattedMessage {...messages.description} />
+        </Description>
+        <Label>
+          <FormattedMessage {...messages.displayNameLabel} />
+        </Label>
         <TextField
           type="text"
           spellCheck="false"
@@ -57,7 +63,7 @@ export const HomePage = () => {
         />
 
         <Button style={FullWidth} onClick={redirectToRoom}>
-          Create Room
+          <FormattedMessage {...messages.createRoomButton} />
         </Button>
         <CodedWithLove />
       </Container>

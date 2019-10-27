@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -18,10 +18,10 @@ import {
 import QueueItem from 'components/QueueItem';
 import DollyEmpty from 'svgs/DollyEmpty';
 
-// import messages from './messages';
-import Empty from './Empty';
-import Wrapper from './Wrapper';
-import ShowMore from './ShowMore';
+import messages from './messages';
+import Empty from './styles/Empty';
+import Wrapper from './styles/Wrapper';
+import ShowMore from './styles/ShowMore';
 
 const SHOW_MORE_MAX_VALUE = 10;
 
@@ -58,9 +58,9 @@ export function History({ socket, history }) {
             user={video.addedBy}
           />
         ))}
-        {showMoreAmount && (
+        {!!showMoreAmount && (
           <ShowMore onClick={handleAddShowMax}>
-            Show More ({showMoreAmount})
+            <FormattedMessage {...messages.showMoreLabel} /> ({showMoreAmount})
           </ShowMore>
         )}
       </>
@@ -70,7 +70,7 @@ export function History({ socket, history }) {
   const emptyHistory = () => (
     <Empty>
       <DollyEmpty />
-      Video history is empty
+      <FormattedMessage {...messages.noVideosText} />
     </Empty>
   );
 

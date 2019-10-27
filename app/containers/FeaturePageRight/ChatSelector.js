@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import { WS_ACTION_USER_USERNAME_CHANGE } from 'containers/WebSocket/constants';
+import SettingsModal from 'containers/SettingsModal';
 import Tab from 'components/Tab';
 import Menu from 'components/Menu';
 import Label from 'components/Label';
@@ -10,8 +12,8 @@ import { setItem, USERNAME } from 'utils/localStorage';
 import CogSVG from 'svgs/Cog';
 import TwitchSVG from 'svgs/Twitch';
 
+import messages from './messages';
 import Button from './styles/Button';
-import NameChangeModal from './NameChangeModal';
 
 const Wrapper = styled.div`
   border-bottom: 1px solid #080808;
@@ -58,20 +60,22 @@ const ChatSelector = ({ currentUser, socket, twitchChannel, onClick }) => {
   return (
     <Wrapper>
       {isModalOpen && (
-        <NameChangeModal
+        <SettingsModal
           currentUser={currentUser}
           onName={handleNameSave}
           onClose={handleCloseModal}
         />
       )}
-      <Label>Chat room</Label>
+      <Label>
+        <FormattedMessage {...messages.chatRooms} />
+      </Label>
       <ChatActions>
         <Menu>
           <Tab
             active={selectedTab === defaultChat}
             onClick={() => handleTabClick(defaultChat)}
           >
-            Chat
+            <FormattedMessage {...messages.room} />
           </Tab>
           {twitchChannel && (
             <Tab

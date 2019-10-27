@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from './styles/Wrapper';
-import Bolded from './styles/Bolded';
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
+import Wrapper from '../styles/Wrapper';
+import Bolded from '../styles/Bolded';
 
 const MessageVideoPlayOrder = ({ message }) => (
   <Wrapper>
-    Set room play type to <Bolded>{message.content}</Bolded>
+    <FormattedMessage {...messages.roomPlayType} />{' '}
+    <Bolded>
+      <FormattedMessage {...messages[message.content]} />
+    </Bolded>
   </Wrapper>
 );
 

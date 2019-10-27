@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
@@ -25,12 +25,12 @@ import {
 } from 'containers/WebSocket/constants';
 import QueueItem from 'components/QueueItem';
 
-// import messages from './messages';
-import Wrapper from './Wrapper';
+import messages from './messages';
+import Wrapper from './styles/Wrapper';
 import EmptyQueue from './EmptyQueue';
 import NowPlaying from './NowPlaying';
-import CurrentlyPlaying from './CurrentlyPlaying';
-import SortableContainerUl from './SortableContainerUl';
+import CurrentlyPlaying from './styles/CurrentlyPlaying';
+import SortableContainerUl from './styles/SortableContainerUl';
 
 export function Queue({
   lastReorder,
@@ -100,7 +100,9 @@ export function Queue({
 
   const queueItems = () => (
     <>
-      <CurrentlyPlaying>Queue</CurrentlyPlaying>
+      <CurrentlyPlaying>
+        <FormattedMessage {...messages.queueLabel} />
+      </CurrentlyPlaying>
       <SortableList
         transitionDuration={150}
         lockAxis="y"

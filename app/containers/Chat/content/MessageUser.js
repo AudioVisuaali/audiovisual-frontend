@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 const UserMessage = ({ message }) => message.content;
 
 UserMessage.propTypes = {

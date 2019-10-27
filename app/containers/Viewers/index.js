@@ -23,7 +23,7 @@ export function UsersInformation({ viewers }) {
   return (
     <Wrapper>
       <Label>
-        <FormattedMessage {...messages.users} />
+        <FormattedMessage {...messages.viewers} />
       </Label>
       <Users>
         {viewers.map(v => (

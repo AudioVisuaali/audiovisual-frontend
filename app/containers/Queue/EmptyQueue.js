@@ -1,11 +1,13 @@
 import React from 'react';
 import ListSVG from 'svgs/List';
-import Empty from './Empty';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+import Empty from './styles/Empty';
 
 const EmptyQueue = () => (
   <Empty>
     <ListSVG />
-    Video queue is empty
+    <FormattedMessage {...messages.queueEmpty} />
   </Empty>
 );
 

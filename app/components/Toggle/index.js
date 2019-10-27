@@ -7,8 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ToggleOption from 'components/ToggleOption';
 import Select from './Select';
-import ToggleOption from '../ToggleOption';
 
 function Toggle(props) {
   let content = <option>--</option>;

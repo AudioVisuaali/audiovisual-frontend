@@ -7,14 +7,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import ReactPlayer from 'react-player';
 
 import Label from 'components/Label';
 import PlatformSelector from 'containers/PlatformSelector';
 
-// import messages from './messages';
+import messages from './messages';
 import Input from './styles/Input';
 import Wrapper from './styles/Wrapper';
 import AddVideo from './styles/AddVideo';
@@ -69,7 +69,9 @@ export function VideoAdder({ socket }) {
     <Wrapper>
       <PlatformSelector onClick={handlePlatformChange} />
       <URLContainer>
-        <Label>Video URL</Label>
+        <Label>
+          <FormattedMessage {...messages.videoInputFieldLabel} />
+        </Label>
         <div>
           <Input value={videoLink} onChange={handleInputChange} />
           <AddVideo
@@ -77,20 +79,24 @@ export function VideoAdder({ socket }) {
             type="button"
             onClick={addVideoHandler}
           >
-            Add to queue
+            <FormattedMessage {...messages.addVideoToQueueButton} />
           </AddVideo>
         </div>
 
         {selectedPlatform === 'mp4' && (
           <>
-            <Label>Translation URL</Label>
+            <Label>
+              <FormattedMessage {...messages.translationFieldURL} />
+            </Label>
             <div>
               <Input value={subtitleLink} onChange={handleOnTranslation} />
             </div>
           </>
         )}
 
-        <Label>Preview - {selectedPlatform}</Label>
+        <Label>
+          <FormattedMessage {...messages.previewLabel} /> - {selectedPlatform}
+        </Label>
         <PreviewContainer>
           <ReactPlayer
             width="100%"

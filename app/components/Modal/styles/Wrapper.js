@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import fadeIn from 'styles/animations/fadeIn';
 import fadeOut from 'styles/animations/fadeOut';
 
-const fadingOut = `
+const fadingOut = css`
   animation: ${fadeOut} 200ms;
   opacity: 0;
 `;

@@ -28,17 +28,17 @@ import {
   MESSAGE_VIDEO_PLAY_ORDER,
   MESSAGE_REORDER,
 } from './constants';
-import MessageUser from './MessageUser';
-import MessageVideoSeek from './MessageVideoSeek';
-import MessageVideoSkip from './MessageVideoSkip';
-import MessageVideoNext from './MessageVideoNext';
-import MessageVideoAdd from './MessageVideoAdd';
-import MessageVideoDelete from './MessageVideoDelete';
-import MessageUserUsernameChange from './MessageUserUsernameChange';
-import MessageUserJoin from './MessageUserJoin';
-import MessageUserLeave from './MessageUserLeave';
-import MessageVideoPlayOrder from './MessageVideoPlayOrder';
-import MessageReorder from './MessageReorder';
+import MessageUser from './content/MessageUser';
+import MessageVideoSeek from './content/MessageVideoSeek';
+import MessageVideoSkip from './content/MessageVideoSkip';
+import MessageVideoNext from './content/MessageVideoNext';
+import MessageVideoAdd from './content/MessageVideoAdd';
+import MessageVideoDelete from './content/MessageVideoDelete';
+import MessageUserUsernameChange from './content/MessageUserUsernameChange';
+import MessageUserJoin from './content/MessageUserJoin';
+import MessageUserLeave from './content/MessageUserLeave';
+import MessageVideoPlayOrder from './content/MessageVideoPlayOrder';
+import MessageReorder from './content/MessageReorder';
 
 export const getTypeVariables = msg => {
   switch (msg.type) {

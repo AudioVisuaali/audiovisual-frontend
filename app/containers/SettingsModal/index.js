@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 
 import Modal from 'components/Modal';
 
+import messages from './messages';
 import Input from './Input';
 
-const NameChangeModal = ({ currentUser, onClose, onName }) => {
+const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
   const [name, setName] = useState(currentUser ? currentUser.username : '');
 
   const handleInputField = e => setName(e.target.value);
@@ -14,16 +16,21 @@ const NameChangeModal = ({ currentUser, onClose, onName }) => {
   useEffect(() => setName(currentUser.username), [currentUser.username]);
 
   return (
-    <Modal title="Change Name" onSave={handleSave} onClose={onClose}>
+    <Modal
+      title={intl.formatMessage(messages.title)}
+      onSave={handleSave}
+      onClose={onClose}
+    >
       <Input value={name} onChange={handleInputField} />
     </Modal>
   );
 };
 
-NameChangeModal.propTypes = {
+SettingsModal.propTypes = {
   currentUser: PropTypes.object,
   onClose: PropTypes.func,
   onName: PropTypes.func,
+  intl: PropTypes.any.isRequired,
 };
 
-export default NameChangeModal;
+export default injectIntl(SettingsModal);

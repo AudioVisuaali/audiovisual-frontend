@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import QueueItem from 'components/QueueItem';
-import CurrentlyPlaying from './CurrentlyPlaying';
-import NowPlayingWrapper from './NowPlayingWrapper';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+import CurrentlyPlaying from './styles/CurrentlyPlaying';
+import NowPlayingWrapper from './styles/NowPlayingWrapper';
 
 const NowPlaying = ({ currentlyPlaying, onSkip }) => (
   <NowPlayingWrapper>
-    <CurrentlyPlaying>Currently playing</CurrentlyPlaying>
+    <CurrentlyPlaying>
+      <FormattedMessage {...messages.currentlyPlayingLabel} />
+    </CurrentlyPlaying>
     <QueueItem
       onSkip={onSkip}
       video={currentlyPlaying}

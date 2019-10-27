@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import device from 'styles/device';
 import fadeIn from 'styles/animations/fadeIn';
 import fadeAndSlideInFromTop from 'styles/animations/fadeAndSlideInFromTop';
 
-const fixed = `
+const fixed = css`
   position: fixed;
   z-index: 999;
   top: 30px;
@@ -11,7 +11,8 @@ const fixed = `
 
   width: 800px;
   height: 450px;
-  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 
   animation: ${fadeAndSlideInFromTop} ease 500ms;
 
@@ -31,7 +32,7 @@ const fixed = `
   }
 `;
 
-const normal = `
+const normal = css`
   width: 100%;
   height: 100%;
 

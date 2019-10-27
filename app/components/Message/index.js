@@ -1,94 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { dateToDoublePercision } from 'utils/time';
-import device from 'styles/device';
 
-const Wrapper = styled.div`
-  padding: 0 10px 0 5px;
-  ${props =>
-    props.boxed &&
-    `
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-  `}
-`;
-
-const InnerWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 8px 8px 8px;
-
-  ${props =>
-    props.boxed &&
-    `
-    border-radius: 6px;
-    background-color: rgba(0,0,0,0.3);
-  `}
-`;
-
-const UserSVGContainer = styled.div`
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 100%;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-
-  & svg {
-    color: rgba(255, 255, 255, 0.4);
-    width: 18px;
-    height: 18px;
-  }
-`;
-
-const MessageContainer = styled.div`
-  flex-grow: 1;
-  ${props =>
-    props.centered &&
-    `
-    display: flex;
-    align-items: center;
-  `}
-`;
-
-const MessageContent = styled.div`
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 12px;
-  font-weight: 300;
-  margin-top: 2px;
-
-  @media screen and ${device.tablet} {
-    font-size: 10px;
-  }
-`;
-
-const Username = styled.div`
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  font-weight: 500;
-
-  @media screen and ${device.tablet} {
-    font-size: 10px;
-  }
-`;
-
-const Time = styled.span`
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 10px;
-  font-weight: 300;
-
-  @media screen and ${device.tablet} {
-    font-size: 8px;
-  }
-`;
+import Wrapper from './styles/Wrapper';
+import InnerWrapper from './styles/InnerWrapper';
+import UserSVGContainer from './styles/UserSVGContainer';
+import MessageContainer from './styles/MessageContainer';
+import Username from './styles/Username';
+import Time from './styles/Time';
+import MessageContent from './styles/MessageContent';
 
 const Message = ({ boxed, icon, message, children }) => (
   <Wrapper boxed={boxed}>

@@ -11,14 +11,18 @@ require('@formatjs/intl-pluralrules/polyfill');
 require('@formatjs/intl-pluralrules/dist/locale-data/en');
 
 const enTranslationMessages = require('./translations/en.json');
-const deTranslationMessages = require('./translations/de.json');
+const fiTranslationMessages = require('./translations/fi.json');
+const norTranslationMessages = require('./translations/nor.json');
+const sweTranslationMessages = require('./translations/swe.json');
 
 const DEFAULT_LOCALE = 'en';
 
 // prettier-ignore
 const appLocales = [
   'en',
-  'de',
+  'fi',
+  'swe',
+  'nor',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -38,7 +42,9 @@ const formatTranslationMessages = (locale, messages) => {
 
 const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  de: formatTranslationMessages('de', deTranslationMessages),
+  fi: formatTranslationMessages('fi', fiTranslationMessages),
+  swe: formatTranslationMessages('swe', sweTranslationMessages),
+  nor: formatTranslationMessages('nor', norTranslationMessages),
 };
 
 exports.appLocales = appLocales;
