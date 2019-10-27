@@ -1,6 +1,6 @@
-import { keyframes } from 'styled-components';
+import { css } from 'styled-components';
 
-const fadeAndSlideInFromTop = keyframes`
+const fadeAndSlideInFromTop = css`
   0% {
     opacity: 0;
     transform: translateY(-0.5em);
