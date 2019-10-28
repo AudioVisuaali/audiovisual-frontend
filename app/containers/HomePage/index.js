@@ -12,6 +12,7 @@ import uuid from 'uuid/v4';
 import LocaleToggle from 'containers/LocaleToggle';
 import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
+import { generateName } from 'utils/name';
 
 import messages from './messages';
 import Wrapper from './styles/Wrapper';
@@ -26,7 +27,7 @@ import CodedWithLove from './CodedWithLove';
 const FullWidth = { width: '100%' };
 
 export const HomePage = () => {
-  const [username, setUsername] = useState(getItem(USERNAME) || '');
+  const [username, setUsername] = useState(getItem(USERNAME) || generateName());
   const [isTransparent, setIsTransparent] = useState(false);
 
   const redirectToRoom = () => {
