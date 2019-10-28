@@ -52,7 +52,7 @@ export function Add({ socket }) {
 
   const AddSubtitle = () => (
     <ShowSubtitleURLAdd onClick={handleShowSubtitleURL}>
-      <FormattedMessage {...messages.addURL} />
+      <FormattedMessage {...messages.addSubtitle} />
     </ShowSubtitleURLAdd>
   );
 

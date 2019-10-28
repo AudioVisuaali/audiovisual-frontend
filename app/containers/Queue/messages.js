@@ -9,13 +9,13 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.Queue';
 
 export default defineMessages({
+  title: {
+    id: `${scope}.title`,
+    defaultMessage: 'Queue',
+  },
   currentlyPlayingLabel: {
     id: `${scope}.currentlyPlayingLabel`,
     defaultMessage: 'Currently Playing',
-  },
-  queueLabel: {
-    id: `${scope}.queueLabel`,
-    defaultMessage: 'Queue',
   },
   queueEmpty: {
     id: `${scope}.queueEmpty`,

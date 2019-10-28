@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.VideoAdder';
+export const scope = 'app.containers.Add';
 
 export default defineMessages({
   videoInputFieldLabel: {
@@ -29,8 +29,8 @@ export default defineMessages({
     id: `${scope}.title`,
     defaultMessage: 'Add',
   },
-  addURL: {
-    id: `${scope}.addURL`,
-    defaultMessage: 'Add subtitles',
+  addSubtitle: {
+    id: `${scope}.addSubtitle`,
+    defaultMessage: 'Add subtitle',
   },
 });

@@ -100,7 +100,7 @@ export function Queue({
   const QueueItems = () => (
     <>
       <BigLabel>
-        <FormattedMessage {...messages.queueLabel} />
+        <FormattedMessage {...messages.title} />
       </BigLabel>
       <SortableList
         transitionDuration={150}

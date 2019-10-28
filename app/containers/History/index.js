@@ -51,7 +51,7 @@ export function History({ socket, history }) {
     return (
       <>
         <BigLabel>
-          <FormattedMessage {...messages.history} />
+          <FormattedMessage {...messages.title} />
         </BigLabel>
         {showingVideos.map(video => (
           <QueueItem
