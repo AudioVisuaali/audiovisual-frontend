@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const buttonMaskBackground = p =>
+  p.theme.isDark ? p.theme.light[50] : p.theme.darkRGBA[10];
+const active = p => (p.theme.isDark ? p.theme.light[50] : p.theme.darkRGBA[10]);
+
 const ButtonWrapper = styled.div`
   user-select: none;
   font-size: 14px;
@@ -11,8 +15,8 @@ const ButtonWrapper = styled.div`
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  opacity: 0.6;
-  color: #fff;
+  opacity: ${p => (p.theme.isDark ? 0.6 : 0.7)};
+  color: ${p => (p.theme.isDark ? p.theme.light[50] : p.theme.grey[600])};
   text-align: center;
   margin-bottom: 0.6em;
   border-radius: 5px;
@@ -56,7 +60,7 @@ const ButtonWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: white;
+    background: ${buttonMaskBackground};
     transform: translateX(-100%) rotate(45deg);
     transition: all 0.3s;
   }
@@ -75,7 +79,7 @@ const ButtonWrapper = styled.div`
 
   &:active {
     opacity: 1;
-    background: white;
+    background: ${active};
     color: inherit;
   }
 

@@ -13,7 +13,7 @@ const Button = styled.button`
   outline: 0;
   border: none;
   background-color: transparent;
-  color: #fff;
+  color: ${p => (p.theme.isDark ? p.theme.light[50] : p.theme.dark[500])};
 
   & svg {
     transition: all 100ms;

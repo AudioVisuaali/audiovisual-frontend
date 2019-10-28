@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const Active = styled.span`
   height: 2px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: ${p =>
+    p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.darkRGBA[60]};
   position: absolute;
   left: 0;
   right: 0;

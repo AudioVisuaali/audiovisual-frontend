@@ -13,6 +13,10 @@ const A = styled.a`
     text-decoration: underline;
     cursor: pointer;
   }
+
+  &:focus {
+    color: inherit;
+  }
 `;
 
 export default ({ ...rest }) => (

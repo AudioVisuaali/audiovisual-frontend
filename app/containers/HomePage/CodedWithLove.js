@@ -8,7 +8,8 @@ import messages from './messages';
 
 const Wrapper = styled.h4`
   margin-top: 50px;
-  color: rgba(255, 255, 255, 0.6);
+  color: ${props =>
+    props.theme.isDark ? props.theme.whiteRGBA[60] : props.theme.grey[600]};
   text-align: center;
   font-weight: 400;
 `;

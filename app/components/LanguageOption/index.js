@@ -11,7 +11,7 @@ import Flag from './Countries';
 
 const LanguageOption = ({ active, onClick, value }) => (
   <Option active={active} onClick={onClick}>
-    <Flag locale={value} />
+    <Flag style={{ width: 30, height: 20 }} locale={value} />
   </Option>
 );
 

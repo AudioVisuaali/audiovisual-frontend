@@ -104,7 +104,6 @@ const webSocketReducer = (state = initialState, action) =>
         break;
 
       case WS_SET_CURRENT_USER_USERNAME:
-        draft.currentUser.username = action.user.username;
         if (state.currentUser.unique === action.user.unique) {
           draft.currentUser.username = action.user.username;
         }

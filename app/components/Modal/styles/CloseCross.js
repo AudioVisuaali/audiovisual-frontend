@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+const hoverBackgroundColor = p =>
+  p.theme.isDark ? p.theme.darkRGBA[40] : p.theme.darkRGBA[10];
+
 const CloseCross = styled.button`
   border: none;
   background-color: transparent;
@@ -17,13 +20,13 @@ const CloseCross = styled.button`
 
   &:hover {
     transform: scale(1.2);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: ${hoverBackgroundColor};
   }
 
   & svg {
     width: 18px;
     height: 18px;
-    color: #fff;
+    color: ${p => (p.theme.isDark ? p.theme.light[50] : p.theme.dark[700])};
   }
 `;
 

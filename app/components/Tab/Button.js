@@ -1,18 +1,29 @@
 import styled from 'styled-components';
 import device from 'styles/device';
 
+const hoverBackground = p =>
+  p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.darkRGBA[10];
+const focusColor = p =>
+  p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.darkRGBA[60];
+
 const Button = styled.button`
   border: none;
   background-color: transparent;
   font-size: 16px;
   font-weight: 500;
-  color: #fff;
+  color: ${p =>
+    p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.darkRGBA[60]};
   padding: 10px 16px;
 
   transition: background-color 200ms;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: ${hoverBackground};
+  }
+
+  &:active,
+  :focus {
+    color: ${focusColor};
   }
 
   & svg {

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 const Label = styled.span`
-  color: #fff;
+  color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.grey[700])};
   display: block;
   padding-bottom: 0.2em;
-  opacity: 0.6;
 `;
 
 export default Label;

@@ -23,6 +23,9 @@ import App from 'containers/App';
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
+// Import Theme Provider
+import ThemeProvider from 'containers/ThemeProvider';
+
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon-visuals.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
@@ -50,9 +53,11 @@ const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <ThemeProvider>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </ThemeProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

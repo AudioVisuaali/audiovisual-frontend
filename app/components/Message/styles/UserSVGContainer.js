@@ -8,14 +8,15 @@ const UserSVGContainer = styled.div`
 
   border-radius: 100%;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: ${p =>
+    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.grey[600]};
 
   width: 30px;
   height: 30px;
   margin-right: 10px;
 
   & svg {
-    color: rgba(255, 255, 255, 0.4);
+    color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[40] : p.theme.light[50])};
     width: 18px;
     height: 18px;
   }

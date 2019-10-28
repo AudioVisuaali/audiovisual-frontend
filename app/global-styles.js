@@ -1,6 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 import device from 'styles/device';
 
+const backgroundColor = props =>
+  props.theme.isDark ? props.theme.dark[200] : props.theme.grey[200];
+
 const GlobalStyle = createGlobalStyle`
   html,
   body {
@@ -9,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0px;
     padding: 0px;
     overflow: hidden;
-    background-color: #282828;
+    background-color: ${props => backgroundColor(props)};
   }
 
   body {

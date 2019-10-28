@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+const backgroundColor = p =>
+  p.theme.isDark ? p.theme.grey[700] : p.theme.light[700];
+const hoverBackgroundColor = p =>
+  p.theme.isDark ? p.theme.grey[700] : p.theme.light[800];
+const disabledBackgroundColor = p =>
+  p.theme.isDark ? p.theme.grey[700] : p.theme.light[600];
 
 const Send = styled.button`
   cursor: pointer;
-  background-color: #585858;
+  background-color: ${backgroundColor};
   border: none;
   color: #fff;
   font-weight: 500;
@@ -12,16 +18,14 @@ const Send = styled.button`
   transition: all 200ms ease-out;
 
   &:hover {
-    background-color: #484848;
+    background-color: ${hoverBackgroundColor};
   }
 
-  &:disabled {
-    color: #aaa;
+  &:disabled,
+  :hover:disabled {
+    color: ${p => (p.theme.isDark ? p.theme.light[700] : p.theme.light[800])};
     cursor: not-allowed;
-  }
-
-  &:disabled:hover {
-    background-color: #585858;
+    background-color: ${disabledBackgroundColor};
   }
 `;
 

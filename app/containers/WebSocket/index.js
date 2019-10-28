@@ -88,8 +88,8 @@ export class WebSocket extends React.Component {
   }
 
   setUser = user => {
-    setItem(user.username);
-    setItem(user.token);
+    setItem(USERNAME, user.username);
+    setItem(TOKEN, user.token);
     this.props.setCurrentUser(user);
   };
 

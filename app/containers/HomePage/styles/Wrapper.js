@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+const getBackgroundGradient = theme => {
+  const { dark, isDark, light } = theme;
+  const start = isDark ? dark[200] : light[200];
+  const end = isDark ? dark[700] : light[700];
+  return `background-image: radial-gradient(${start}, ${end});`;
+};
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -7,7 +14,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-image: radial-gradient(#282828, #121212);
+  ${props => getBackgroundGradient(props.theme)};
 
   transition: opacity 200ms ease-in-out;
 

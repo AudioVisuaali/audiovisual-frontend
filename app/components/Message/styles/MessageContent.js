@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import device from 'styles/device';
 
 const MessageContent = styled.div`
-  color: rgba(255, 255, 255, 0.9);
+  color: ${p =>
+    p.theme.isDark ? p.theme.whiteRGBA[90] : p.theme.darkRGBA[60]};
   font-size: 12px;
   font-weight: 300;
   margin-top: 2px;

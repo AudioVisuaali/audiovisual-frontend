@@ -3,8 +3,10 @@ import device from 'styles/device';
 
 const MenusWrapper = styled.div`
   display: flex;
-  border-bottom: 1px solid #080808;
-  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid
+    ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
+  background-color: ${p =>
+    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.darkRGBA[10]};
   justify-content: space-between;
   padding: 0 16px;
 

@@ -27,7 +27,8 @@ const Button = styled.button`
 
 const Active = styled.span`
   height: 2px;
-  background-color: #fff;
+  background-color: ${p =>
+    p.theme.isDark ? p.theme.light[50] : p.theme.grey[500]};
   position: absolute;
   left: 0;
   right: 0;

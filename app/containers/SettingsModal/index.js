@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import LocaleToggle from 'containers/LocaleToggle';
+import ThemeToggle from 'containers/ThemeToggle';
 import Modal from 'components/Modal';
 
 import messages from './messages';
@@ -24,6 +25,13 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
       onSave={handleSave}
       onClose={onClose}
     >
+      <Section>
+        <Label>
+          <FormattedMessage {...messages.changeLanguage} />
+        </Label>
+        <ThemeToggle />
+      </Section>
+
       <Section>
         <Label>
           <FormattedMessage {...messages.changeLanguage} />

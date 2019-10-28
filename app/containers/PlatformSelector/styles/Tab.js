@@ -2,16 +2,25 @@
  *
  */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const active = props => css`
+  background-color: ${props.theme.isDark
+    ? props.theme.darkRGBA[30]
+    : props.theme.darkRGBA[30]};
+  border: 1px solid
+    ${props.theme.isDark ? props.theme.dark[700] : props.theme.grey[600]};
+`;
 
 const Tab = styled.button`
   width: 80px;
   height: 100px;
-  background-color: ${p =>
-    p.active ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'};
-  border: 1px solid ${p => (p.active ? '#101010' : 'transparent')};
+  background-color: ${props =>
+    props.theme.isDark ? props.theme.darkRGBA[10] : props.theme.darkRGBA[10]};
+  border: 1px solid transparent;
   border-radius: 4px;
-  color: #fff;
+  color: ${props =>
+    props.theme.isDark ? props.theme.light[50] : props.theme.dark[500]};
   font-weight: 500;
   display: flex;
   flex-direction: column;
@@ -35,6 +44,8 @@ const Tab = styled.button`
     flex-shrink: 0;
     margin-bottom: 6px;
   }
+
+  ${props => props.active && active(props)}
 `;
 
 export default Tab;

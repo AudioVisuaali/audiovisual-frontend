@@ -7,7 +7,7 @@ const Empty = styled.div`
   justify-content: center;
   flex-direction: column;
   font-size: 28px;
-  color: #666;
+  color: ${p => (p.theme.isDark ? p.theme.grey[700] : p.theme.grey[600])};
 
   & svg {
     height: 100px;

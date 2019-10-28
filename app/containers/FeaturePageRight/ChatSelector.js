@@ -16,7 +16,8 @@ import messages from './messages';
 import Button from './styles/Button';
 
 const Wrapper = styled.div`
-  border-bottom: 1px solid #080808;
+  border-bottom: 1px solid
+    ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[700])};
   padding: 0 10px;
 `;
 
