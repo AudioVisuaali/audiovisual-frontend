@@ -15,7 +15,11 @@ import Wrapper from './Wrapper';
 const SupportedPlatforms = () => (
   <Wrapper>
     {platforms.map(platform => (
-      <SupportedPlatform SVG={platform.SVG} name={platform.name} />
+      <SupportedPlatform
+        key={platform.name}
+        SVG={platform.SVG}
+        name={platform.name}
+      />
     ))}
   </Wrapper>
 );

@@ -8,11 +8,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 
+import Button from 'components/Button';
 import messages, { placeholderId } from './messages';
 import TextArea from './styles/TextArea';
 import Wrapper from './styles/Wrapper';
 import Actions from './styles/Actions';
-import Send from './styles/Send';
 
 function ChatTextField({ onSend, intl }) {
   const placeholder = intl.formatMessage({ id: placeholderId });
@@ -48,13 +48,13 @@ function ChatTextField({ onSend, intl }) {
         placeholder={placeholder}
       />
       <Actions>
-        <Send
+        <Button
           type="submit"
           disabled={isSendMessageDisabled}
           onClick={handleSend}
         >
           <FormattedMessage {...messages.send} />
-        </Send>
+        </Button>
       </Actions>
     </Wrapper>
   );

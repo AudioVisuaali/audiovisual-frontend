@@ -10,15 +10,15 @@ import { FormattedMessage } from 'react-intl';
 import ReactPlayer from 'react-player';
 
 import Label from 'components/Label';
+import Button from 'components/Button';
 import BigLabel from 'components/BigLabel';
+import TextField from 'components/TextField';
 import SupportedPlatforms from 'components/SupportedPlatforms';
 
 import messages from './messages';
-import Input from './styles/Input';
 import Inputs from './styles/Inputs';
 import Section from './styles/Section';
 import Actions from './styles/Actions';
-import AddVideo from './styles/AddVideo';
 import URLContainer from './styles/URLContainer';
 import InputWrapper from './styles/InputWrapper';
 import ShowSubtitleURLAdd from './styles/ShowSubtitleURLAdd';
@@ -48,18 +48,13 @@ export function Add({ socket }) {
     setVideoLink('');
     setSubtitleLink('');
     setShowSubtitleAdd(false);
+    setIsVideoAddable(false);
   };
 
   const AddSubtitle = () => (
     <ShowSubtitleURLAdd onClick={handleShowSubtitleURL}>
       <FormattedMessage {...messages.addSubtitle} />
     </ShowSubtitleURLAdd>
-  );
-
-  const Addvideo = () => (
-    <AddVideo disabled={!isVideoAddable} onClick={addVideoHandler}>
-      <FormattedMessage {...messages.addVideoToQueueButton} />
-    </AddVideo>
   );
 
   return (
@@ -75,7 +70,7 @@ export function Add({ socket }) {
               <Label>
                 <FormattedMessage {...messages.videoInputFieldLabel} />
               </Label>
-              <Input value={videoLink} onChange={handleInputChange} />
+              <TextField value={videoLink} onChange={handleInputChange} />
               {!showSubtitleAdd && <AddSubtitle />}
             </InputWrapper>
 
@@ -84,13 +79,18 @@ export function Add({ socket }) {
                 <Label>
                   <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
                 </Label>
-                <Input value={subtitleLink} onChange={handleOnTranslation} />
+                <TextField
+                  value={subtitleLink}
+                  onChange={handleOnTranslation}
+                />
               </InputWrapper>
             )}
           </Inputs>
 
           <Actions>
-            <Addvideo />
+            <Button disabled={!isVideoAddable} onClick={addVideoHandler}>
+              <FormattedMessage {...messages.addVideoToQueueButton} />
+            </Button>
           </Actions>
         </URLContainer>
       </Section>

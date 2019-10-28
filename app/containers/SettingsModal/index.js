@@ -4,10 +4,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 
 import LocaleToggle from 'containers/LocaleToggle';
 import ThemeToggle from 'containers/ThemeToggle';
+import TextField from 'components/TextField';
 import Modal from 'components/Modal';
 
 import messages from './messages';
-import Input from './Input';
 import Label from './Label';
 import Section from './Section';
 
@@ -43,7 +43,7 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
         <Label>
           <FormattedMessage {...messages.changeUsername} />
         </Label>
-        <Input value={name} onChange={handleInputField} />
+        <TextField value={name} onChange={handleInputField} />
       </Section>
     </Modal>
   );

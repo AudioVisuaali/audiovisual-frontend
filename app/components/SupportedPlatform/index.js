@@ -16,7 +16,7 @@ const SupportedPlatform = ({ SVG, name }) => (
 );
 
 SupportedPlatform.propTypes = {
-  SVG: PropTypes.node,
+  SVG: PropTypes.func,
   name: PropTypes.string,
 };
 
