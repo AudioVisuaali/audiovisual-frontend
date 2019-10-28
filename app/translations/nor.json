@@ -2,6 +2,8 @@
   "app.components.ChatTextField.send": "Sende",
   "app.components.ChatTextField.textField.placeholder": "Send en melding",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Spiller for tiden",
+  "app.components.ThemeSwitch.dark": "Mørk",
+  "app.components.ThemeSwitch.light": "Lys",
   "app.containers.Chat.addedText": "lagt till",
   "app.containers.Chat.deletedText": "slettet",
   "app.containers.Chat.joinedText": "ble med",

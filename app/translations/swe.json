@@ -2,6 +2,8 @@
   "app.components.ChatTextField.send": "Skicka",
   "app.components.ChatTextField.textField.placeholder": "Skicka ett meddelande",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Spelar för närvarande",
+  "app.components.ThemeSwitch.dark": "Mörk",
+  "app.components.ThemeSwitch.light": "Ljus",
   "app.containers.Chat.addedText": "lagt",
   "app.containers.Chat.deletedText": "raderad",
   "app.containers.Chat.joinedText": "gick med",

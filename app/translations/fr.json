@@ -2,6 +2,8 @@
   "app.components.ChatTextField.send": "Envoyer",
   "app.components.ChatTextField.textField.placeholder": "Envoyer un message",
   "app.components.CurrentlyPlaying.curentlyPlaying": "En train de jouer",
+  "app.components.ThemeSwitch.dark": "Sombre",
+  "app.components.ThemeSwitch.light": "Lumière",
   "app.containers.Chat.addedText": "ajoutée",
   "app.containers.Chat.deletedText": "supprimée",
   "app.containers.Chat.joinedText": "jointe",

@@ -2,6 +2,8 @@
   "app.components.ChatTextField.send": "Lähetä",
   "app.components.ChatTextField.textField.placeholder": "Lähetä viesti",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Toistossa",
+  "app.components.ThemeSwitch.dark": "Tumma",
+  "app.components.ThemeSwitch.light": "Vaalea",
   "app.containers.Chat.addedText": "lisäsi",
   "app.containers.Chat.deletedText": "poisti",
   "app.containers.Chat.joinedText": "liittyi",

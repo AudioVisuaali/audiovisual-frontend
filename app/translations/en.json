@@ -2,6 +2,8 @@
   "app.components.ChatTextField.send": "Send",
   "app.components.ChatTextField.textField.placeholder": "Send a message",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Currently Playing",
+  "app.components.ThemeSwitch.dark": "Dark",
+  "app.components.ThemeSwitch.light": "Light",
   "app.containers.Chat.addedText": "added",
   "app.containers.Chat.deletedText": "deleted",
   "app.containers.Chat.joinedText": "Joined",
