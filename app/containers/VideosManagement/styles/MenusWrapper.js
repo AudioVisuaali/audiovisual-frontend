@@ -6,7 +6,7 @@ const MenusWrapper = styled.div`
   border-bottom: 1px solid
     ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
   background-color: ${p =>
-    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.darkRGBA[10]};
+    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.light[50]};
   justify-content: space-between;
   padding: 0 16px;
 

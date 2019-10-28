@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const TextArea = styled.textarea`
   width: 100%;
   background-color: ${p =>
-    p.theme.isDark ? p.theme.darkRGBA[10] : p.theme.darkRGBA[10]};
+    p.theme.isDark ? p.theme.darkRGBA[10] : 'transparent'};
   border: 1px solid
     ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
   overflow-y: hidden;

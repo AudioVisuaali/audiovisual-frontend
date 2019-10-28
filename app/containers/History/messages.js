@@ -17,4 +17,8 @@ export default defineMessages({
     id: `${scope}.noVideosText`,
     defaultMessage: 'Video history is empty',
   },
+  history: {
+    id: `${scope}.history`,
+    defaultMessage: 'History',
+  },
 });

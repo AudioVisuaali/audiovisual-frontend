@@ -34,6 +34,7 @@
   "app.containers.Queue.queueEmpty": "Videokön är tom",
   "app.containers.Queue.queueLabel": "Kö",
   "app.containers.SettingsModal.changeLanguage": "Ändra språk",
+  "app.containers.SettingsModal.changeTheme": "Ändra tema",
   "app.containers.SettingsModal.changeUsername": "Ändra användarnamn",
   "app.containers.SettingsModal.title": "Snställningar",
   "app.containers.VideoAdder.addVideoToQueueButton": "Lägg till i kö",

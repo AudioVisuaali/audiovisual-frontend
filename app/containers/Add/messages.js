@@ -21,8 +21,16 @@ export default defineMessages({
     id: `${scope}.translationFieldURL`,
     defaultMessage: 'Translation URL',
   },
-  previewLabel: {
-    id: `${scope}.previewLabel`,
-    defaultMessage: 'Preview',
+  supportedPlatforms: {
+    id: `${scope}.supportedPlatforms`,
+    defaultMessage: 'Supported platforms',
+  },
+  title: {
+    id: `${scope}.title`,
+    defaultMessage: 'Add',
+  },
+  addURL: {
+    id: `${scope}.addURL`,
+    defaultMessage: 'Add subtitles',
   },
 });

@@ -16,11 +16,11 @@ import {
   makeSelectViewers,
 } from 'containers/WebSocket/selectors';
 import QueueItem from 'components/QueueItem';
+import BigLabel from 'components/BigLabel';
 import DollyEmpty from 'svgs/DollyEmpty';
 
 import messages from './messages';
 import Empty from './styles/Empty';
-import Wrapper from './styles/Wrapper';
 import ShowMore from './styles/ShowMore';
 
 const SHOW_MORE_MAX_VALUE = 10;
@@ -50,6 +50,9 @@ export function History({ socket, history }) {
         : amountOfVideosNotShown;
     return (
       <>
+        <BigLabel>
+          <FormattedMessage {...messages.history} />
+        </BigLabel>
         {showingVideos.map(video => (
           <QueueItem
             key={video.unique}
@@ -74,7 +77,7 @@ export function History({ socket, history }) {
     </Empty>
   );
 
-  return <Wrapper>{history.length ? historyItems() : emptyHistory()}</Wrapper>;
+  return history.length ? historyItems() : emptyHistory();
 }
 
 History.propTypes = {

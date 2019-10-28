@@ -27,7 +27,7 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
     >
       <Section>
         <Label>
-          <FormattedMessage {...messages.changeLanguage} />
+          <FormattedMessage {...messages.changeTheme} />
         </Label>
         <ThemeToggle />
       </Section>

@@ -19,7 +19,7 @@ import {
   makeSelectPlayOrder,
   makeSelectCurrentlyPlaying,
 } from 'containers/WebSocket/selectors';
-import VideoAdder from 'containers/VideoAdder';
+import Add from 'containers/Add';
 import History from 'containers/History';
 import Queue from 'containers/Queue';
 import Menu from 'components/Menu';
@@ -57,7 +57,7 @@ export function VideosManagement({ playing, playOrder, socket }) {
       case 0:
         return <Queue socket={socket} />;
       case 1:
-        return <VideoAdder socket={socket} />;
+        return <Add socket={socket} />;
 
       default:
         return <History socket={socket} />;
@@ -100,7 +100,12 @@ export function VideosManagement({ playing, playOrder, socket }) {
           </Menu>
         </MenuWrapper>
       </MenusWrapper>
-      <Contents>{getTab(activeTab)}</Contents>
+      <Contents
+        // Use key so component remounts and animation kicks in
+        key={activeTab}
+      >
+        {getTab(activeTab)}
+      </Contents>
     </Wrapper>
   );
 }
@@ -111,20 +116,11 @@ VideosManagement.propTypes = {
   playing: PropTypes.object,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
 const mapStateToProps = createStructuredSelector({
   playOrder: makeSelectPlayOrder(),
   playing: makeSelectCurrentlyPlaying(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 export default compose(withConnect)(VideosManagement);

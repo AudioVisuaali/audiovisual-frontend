@@ -12,8 +12,6 @@ const Input = styled.input`
   padding: 8px 14px;
   border-radius: 4px;
   width: 100%;
-  max-width: 420px;
-  margin: 0 10px 20px 0;
 `;
 
 export default Input;

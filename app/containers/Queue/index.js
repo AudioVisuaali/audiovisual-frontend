@@ -24,12 +24,11 @@ import {
   WS_ACTION_REORDER,
 } from 'containers/WebSocket/constants';
 import QueueItem from 'components/QueueItem';
+import BigLabel from 'components/BigLabel';
 
 import messages from './messages';
-import Wrapper from './styles/Wrapper';
 import EmptyQueue from './EmptyQueue';
 import NowPlaying from './NowPlaying';
-import CurrentlyPlaying from './styles/CurrentlyPlaying';
 import SortableContainerUl from './styles/SortableContainerUl';
 
 export function Queue({
@@ -98,11 +97,11 @@ export function Queue({
     );
   });
 
-  const queueItems = () => (
+  const QueueItems = () => (
     <>
-      <CurrentlyPlaying>
+      <BigLabel>
         <FormattedMessage {...messages.queueLabel} />
-      </CurrentlyPlaying>
+      </BigLabel>
       <SortableList
         transitionDuration={150}
         lockAxis="y"
@@ -112,12 +111,12 @@ export function Queue({
   );
 
   return (
-    <Wrapper>
+    <>
       {currentlyPlaying && (
         <NowPlaying currentlyPlaying={currentlyPlaying} onSkip={handleSkip} />
       )}
-      {queue.length ? queueItems() : <EmptyQueue />}
-    </Wrapper>
+      {queue.length ? <QueueItems /> : <EmptyQueue />}
+    </>
   );
 }
 

@@ -21,4 +21,8 @@ export default defineMessages({
     id: `${scope}.changeUsername`,
     defaultMessage: 'Change username',
   },
+  changeTheme: {
+    id: `${scope}.changeTheme`,
+    defaultMessage: 'Change theme',
+  },
 });

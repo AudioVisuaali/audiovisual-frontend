@@ -34,6 +34,7 @@
   "app.containers.Queue.queueEmpty": "La file d'attente vidéo est vide",
   "app.containers.Queue.queueLabel": "Queue",
   "app.containers.SettingsModal.changeLanguage": "Changer de langue",
+  "app.containers.SettingsModal.changeTheme": "Change le thème",
   "app.containers.SettingsModal.changeUsername": "Changer le nom d'utilisateur",
   "app.containers.SettingsModal.title": "Paramètres",
   "app.containers.VideoAdder.addVideoToQueueButton": "Ajouter à la liste",

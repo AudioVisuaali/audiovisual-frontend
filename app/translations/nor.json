@@ -34,6 +34,7 @@
   "app.containers.Queue.queueEmpty": "Køen er tom",
   "app.containers.Queue.queueLabel": "Kø",
   "app.containers.SettingsModal.changeLanguage": "Skifte språk",
+  "app.containers.SettingsModal.changeTheme": "Endre tema",
   "app.containers.SettingsModal.changeUsername": "Endre brukernavn",
   "app.containers.SettingsModal.title": "Innstillinger",
   "app.containers.VideoAdder.addVideoToQueueButton": "Legg til i kø",

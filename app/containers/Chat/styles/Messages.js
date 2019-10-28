@@ -3,9 +3,9 @@ import device from 'styles/device';
 import fadeIn from 'styles/animations/fadeIn';
 
 const Messages = styled.div`
-  padding-bottom: 5px;
   min-height: 100%;
   display: flex;
+  padding: 0 6px 6px;
   flex-direction: column;
   justify-content: flex-end;
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const hoverBackground = p =>
   p.theme.isDark ? p.theme.darkRGBA[40] : p.theme.grey[800];
 const svgColor = p =>
-  p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.whiteRGBA[80];
+  p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.light[50];
 
 const RepeatButton = styled.button`
   flex-shrink: 0;
@@ -31,10 +31,6 @@ const RepeatButton = styled.button`
     height: 16px;
 
     transition: all 200ms;
-  }
-
-  &:hover svg {
-    color: rgba(255, 255, 255, 0.8);
   }
 `;
 

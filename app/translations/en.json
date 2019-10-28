@@ -34,6 +34,7 @@
   "app.containers.Queue.queueEmpty": "Video queue is empty",
   "app.containers.Queue.queueLabel": "Queue",
   "app.containers.SettingsModal.changeLanguage": "Change language",
+  "app.containers.SettingsModal.changeTheme": "Change theme",
   "app.containers.SettingsModal.changeUsername": "Change username",
   "app.containers.SettingsModal.title": "Settings",
   "app.containers.VideoAdder.addVideoToQueueButton": "Add to queue",

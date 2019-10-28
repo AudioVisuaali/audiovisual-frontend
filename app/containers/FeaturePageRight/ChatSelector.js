@@ -18,6 +18,8 @@ import Button from './styles/Button';
 const Wrapper = styled.div`
   border-bottom: 1px solid
     ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[700])};
+  background-color: ${p =>
+    p.theme.isDark ? 'transparent' : p.theme.light[400]};
   padding: 0 10px;
 `;
 

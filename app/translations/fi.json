@@ -34,6 +34,7 @@
   "app.containers.Queue.queueEmpty": "Jono on tyhjä",
   "app.containers.Queue.queueLabel": "Jono",
   "app.containers.SettingsModal.changeLanguage": "Vaihda kieli",
+  "app.containers.SettingsModal.changeTheme": "Vaihda teemaa",
   "app.containers.SettingsModal.changeUsername": "Vaihda käyttäjänimi",
   "app.containers.SettingsModal.title": "Asetukset",
   "app.containers.VideoAdder.addVideoToQueueButton": "Lisää video jonoon",
