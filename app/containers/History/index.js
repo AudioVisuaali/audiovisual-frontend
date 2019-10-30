@@ -27,8 +27,7 @@ const SHOW_MORE_MAX_VALUE = 10;
 
 export function History({ socket, history }) {
   const [showMax, setShowMax] = useState(10);
-  const handleRepeat = video =>
-    socket('add-video', { url: video.url, subtitle: video.subtitle });
+  const handleRepeat = video => socket('add-video', video.repeat);
 
   const handleAddShowMax = () => {
     const newShowTotal = showMax + SHOW_MORE_MAX_VALUE;

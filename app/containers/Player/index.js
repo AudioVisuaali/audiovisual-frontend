@@ -107,11 +107,17 @@ class Player extends React.Component {
     if (nextURL !== CurrentURL) {
       // TODO
       // this.playerRef.getInternalPlayer().loadVideoById('UOxkGD8qRB4');
-      this.setState({ allowNext: false, url: nextURL, isLive });
+      this.setState({
+        played: 0,
+        duration: 0,
+        allowNext: false,
+        url: nextURL,
+        isLive,
+      });
       return;
     }
 
-    this.setState({ allowNext: false, url: null });
+    this.setState({ played: 0, duration: 0, allowNext: false, url: null });
     setTimeout(
       () =>
         this.setState({

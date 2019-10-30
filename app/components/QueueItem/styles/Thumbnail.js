@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import device from 'styles/device';
 
 const Thumbnail = styled.div`
+  position: relative;
   margin-right: 20px;
   flex-shrink: 0;
   border-radius: 4px;

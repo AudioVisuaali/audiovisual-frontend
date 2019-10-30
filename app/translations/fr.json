@@ -20,7 +20,7 @@
   "app.containers.History.chatRooms": "Salles de discussions",
   "app.containers.History.codedWithLove": "Ce site est {coded} avec 💖 dans la nuit de la nuit",
   "app.containers.History.createRoomButton": "Créer une chambre",
-  "app.containers.History.description": "Regardez des vidéos ensemble. Nulle part. N'importe quand.",
+  "app.containers.History.description": "Regardez des vidéos ensemble. Nulle part. N'importe où.",
   "app.containers.History.displayNameLabel": "Afficher un nom",
   "app.containers.History.noVideosText": "Aucune vidéo dans l'histoire",
   "app.containers.History.room": "Pièce",
@@ -48,6 +48,6 @@
   "app.containers.VideosManagement.videoMenu.add": "Ajouter",
   "app.containers.VideosManagement.videoMenu.history": "Histoire",
   "app.containers.VideosManagement.videoMenu.queue": "Queue",
-  "app.containers.modal.close": "Proche",
-  "app.containers.modal.save": "Sauver"
+  "app.containers.modal.close": "Annuler",
+  "app.containers.modal.save": "Sauvegarder"
 }

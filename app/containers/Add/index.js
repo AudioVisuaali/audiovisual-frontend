@@ -7,13 +7,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import ReactPlayer from 'react-player';
 
 import Label from 'components/Label';
 import Button from 'components/Button';
 import BigLabel from 'components/BigLabel';
 import TextField from 'components/TextField';
 import SupportedPlatforms from 'components/SupportedPlatforms';
+import { canPlayVideo } from 'utils/video';
 
 import messages from './messages';
 import Inputs from './styles/Inputs';
@@ -34,7 +34,7 @@ export function Add({ socket }) {
   const handleInputChange = e => {
     const { value } = e.target;
     setVideoLink(value);
-    setIsVideoAddable(ReactPlayer.canPlay(value));
+    setIsVideoAddable(canPlayVideo(value));
   };
 
   const addVideoHandler = () => {

@@ -12,6 +12,8 @@ import createConnection from 'socket.io-client';
 import { compose } from 'redux';
 
 import { USERNAME, TOKEN, getItem, setItem } from 'utils/localStorage';
+import injectReducer from 'utils/injectReducer';
+import { generateName } from 'utils/name';
 
 import {
   addVideo,
@@ -46,8 +48,6 @@ import {
   WS_ACTION_REORDER,
 } from './constants';
 import reducer from './reducer';
-import injectReducer from '../../utils/injectReducer';
-import { generateName } from '../../utils/name';
 
 export const key = 'webSocket';
 
@@ -59,7 +59,7 @@ export class WebSocket extends React.Component {
 
     const auth = { query: { roomUnique: roomcode, username, token } };
     this.props.onConnection(this.emit);
-    const url = `${window.location.protocol}//${window.location.hostname}:3001`;
+    const url = `${window.location.protocol}//${window.location.hostname}`;
     this.socket = createConnection.connect(url, auth);
 
     this.socket.on('connect', () => {

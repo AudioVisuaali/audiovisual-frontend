@@ -33,17 +33,19 @@ const MixCloudWrapped = () => (
   </Colored>
 );
 
-export const platforms = [
-  { SVG: Youtube, name: 'Youtube' },
-  { SVG: Twitch, name: 'Twitch' },
-  { SVG: Facebook, name: 'Facebook' },
-  { SVG: Vimeo, name: 'Vimeo' },
-  { SVG: SoundCloud, name: 'SoundCloud' },
-  { SVG: Streamable, name: 'Streamable' },
-  { SVG: Wistia, name: 'Wistia' },
-  { SVG: MixCloudWrapped, name: 'Mixcloud' },
-  { SVG: Dailymotion, name: 'Dailymotion' },
-  { SVG: Mp4Wrapped, name: 'File' },
-];
+const platforms = {
+  mixcloud: MixCloudWrapped,
+  twitch: Twitch,
+  'twitch-live': Twitch,
+  'twitch-clip': Twitch,
+  vimeo: Vimeo,
+  youtube: Youtube,
+  soundcloud: SoundCloud,
+  streamable: Streamable,
+  file: Mp4Wrapped,
+  facebook: Facebook,
+  dailymotion: Dailymotion,
+  wistia: Wistia,
+};
 
 export default platforms;

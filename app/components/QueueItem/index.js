@@ -14,6 +14,7 @@ import TrashSVG from 'svgs/Trash';
 import ArrowsSVG from 'svgs/Arrows';
 import ForwardSVG from 'svgs/Forward';
 import A from 'components/A';
+import PlatformIcon from 'components/PlatformIcon';
 
 // import messages from './messages';
 import Img from './styles/Img';
@@ -28,6 +29,7 @@ import Thumbnail from './styles/Thumbnail';
 import RepeatButton from './styles/RepeatButton';
 import InfoAndActions from './styles/InfoAndActions';
 import PlacementContainer from './styles/PlacementContainer';
+import PlatformWrapper from './styles/PlatformWrapper';
 
 const QueueItem = ({
   onRepeat,
@@ -65,6 +67,9 @@ const QueueItem = ({
         </Channel>
       </div>
       <InfoAndActions>
+        <PlatformWrapper>
+          <PlatformIcon type={video.type} />
+        </PlatformWrapper>
         {onRepeat && (
           <RepeatButton onClick={() => onRepeat(video)}>
             <RepeatSVG />
@@ -110,6 +115,7 @@ QueueItem.propTypes = {
     thumbnail: PropTypes.string,
     title: PropTypes.string,
     channel: PropTypes.string,
+    type: PropTypes.string,
     links: PropTypes.shape({
       channel: PropTypes.string,
       video: PropTypes.string,
