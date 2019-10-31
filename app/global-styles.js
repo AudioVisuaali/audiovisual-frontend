@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
 
   #app {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
   }
 
   button {
@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     outline-width: 0;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and ${device.laptop} {
     html,
     body {
       height: auto;
@@ -50,7 +50,6 @@ const GlobalStyle = createGlobalStyle`
     
     & #app {
       height: auto;
-      width: 100vw;
     }
   }
 `;

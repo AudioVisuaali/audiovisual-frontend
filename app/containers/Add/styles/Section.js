@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Section = styled.div`
+const Section = styled.form`
   margin: 10px 0;
 `;
 

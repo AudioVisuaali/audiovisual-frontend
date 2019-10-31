@@ -12,7 +12,7 @@ export default styled.div`
   border-left: 1px solid
     ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
   background-color: ${p =>
-    p.theme.isDark ? p.theme.dark[300] : p.theme.grey[100]};
+    p.theme.isDark ? p.theme.dark[300] : p.theme.light[100]};
   display: flex;
   flex-direction: column;
 

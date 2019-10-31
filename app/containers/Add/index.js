@@ -63,7 +63,7 @@ export function Add({ socket }) {
         <FormattedMessage {...messages.title} />
       </BigLabel>
 
-      <Section>
+      <Section onSubmit={addVideoHandler}>
         <URLContainer>
           <Inputs>
             <InputWrapper>
@@ -88,7 +88,11 @@ export function Add({ socket }) {
           </Inputs>
 
           <Actions>
-            <Button disabled={!isVideoAddable} onClick={addVideoHandler}>
+            <Button
+              type="submit"
+              disabled={!isVideoAddable}
+              onClick={addVideoHandler}
+            >
               <FormattedMessage {...messages.addVideoToQueueButton} />
             </Button>
           </Actions>

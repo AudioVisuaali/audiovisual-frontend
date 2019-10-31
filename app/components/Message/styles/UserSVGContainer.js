@@ -9,7 +9,7 @@ const UserSVGContainer = styled.div`
   border-radius: 100%;
   overflow: hidden;
   background-color: ${p =>
-    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.grey[600]};
+    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.darkRGBA[60]};
 
   width: 30px;
   height: 30px;

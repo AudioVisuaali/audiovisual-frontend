@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const ShowSubtitleURLAdd = styled.button`
+const ShowSubtitleURLAdd = styled.div`
   color: ${props =>
-    props.theme.isDark ? props.theme.light[900] : props.theme.dark[300]};
+    props.theme.isDark ? props.theme.light[900] : props.theme.grey[500]};
   background-color: transparent;
   border: none;
   padding: 0;
   font-size: 10px;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

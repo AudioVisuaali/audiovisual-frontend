@@ -135,15 +135,6 @@ const mapStateToProps = createStructuredSelector({
   lastReorder: makeSelectLastReorder(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 export default compose(withConnect)(Queue);

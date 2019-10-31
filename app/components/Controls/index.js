@@ -27,7 +27,6 @@ import Stats from './Stats';
 
 const Controls = ({
   playing,
-  showDisplay,
   onPlay,
   volume,
   onVolume,
@@ -62,7 +61,7 @@ const Controls = ({
   const playedOrSeek = seeking ? seekingAt : played;
 
   return (
-    <Wrapper showControls={showDisplay}>
+    <Wrapper>
       <ControlWrapper>
         <ControlLeft>
           <PlayButton onClick={handlePlayPause}>
@@ -86,8 +85,11 @@ const Controls = ({
             min="0"
             max={duration}
             value={playedOrSeek}
+            onTouchStart={handleOnMouseDown} // touch
             onMouseDown={handleOnMouseDown}
+            onTouchEnd={handleOnMouseUp} // touch
             onMouseUp={handleOnMouseUp}
+            onInput={handleSeek} // touch
             onChange={handleSeek}
             step="any"
           />
@@ -98,7 +100,6 @@ const Controls = ({
 };
 
 Controls.propTypes = {
-  showDisplay: PropTypes.bool,
   isLive: PropTypes.bool,
   isFullscreen: PropTypes.bool,
   onToggleFullscreen: PropTypes.func,

@@ -40,7 +40,7 @@ class FeaturePage extends React.Component {
   }
 
   handleResize = () => {
-    const isMobile = window.innerWidth <= 760;
+    const isMobile = window.innerWidth <= 1024;
     if (isMobile === this.state.isMobile) return;
 
     this.setState({ isMobile });

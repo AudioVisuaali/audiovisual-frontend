@@ -111,6 +111,7 @@ export function VideosManagement({ playing, playOrder, socket }) {
 }
 
 VideosManagement.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
   socket: PropTypes.func,
   playOrder: PropTypes.string.isRequired,
   playing: PropTypes.object,

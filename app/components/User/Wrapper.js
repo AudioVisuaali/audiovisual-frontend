@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import fadeAndSlideInFromLeft from 'styles/animations/fadeAndSlideInFromLeft';
 
 const backgroundColor = p =>
-  p.theme.isDark ? p.theme.darkRGBA[30] : p.theme.grey[700];
+  p.theme.isDark ? p.theme.darkRGBA[30] : p.theme.darkRGBA[50];
 const color = p =>
-  p.theme.isDark ? p.theme.whiteRGBA[80] : p.theme.whiteRGBA[90];
+  p.theme.isDark ? p.theme.whiteRGBA[80] : p.theme.whiteRGBA[100];
 const svgColor = p =>
-  p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.whiteRGBA[70];
+  p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.whiteRGBA[90];
 
 const Wrapper = styled.div`
   background-color: ${backgroundColor};

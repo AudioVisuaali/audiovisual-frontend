@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import device from 'styles/device';
 
 const Username = styled.div`
-  color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.grey[900])};
+  color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.dark[700])};
   font-size: 12px;
   font-weight: 500;
 

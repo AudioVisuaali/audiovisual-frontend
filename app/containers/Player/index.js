@@ -27,6 +27,7 @@ import Controls from 'components/Controls';
 import { VOLUME, setItem, getItem } from 'utils/localStorage';
 import { openFullscreen, closeFullscreen } from 'utils/fullscreen';
 import { getSeeked } from 'utils/time';
+import VideoHeader from './VideoHeader';
 
 import Wrapper from './styles/Wrapper';
 import ControlWapper from './styles/ControlWapper';
@@ -238,6 +239,7 @@ class Player extends React.Component {
   };
 
   render() {
+    const { currentVideo } = this.props;
     const {
       displayControls,
       duration,
@@ -254,6 +256,7 @@ class Player extends React.Component {
         ref={this.handleWrapperRef}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        onTouchStart={this.handleMouseEnter}
       >
         <ReactPlayer
           onReady={this.handleOnReady}
@@ -270,10 +273,10 @@ class Player extends React.Component {
           url={url}
           volume={volume}
         />
-        <ControlWapper>
-          {url && (
+        {url && (
+          <ControlWapper show={showControls}>
+            <VideoHeader video={currentVideo} />
             <Controls
-              showDisplay={showControls}
               onToggleFullscreen={this.toggleFullscreen}
               onVolume={this.handleVolume}
               onSeek={this.handleSeek}
@@ -285,8 +288,8 @@ class Player extends React.Component {
               volume={volume}
               isLive={isLive}
             />
-          )}
-        </ControlWapper>
+          </ControlWapper>
+        )}
       </Wrapper>
     );
   }

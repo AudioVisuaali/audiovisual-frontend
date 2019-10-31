@@ -7,7 +7,7 @@ import ToolsSVG from 'svgs/Tools';
 const Wrapper = styled.div`
   position: fixed;
   z-index: 10002;
-  bottom: 220px;
+  bottom: 160px;
   right: 20px;
   background-color: #353535;
   border: 1px solid #080808;
