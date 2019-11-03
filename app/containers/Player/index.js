@@ -31,6 +31,7 @@ import VideoHeader from './VideoHeader';
 
 import Wrapper from './styles/Wrapper';
 import ControlWapper from './styles/ControlWapper';
+import GreyBG from './styles/GreyBG';
 import nextVideoSound from './audio';
 import playerConfig from './playerConfig';
 
@@ -74,7 +75,6 @@ class Player extends React.Component {
     );
     document.addEventListener('mozfullscreenchange', this.handleExitFullScreen);
     document.addEventListener('MSFullscreenChange', this.handleExitFullScreen);
-    setTimeout(this.setSubtitle, 1000);
   }
 
   // eslint-disable-next-line camelcase
@@ -119,14 +119,12 @@ class Player extends React.Component {
     }
 
     this.setState({ played: 0, duration: 0, allowNext: false, url: null });
-    setTimeout(
-      () =>
-        this.setState({
-          isLive,
-          url: nextProps.currentVideo ? nextProps.currentVideo.url : null,
-        }),
-      0,
-    );
+    setTimeout(() => {
+      this.setState({
+        isLive,
+        url: nextProps.currentVideo ? nextProps.currentVideo.url : null,
+      });
+    }, 0);
   }
 
   toggleFullscreen = () => {
@@ -188,6 +186,7 @@ class Player extends React.Component {
     }
 
     this.setState({ initialSeeked: true, duration, allowNext: true });
+    this.setSubtitle();
   };
 
   handlePlay = state => this.props.socket(WS_ACTION_IS_PLAYING, state);
@@ -228,8 +227,6 @@ class Player extends React.Component {
     });
   };
 
-  handleOnReady = () => this.setSubtitle();
-
   handleWrapperRef = ref => {
     this.wrapperRef = ref;
   };
@@ -250,7 +247,13 @@ class Player extends React.Component {
       volume,
       isLive,
     } = this.state;
+
+    if (!url) {
+      return <GreyBG />;
+    }
+
     const showControls = !playing || displayControls;
+
     return (
       <Wrapper
         ref={this.handleWrapperRef}
