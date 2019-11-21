@@ -61,7 +61,7 @@ export class WebSocket extends React.Component {
     const token = getItem(TOKEN);
 
     const auth = { query: { roomUnique: roomcode, username, token } };
-    const url = `${window.location.protocol}//${window.location.hostname}:3001`;
+    const url = `${window.location.protocol}//${window.location.hostname}`;
     this.socket = createConnection.connect(url, auth);
 
     this.socket.on('connect', () => {
