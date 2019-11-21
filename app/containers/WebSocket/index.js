@@ -13,6 +13,7 @@ import { compose } from 'redux';
 
 import { USERNAME, TOKEN, getItem, setItem } from 'utils/localStorage';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 import { generateName } from 'utils/name';
 
 import {
@@ -30,6 +31,7 @@ import {
   setCurrentUser,
   setUsernameChange,
   setReorder,
+  setEmit,
 } from './actions';
 import {
   WS_ACTION_USER,
@@ -43,11 +45,12 @@ import {
   WS_ACTION_NEXT_VIDEO,
   WS_ACTION_USER_LEAVE,
   WS_ACTION_USER_JOIN,
-  WS_ACTION_USER_MESSAGE,
+  WS_ACTION_MESSAGE,
   WS_ACTION_USER_USERNAME_CHANGE,
   WS_ACTION_REORDER,
 } from './constants';
 import reducer from './reducer';
+import saga from './saga';
 
 export const key = 'webSocket';
 
@@ -58,13 +61,13 @@ export class WebSocket extends React.Component {
     const token = getItem(TOKEN);
 
     const auth = { query: { roomUnique: roomcode, username, token } };
-    this.props.onConnection(this.emit);
-    const url = `${window.location.protocol}//${window.location.hostname}`;
+    const url = `${window.location.protocol}//${window.location.hostname}:3001`;
     this.socket = createConnection.connect(url, auth);
 
     this.socket.on('connect', () => {
-      this.socket.on(WS_ACTION_USER, this.setUser);
+      this.props.setEmit(this.emit);
       this.socket.on(WS_ACTION_ROOM, this.props.setRoom);
+      this.socket.on(WS_ACTION_USER, this.setUser);
       this.socket.on(WS_ACTION_SEEK, this.props.setSeek);
       this.socket.on(WS_ACTION_SKIP, this.props.setSkip);
       this.socket.on(WS_ACTION_REMOVE_VIDEO, this.props.setRemoveVideo);
@@ -74,7 +77,7 @@ export class WebSocket extends React.Component {
       this.socket.on(WS_ACTION_NEXT_VIDEO, this.props.setNextVideo);
       this.socket.on(WS_ACTION_USER_LEAVE, this.props.setUserLeave);
       this.socket.on(WS_ACTION_USER_JOIN, this.props.setUserJoin);
-      this.socket.on(WS_ACTION_USER_MESSAGE, this.props.setUserMessage);
+      this.socket.on(WS_ACTION_MESSAGE, this.props.setUserMessage);
       this.socket.on(
         WS_ACTION_USER_USERNAME_CHANGE,
         this.props.setUsernameChange,
@@ -84,6 +87,7 @@ export class WebSocket extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.setEmit();
     this.socket.disconnect();
   }
 
@@ -103,7 +107,6 @@ export class WebSocket extends React.Component {
 WebSocket.propTypes = {
   addVideo: PropTypes.func.isRequired,
   setRoom: PropTypes.func.isRequired,
-  onConnection: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       roomcode: PropTypes.string,
@@ -121,6 +124,7 @@ WebSocket.propTypes = {
   setCurrentUser: PropTypes.func.isRequired,
   setUsernameChange: PropTypes.func.isRequired,
   setReorder: PropTypes.func.isRequired,
+  setEmit: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -138,6 +142,7 @@ const mapDispatchToProps = dispatch => ({
   setPlayOrder: evt => dispatch(setPlayOrder(evt)),
   setUsernameChange: evt => dispatch(setUsernameChange(evt)),
   setReorder: evt => dispatch(setReorder(evt)),
+  setEmit: evt => dispatch(setEmit(evt)),
 });
 
 const withConnect = connect(
@@ -146,5 +151,5 @@ const withConnect = connect(
 );
 
 export default injectReducer({ key, reducer })(
-  compose(withConnect)(withRouter(WebSocket)),
+  injectSaga({ key, saga })(compose(withConnect)(withRouter(WebSocket))),
 );

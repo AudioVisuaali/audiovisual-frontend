@@ -19,10 +19,10 @@ import {
   makeSelectLastReorder,
 } from 'containers/WebSocket/selectors';
 import {
-  WS_ACTION_SKIP,
-  WS_ACTION_REMOVE_VIDEO,
-  WS_ACTION_REORDER,
-} from 'containers/WebSocket/constants';
+  emitRoomSkip,
+  emitRoomDelVideo,
+  emitRoomReorder,
+} from 'containers/WebSocket/actions';
 import QueueItem from 'components/QueueItem';
 import BigLabel from 'components/BigLabel';
 
@@ -31,13 +31,15 @@ import EmptyQueue from './EmptyQueue';
 import NowPlaying from './NowPlaying';
 import SortableContainerUl from './styles/SortableContainerUl';
 
-export function Queue({
+const Queue = ({
   lastReorder,
-  socket,
+  skip,
+  deleteVideo,
+  reorder,
   playOrder,
   currentlyPlaying,
   queue,
-}) {
+}) => {
   const [tempQue, setTempQue] = useState([]);
   const [useTemp, setUseTemp] = useState(false);
   useEffect(() => {
@@ -49,18 +51,18 @@ export function Queue({
   const handleSkip = video => {
     if (!currentlyPlaying) return;
 
-    socket(WS_ACTION_SKIP, video.unique);
+    skip(video.unique);
   };
 
   const handleDelete = video => {
-    socket(WS_ACTION_REMOVE_VIDEO, video.unique);
+    deleteVideo(video.unique);
   };
 
   const handleSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex === newIndex) return;
     const { unique } = queue[oldIndex];
-    const reorder = { oldIndex, unique, newIndex };
-    socket(WS_ACTION_REORDER, reorder);
+    const newOrder = { oldIndex, unique, newIndex };
+    reorder(newOrder);
 
     const tempQueue = [...queue];
     const video = tempQueue.splice(oldIndex, 1);
@@ -118,14 +120,16 @@ export function Queue({
       {queue.length ? <QueueItems /> : <EmptyQueue />}
     </>
   );
-}
+};
 
 Queue.propTypes = {
-  socket: PropTypes.func.isRequired,
   currentlyPlaying: PropTypes.object,
   queue: PropTypes.arrayOf(PropTypes.object),
   playOrder: PropTypes.string.isRequired,
   lastReorder: PropTypes.number,
+  skip: PropTypes.func.isRequired,
+  deleteVideo: PropTypes.func.isRequired,
+  reorder: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -135,6 +139,15 @@ const mapStateToProps = createStructuredSelector({
   lastReorder: makeSelectLastReorder(),
 });
 
-const withConnect = connect(mapStateToProps);
+const mapDispatchToProps = dispatch => ({
+  skip: evt => dispatch(emitRoomSkip(evt)),
+  deleteVideo: evt => dispatch(emitRoomDelVideo(evt)),
+  reorder: evt => dispatch(emitRoomReorder(evt)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 export default compose(withConnect)(Queue);

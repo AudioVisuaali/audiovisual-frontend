@@ -65,7 +65,7 @@ export class FeaturePageLeft extends React.Component {
   handlePopUp = value => this.setState({ isVideoManagementSelected: value });
 
   innerContent = () => {
-    const { isMobile, socket, currentVideo } = this.props;
+    const { isMobile, currentVideo } = this.props;
     const { isVideoManagementSelected, smallPlayer, playerHeight } = this.state;
 
     const smallPlayerAndAllowed = currentVideo && smallPlayer;
@@ -74,13 +74,13 @@ export class FeaturePageLeft extends React.Component {
       <>
         <VideoContainer style={VideoPlayerStyle}>
           <DynamicVideoContainer dynamic={smallPlayerAndAllowed}>
-            <Player socket={socket} />
+            <Player />
           </DynamicVideoContainer>
         </VideoContainer>
         {!isMobile || (isMobile && isVideoManagementSelected) ? (
-          <VideosManagement socket={socket} />
+          <VideosManagement />
         ) : (
-          <FeaturePageRight isMobile={isMobile} socket={socket} />
+          <FeaturePageRight isMobile={isMobile} />
         )}
       </>
     );
@@ -126,7 +126,6 @@ export class FeaturePageLeft extends React.Component {
 
 FeaturePageLeft.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  socket: PropTypes.func,
   currentVideo: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),

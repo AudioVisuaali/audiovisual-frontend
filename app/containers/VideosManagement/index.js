@@ -11,10 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  WS_ACTION_PLAY_ORDER,
-  WS_ACTION_SKIP,
-} from 'containers/WebSocket/constants';
+import { emitRoomPlayOrder, emitRoomSkip } from 'containers/WebSocket/actions';
 import {
   makeSelectPlayOrder,
   makeSelectCurrentlyPlaying,
@@ -37,30 +34,30 @@ import messages from './messages';
 const PLAY_ORDER_LINEAR = 'linear';
 const PLAY_ORDER_RANDOM = 'random';
 
-export function VideosManagement({ playing, playOrder, socket }) {
+export function VideosManagement({ playing, playOrder, setPlayOrder, skip }) {
   const [activeTab, setActiveTab] = useState(0);
 
   const handleSkip = () => {
     if (!playing) return;
 
-    socket(WS_ACTION_SKIP, playing.unique);
+    skip();
   };
 
   const handlePlayOrder = type => {
     if (type === playOrder) return;
 
-    socket(WS_ACTION_PLAY_ORDER, type);
+    setPlayOrder(type);
   };
 
   const getTab = key => {
     switch (key) {
       case 0:
-        return <Queue socket={socket} />;
+        return <Queue />;
       case 1:
-        return <Add socket={socket} />;
+        return <Add />;
 
       default:
-        return <History socket={socket} />;
+        return <History />;
     }
   };
 
@@ -100,10 +97,7 @@ export function VideosManagement({ playing, playOrder, socket }) {
           </Menu>
         </MenuWrapper>
       </MenusWrapper>
-      <Contents
-        // Use key so component remounts and animation kicks in
-        key={activeTab}
-      >
+      <Contents key={activeTab} /* forces remount for animation */>
         {getTab(activeTab)}
       </Contents>
     </Wrapper>
@@ -112,9 +106,11 @@ export function VideosManagement({ playing, playOrder, socket }) {
 
 VideosManagement.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  socket: PropTypes.func,
   playOrder: PropTypes.string.isRequired,
   playing: PropTypes.object,
+  setPlayOrder: PropTypes.func.isRequired,
+  skip: PropTypes.func.isRequired,
+  socket: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -122,6 +118,14 @@ const mapStateToProps = createStructuredSelector({
   playing: makeSelectCurrentlyPlaying(),
 });
 
-const withConnect = connect(mapStateToProps);
+const mapDispatchToProps = dispatch => ({
+  setPlayOrder: evt => dispatch(emitRoomPlayOrder(evt)),
+  skip: () => dispatch(emitRoomSkip()),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 export default compose(withConnect)(VideosManagement);

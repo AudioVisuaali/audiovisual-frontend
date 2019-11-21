@@ -16,6 +16,10 @@ import {
   makeSelectCurrentUser,
   makeSelectCurrentlyPlaying,
 } from 'containers/WebSocket/selectors';
+import {
+  emitRoomMessage,
+  emitUserChangeUsername,
+} from 'containers/WebSocket/actions';
 import ChatTextField from 'components/ChatTextField';
 import TwitchChat from 'components/TwitchChat';
 
@@ -26,15 +30,17 @@ import HiddableContainer from './styles/HiddableContainer';
 
 const MATCH_TWITCH_CHANNEL_URL = /(?:www\.|go\.)?twitch\.tv\/([a-z0-9_]+)($|\?)/;
 
-export function FeaturePageRight({
+const FeaturePageRight = ({
   currentlyPlaying,
   currentUser,
-  socket,
+  sendMessage,
+  changeName,
   isMobile,
-}) {
+}) => {
   const [chatChannel, setChatChannel] = useState('default');
 
-  const handleSend = message => socket('user-message', message);
+  const handleSend = message => sendMessage(message);
+  const handleUsername = username => changeName(username);
   const isDefaultChat = chatChannel === 'default';
   const twitchChannelLogin = () => {
     if (!currentlyPlaying) return null;
@@ -56,7 +62,7 @@ export function FeaturePageRight({
     <Wrapper>
       <Viewers />
       <ChatSelector
-        socket={socket}
+        onUsername={handleUsername}
         twitchChannel={twitchChannelName()}
         currentUser={currentUser}
         onClick={setChatChannel}
@@ -74,13 +80,14 @@ export function FeaturePageRight({
       )}
     </Wrapper>
   );
-}
+};
 
 FeaturePageRight.propTypes = {
-  socket: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   currentlyPlaying: PropTypes.object,
   isMobile: PropTypes.bool,
+  sendMessage: PropTypes.func.isRequired,
+  changeName: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -88,6 +95,14 @@ const mapStateToProps = createStructuredSelector({
   currentlyPlaying: makeSelectCurrentlyPlaying(),
 });
 
-const withConnect = connect(mapStateToProps);
+const mapDispatchToProps = dispatch => ({
+  sendMessage: evt => dispatch(emitRoomMessage(evt)),
+  changeName: evt => dispatch(emitUserChangeUsername(evt)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 export default compose(withConnect)(FeaturePageRight);

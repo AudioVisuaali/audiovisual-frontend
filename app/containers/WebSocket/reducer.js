@@ -19,9 +19,13 @@ import {
   WS_SET_CURRENT_USER,
   WS_SET_CURRENT_USER_USERNAME,
   WS_SET_REORDER,
+  WS_SET_EMIT,
 } from './constants';
 
+export const key = 'webSocket';
+
 export const initialState = {
+  emit: null,
   currentUser: null,
   owner: null,
   unique: null,
@@ -45,6 +49,10 @@ export const initialState = {
 const webSocketReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case WS_SET_EMIT:
+        draft.emit = action.emit;
+        break;
+
       case WS_SET_ROOM:
         draft.owner = action.room.owner;
         draft.unique = action.room.unique;

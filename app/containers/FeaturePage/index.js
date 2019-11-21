@@ -4,22 +4,23 @@
  * List all the features
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 
 import WebSocket from 'containers/WebSocket';
 import FeaturePageRight from 'containers/FeaturePageRight';
 import FeaturePageLeft from 'containers/FeaturePageLeft';
+import { makeSelectEmit } from 'containers/WebSocket/selectors';
 
 import Wrapper from './Wrapper';
 
 class FeaturePage extends React.Component {
   constructor() {
     super();
-    this.state = {
-      socket: null,
-      isMobile: false,
-    };
-    this.handleResize = this.handleResize.bind(this);
+    this.state = { isMobile: false };
   }
 
   componentDidMount() {
@@ -46,12 +47,19 @@ class FeaturePage extends React.Component {
     this.setState({ isMobile });
   };
 
-  handleState = emit => {
-    this.setState({ socket: emit });
+  featurePage = () => {
+    const { isMobile } = this.state;
+
+    return (
+      <>
+        <FeaturePageLeft isMobile={isMobile} />
+        {!isMobile && <FeaturePageRight />}
+      </>
+    );
   };
 
   render() {
-    const { isMobile, socket } = this.state;
+    const { isConnected } = this.props;
     return (
       <Wrapper>
         <Helmet>
@@ -61,16 +69,21 @@ class FeaturePage extends React.Component {
             content="Feature page of React.js Boilerplate application"
           />
         </Helmet>
-        <WebSocket onConnection={this.handleState} />
-        {socket && (
-          <>
-            <FeaturePageLeft isMobile={isMobile} socket={socket} />
-            {!isMobile && <FeaturePageRight socket={socket} />}
-          </>
-        )}
+        <WebSocket />
+        {isConnected && this.featurePage()}
       </Wrapper>
     );
   }
 }
 
-export default FeaturePage;
+FeaturePage.propTypes = {
+  isConnected: PropTypes.func,
+};
+
+const mapStateToProps = createStructuredSelector({
+  isConnected: makeSelectEmit(),
+});
+
+const withConnect = connect(mapStateToProps);
+
+export default compose(withConnect)(FeaturePage);

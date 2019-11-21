@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
-import { WS_ACTION_USER_USERNAME_CHANGE } from 'containers/WebSocket/constants';
 import SettingsModal from 'containers/SettingsModal';
 import Tab from 'components/Tab';
 import Menu from 'components/Menu';
@@ -33,7 +32,7 @@ const ChatActions = styled.div`
 const defaultChat = 'default';
 const twitch = 'twitch';
 
-const ChatSelector = ({ currentUser, socket, twitchChannel, onClick }) => {
+const ChatSelector = ({ currentUser, onUsername, twitchChannel, onClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(defaultChat);
 
@@ -49,7 +48,7 @@ const ChatSelector = ({ currentUser, socket, twitchChannel, onClick }) => {
   const handleNameSave = name => {
     setIsModalOpen(false);
     setItem(USERNAME, name);
-    socket(WS_ACTION_USER_USERNAME_CHANGE, name);
+    onUsername(name);
   };
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -99,10 +98,10 @@ const ChatSelector = ({ currentUser, socket, twitchChannel, onClick }) => {
 };
 
 ChatSelector.propTypes = {
-  socket: PropTypes.func.isRequired,
   twitchChannel: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
+  onUsername: PropTypes.func.isRequired,
 };
 
 ChatSelector.defaultProps = {

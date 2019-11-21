@@ -15,6 +15,7 @@ import {
   makeSelectPlaylistHistory,
   makeSelectViewers,
 } from 'containers/WebSocket/selectors';
+import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import QueueItem from 'components/QueueItem';
 import BigLabel from 'components/BigLabel';
 import DollyEmpty from 'svgs/DollyEmpty';
@@ -25,14 +26,21 @@ import ShowMore from './styles/ShowMore';
 
 const SHOW_MORE_MAX_VALUE = 10;
 
-export function History({ socket, history }) {
+export function History({ addVideo, history }) {
   const [showMax, setShowMax] = useState(10);
-  const handleRepeat = video => socket('add-video', video.repeat);
+  const handleRepeat = video => addVideo(video.repeat);
 
   const handleAddShowMax = () => {
     const newShowTotal = showMax + SHOW_MORE_MAX_VALUE;
     setShowMax(newShowTotal);
   };
+
+  const emptyHistory = () => (
+    <Empty>
+      <DollyEmpty />
+      <FormattedMessage {...messages.noVideosText} />
+    </Empty>
+  );
 
   const historyItems = () => {
     const showingVideos = history
@@ -69,19 +77,12 @@ export function History({ socket, history }) {
     );
   };
 
-  const emptyHistory = () => (
-    <Empty>
-      <DollyEmpty />
-      <FormattedMessage {...messages.noVideosText} />
-    </Empty>
-  );
-
   return history.length ? historyItems() : emptyHistory();
 }
 
 History.propTypes = {
-  socket: PropTypes.func.isRequired,
   history: PropTypes.array.isRequired,
+  addVideo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -89,11 +90,9 @@ const mapStateToProps = createStructuredSelector({
   viewers: makeSelectViewers(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  addVideo: evt => dispatch(emitRoomAddVideo(evt)),
+});
 
 const withConnect = connect(
   mapStateToProps,

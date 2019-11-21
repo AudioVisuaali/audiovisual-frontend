@@ -98,3 +98,9 @@ export const makeSelectLastReorder = () =>
     selectWebSocketDomain,
     substate => substate.videos.lastReorder,
   );
+
+export const makeSelectEmit = () =>
+  createSelector(
+    selectWebSocketDomain,
+    substate => substate.emit,
+  );

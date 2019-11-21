@@ -19,10 +19,10 @@ import {
   makeSelectTimelineAction,
 } from 'containers/WebSocket/selectors';
 import {
-  WS_ACTION_IS_PLAYING,
-  WS_ACTION_SEEK,
-  WS_ACTION_NEXT_VIDEO,
-} from 'containers/WebSocket/constants';
+  emitRoomSeek,
+  emitRoomIsPlaying,
+  emitRoomNextVideo,
+} from 'containers/WebSocket/actions';
 import Controls from 'components/Controls';
 import { VOLUME, setItem, getItem } from 'utils/localStorage';
 import { openFullscreen, closeFullscreen } from 'utils/fullscreen';
@@ -189,9 +189,9 @@ class Player extends React.Component {
     this.setSubtitle();
   };
 
-  handlePlay = state => this.props.socket(WS_ACTION_IS_PLAYING, state);
+  handlePlay = state => this.props.setIsPlaying(state);
 
-  handleSeek = seconds => this.props.socket(WS_ACTION_SEEK, seconds);
+  handleSeek = seconds => this.props.seekTo(seconds);
 
   handlePlayerPlay = () => {
     this.setState({ playing: true });
@@ -208,10 +208,9 @@ class Player extends React.Component {
   };
 
   handleEnd = () => {
-    const { socket, currentVideo } = this.props;
     if (!this.state.allowNext) return;
     this.setState({ allowNext: false });
-    socket(WS_ACTION_NEXT_VIDEO, currentVideo.unique);
+    this.props.nextVideo();
   };
 
   setSubtitle = () => {
@@ -299,7 +298,9 @@ class Player extends React.Component {
 }
 
 Player.propTypes = {
-  socket: PropTypes.func,
+  setIsPlaying: PropTypes.func.isRequired,
+  seekTo: PropTypes.func.isRequired,
+  nextVideo: PropTypes.func.isRequired,
   timelineAction: PropTypes.object,
   currentVideo: PropTypes.object,
   playing: PropTypes.bool,
@@ -316,7 +317,11 @@ const mapStateToProps = createStructuredSelector({
   timelineAction: makeSelectTimelineAction(),
 });
 
-const mapDispatchToProps = dispatch => ({ dispatch });
+const mapDispatchToProps = dispatch => ({
+  setIsPlaying: evt => dispatch(emitRoomIsPlaying(evt)),
+  seekTo: evt => dispatch(emitRoomSeek(evt)),
+  nextVideo: () => dispatch(emitRoomNextVideo()),
+});
 
 const withConnect = connect(
   mapStateToProps,

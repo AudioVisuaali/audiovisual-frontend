@@ -6,13 +6,16 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { compose } from 'redux';
 
 import Label from 'components/Label';
 import Button from 'components/Button';
 import BigLabel from 'components/BigLabel';
 import TextField from 'components/TextField';
 import SupportedPlatforms from 'components/SupportedPlatforms';
+import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import { canPlayVideo } from 'utils/video';
 
 import messages from './messages';
@@ -23,7 +26,7 @@ import URLContainer from './styles/URLContainer';
 import InputWrapper from './styles/InputWrapper';
 import ShowSubtitleURLAdd from './styles/ShowSubtitleURLAdd';
 
-export function Add({ socket }) {
+const Add = ({ addVideo }) => {
   const [videoLink, setVideoLink] = useState('');
   const [subtitleLink, setSubtitleLink] = useState('');
   const [isVideoAddable, setIsVideoAddable] = useState(false);
@@ -37,10 +40,11 @@ export function Add({ socket }) {
     setIsVideoAddable(canPlayVideo(value));
   };
 
-  const addVideoHandler = () => {
+  const addVideoHandler = e => {
+    e.preventDefault();
     if (!isVideoAddable) return;
 
-    socket('add-video', {
+    addVideo({
       url: videoLink,
       subtitle: subtitleLink,
     });
@@ -108,8 +112,19 @@ export function Add({ socket }) {
       </Section>
     </>
   );
-}
+};
 
-Add.propTypes = { socket: PropTypes.func };
+Add.propTypes = {
+  addVideo: PropTypes.func,
+};
 
-export default Add;
+const mapDispatchToProps = dispatch => ({
+  addVideo: evt => dispatch(emitRoomAddVideo(evt)),
+});
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(Add);
