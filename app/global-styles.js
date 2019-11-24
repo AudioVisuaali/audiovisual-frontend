@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     outline-width: 0;
   }
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     html,
     body {
       height: auto;

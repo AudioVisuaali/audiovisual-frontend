@@ -16,17 +16,17 @@ const fixed = css`
 
   animation: ${fadeAndSlideInFromTop} ease 500ms;
 
-  @media screen and ${device.desktop} {
+  @media screen and (${device.desktop}) {
     width: 600px;
     height: 337px;
   }
 
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     width: 400px;
     height: 225px;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     width: 300px;
     height: 167px;
   }

@@ -6,7 +6,7 @@ const Channel = styled.div`
   font-weight: 500;
   color: ${p => (p.theme.isDark ? p.theme.light[700] : p.theme.grey[600])};
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 12px;
   }
 `;

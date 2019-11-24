@@ -19,7 +19,7 @@ import {
 import Add from 'containers/Add';
 import History from 'containers/History';
 import Queue from 'containers/Queue';
-import Menu from 'components/Menu';
+import Tabs from 'components/Tabs';
 import Tab from 'components/Tab';
 import ListSVG from 'svgs/List';
 import RandomSVG from 'svgs/Random';
@@ -43,7 +43,12 @@ export function VideosManagement({ playing, playOrder, setPlayOrder, skip }) {
     skip();
   };
 
+  const handleActiveTab = type => setActiveTab(type);
   const handlePlayOrder = type => {
+    if (type === 0) {
+      return;
+    }
+
     if (type === playOrder) return;
 
     setPlayOrder(type);
@@ -65,36 +70,30 @@ export function VideosManagement({ playing, playOrder, setPlayOrder, skip }) {
     <Wrapper>
       <MenusWrapper>
         <MenuWrapper>
-          <Menu>
-            <Tab active={activeTab === 0} onClick={() => setActiveTab(0)}>
+          <Tabs value={activeTab} onChange={handleActiveTab}>
+            <Tab>
               <FormattedMessage {...messages.queue} />
             </Tab>
-            <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
+            <Tab>
               <FormattedMessage {...messages.add} />
             </Tab>
-            <Tab active={activeTab === 2} onClick={() => setActiveTab(2)}>
+            <Tab>
               <FormattedMessage {...messages.history} />
             </Tab>
-          </Menu>
+          </Tabs>
         </MenuWrapper>
         <MenuWrapper>
-          <Menu>
+          <Tabs value={playOrder} onChange={handlePlayOrder}>
             <Tab onClick={handleSkip}>
               <ForwardSVG />
             </Tab>
-            <Tab
-              active={playOrder === PLAY_ORDER_LINEAR}
-              onClick={() => handlePlayOrder(PLAY_ORDER_LINEAR)}
-            >
+            <Tab value={PLAY_ORDER_LINEAR}>
               <ListSVG />
             </Tab>
-            <Tab
-              active={playOrder === PLAY_ORDER_RANDOM}
-              onClick={() => handlePlayOrder(PLAY_ORDER_RANDOM)}
-            >
+            <Tab value={PLAY_ORDER_RANDOM}>
               <RandomSVG />
             </Tab>
-          </Menu>
+          </Tabs>
         </MenuWrapper>
       </MenusWrapper>
       <Contents key={activeTab} /* forces remount for animation */>

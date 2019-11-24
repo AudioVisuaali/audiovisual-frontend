@@ -24,7 +24,7 @@ const Thumbnail = styled.div`
     display: block;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     width: 120px;
     height: 68px;
   }

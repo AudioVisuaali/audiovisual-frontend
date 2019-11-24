@@ -6,7 +6,7 @@ const AddedBy = styled.div`
   font-weight: 300;
   font-size: 12px;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 10px;
   }
 `;

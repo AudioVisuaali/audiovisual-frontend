@@ -6,7 +6,7 @@ const Time = styled.span`
   font-size: 10px;
   font-weight: 300;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 8px;
   }
 `;

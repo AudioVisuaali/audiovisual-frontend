@@ -10,11 +10,11 @@ const MenusWrapper = styled.div`
   justify-content: space-between;
   padding: 0 16px;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     padding: 0 10px;
   }
 
-  @media screen and ${device.mobileL} {
+  @media screen and (${device.mobileL}) {
     padding: 0 4px;
   }
 `;

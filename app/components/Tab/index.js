@@ -4,25 +4,76 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Wrapper from './Wrapper';
-import Active from './Active';
+import Selected from './Selected';
 import Button from './Button';
 
-const Tab = ({ active, children, ...rest }) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <Wrapper {...rest}>
-    <Button>{children}</Button>
-    <Active active={active} />
-  </Wrapper>
-);
+const Tab = React.forwardRef(function Tab(props, ref) {
+  const {
+    children,
+    disabled = false,
+    label,
+    onChange,
+    onClick,
+    selected,
+    value,
+    ...other
+  } = props;
+
+  const handleChange = event => {
+    if (onChange) {
+      onChange(value, event);
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
+  return (
+    <Button
+      ref={ref}
+      role="tab"
+      selected={selected}
+      aria-selected={selected}
+      onClick={handleChange}
+      disabled={disabled}
+      {...other}
+    >
+      {label || children}
+      <Selected selected={selected} />
+    </Button>
+  );
+});
 
 Tab.propTypes = {
-  active: PropTypes.bool,
+  /**
+   * @ignore
+   */
   children: PropTypes.node,
-};
-
-Tab.defaultProps = {
-  active: false,
+  /**
+   * If `true`, the tab will be disabled.
+   */
+  disabled: PropTypes.bool,
+  /**
+   * The label element.
+   */
+  label: PropTypes.node,
+  /**
+   * @ignore
+   */
+  onChange: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onClick: PropTypes.func,
+  /**
+   * @ignore
+   */
+  selected: PropTypes.bool,
+  /**
+   * You can provide your own value. Otherwise, we fallback to the child position index.
+   */
+  value: PropTypes.any,
 };
 
 export default Tab;

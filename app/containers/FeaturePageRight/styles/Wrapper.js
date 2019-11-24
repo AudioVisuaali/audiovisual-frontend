@@ -16,15 +16,15 @@ export default styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     max-width: 350px;
   }
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     max-width: 300px;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     max-width: none;
     height: auto;
     background-color: ${mediaScreenBackgroundColor};

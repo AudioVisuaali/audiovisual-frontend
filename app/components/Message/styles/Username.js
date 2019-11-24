@@ -6,7 +6,7 @@ const Username = styled.div`
   font-size: 12px;
   font-weight: 500;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 10px;
   }
 `;

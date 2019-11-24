@@ -5,7 +5,7 @@ export default styled.div`
   flex-grow: 1;
   height: 100%;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     height: auto;
   }
 `;

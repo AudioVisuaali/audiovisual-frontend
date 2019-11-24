@@ -6,7 +6,7 @@ const Title = styled.div`
   font-weight: 500;
   color: ${p => (p.theme.isDark ? p.theme.light[50] : p.theme.dark[800])};
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 14px;
   }
 `;

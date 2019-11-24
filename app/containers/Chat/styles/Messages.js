@@ -11,7 +11,7 @@ const Messages = styled.div`
 
   animation: ${fadeIn} 0.6s;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     min-height: 400px;
   }
 `;

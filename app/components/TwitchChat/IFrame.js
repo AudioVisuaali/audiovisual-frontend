@@ -5,7 +5,7 @@ const IFrame = styled.iframe`
   height: 100%;
   width: 100%;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     height: 800px;
   }
 `;

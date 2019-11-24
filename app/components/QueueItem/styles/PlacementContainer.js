@@ -9,7 +9,7 @@ const PlacementContainer = styled.div`
     height: 30px;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     & svg {
       width: 20px;
       height: 20px;

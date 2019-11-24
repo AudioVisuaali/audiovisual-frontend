@@ -7,7 +7,7 @@ const MessageContent = styled.div`
   font-weight: 300;
   margin-top: 2px;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 10px;
   }
 `;
