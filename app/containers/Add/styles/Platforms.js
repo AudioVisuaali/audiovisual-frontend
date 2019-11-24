@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Section = styled.form`
+const Platforms = styled.div`
   margin: 10px 0;
 `;
 
-export default Section;
+export default Platforms;

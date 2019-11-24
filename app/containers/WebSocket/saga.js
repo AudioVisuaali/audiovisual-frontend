@@ -1,4 +1,5 @@
 import { select, takeLatest } from 'redux-saga/effects';
+import { USERNAME, TOKEN, setItem } from 'utils/localStorage';
 import { makeSelectEmit, makeSelectCurrentlyPlaying } from './selectors';
 
 import {
@@ -12,6 +13,7 @@ import {
   EMIT_ROOM_MESSAGE,
   EMIT_ROOM_REORDER,
   EMIT_CURRENT_USER_CHANGE_USERNAME,
+  WS_SET_CURRENT_USER,
   WS_ACTION_SEEK,
   WS_ACTION_SKIP,
   WS_ACTION_REMOVE_VIDEO,
@@ -23,6 +25,11 @@ import {
   WS_ACTION_USER_USERNAME_CHANGE,
   WS_ACTION_REORDER,
 } from './constants';
+
+export function* setUserMetadata({ user }) {
+  setItem(USERNAME, user.username);
+  setItem(TOKEN, user.token);
+}
 
 export function* isPlaying({ isPlaying: isP_ }) {
   const emit = yield select(makeSelectEmit());
@@ -95,6 +102,7 @@ export default function* websocketSaga() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
+  yield takeLatest(WS_SET_CURRENT_USER, setUserMetadata);
   yield takeLatest(EMIT_ROOM_IS_PLAYING, isPlaying);
   yield takeLatest(EMIT_ROOM_TIMELINE, seek);
   yield takeLatest(EMIT_ROOM_SKIP, skip);

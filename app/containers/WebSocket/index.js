@@ -8,10 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import createConnection from 'socket.io-client';
+import socketIO from 'socket.io-client';
 import { compose } from 'redux';
 
-import { USERNAME, TOKEN, getItem, setItem } from 'utils/localStorage';
+import { USERNAME, TOKEN, getItem } from 'utils/localStorage';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { generateName } from 'utils/name';
@@ -49,53 +49,58 @@ import {
   WS_ACTION_USER_USERNAME_CHANGE,
   WS_ACTION_REORDER,
 } from './constants';
-import reducer from './reducer';
+import reducer, { key } from './reducer';
 import saga from './saga';
-
-export const key = 'webSocket';
 
 export class WebSocket extends React.Component {
   componentDidMount() {
+    const port = process.env.WEBSOCKET_PORT;
+    const url = port ? `:${port}` : null;
+    this.socket = socketIO.connect(url, this.createAuthObject());
+
+    this.socket.on('connect', this.bindSocketActions);
+  }
+
+  createAuthObject = () => {
     const { roomcode } = this.props.match.params;
     const username = getItem(USERNAME) || generateName();
     const token = getItem(TOKEN);
 
-    const auth = { query: { roomUnique: roomcode, username, token } };
-    const url = `${window.location.protocol}//${window.location.hostname}`;
-    this.socket = createConnection.connect(url, auth);
+    return {
+      query: {
+        roomUnique: roomcode,
+        username,
+        token,
+      },
+    };
+  };
 
-    this.socket.on('connect', () => {
-      this.props.setEmit(this.emit);
-      this.socket.on(WS_ACTION_ROOM, this.props.setRoom);
-      this.socket.on(WS_ACTION_USER, this.setUser);
-      this.socket.on(WS_ACTION_SEEK, this.props.setSeek);
-      this.socket.on(WS_ACTION_SKIP, this.props.setSkip);
-      this.socket.on(WS_ACTION_REMOVE_VIDEO, this.props.setRemoveVideo);
-      this.socket.on(WS_ACTION_PLAY_ORDER, this.props.setPlayOrder);
-      this.socket.on(WS_ACTION_IS_PLAYING, this.props.setRoomIsPlaying);
-      this.socket.on(WS_ACTION_ADD_VIDEO, this.props.addVideo);
-      this.socket.on(WS_ACTION_NEXT_VIDEO, this.props.setNextVideo);
-      this.socket.on(WS_ACTION_USER_LEAVE, this.props.setUserLeave);
-      this.socket.on(WS_ACTION_USER_JOIN, this.props.setUserJoin);
-      this.socket.on(WS_ACTION_MESSAGE, this.props.setUserMessage);
-      this.socket.on(
-        WS_ACTION_USER_USERNAME_CHANGE,
-        this.props.setUsernameChange,
-      );
-      this.socket.on(WS_ACTION_REORDER, this.props.setReorder);
-    });
-  }
+  bindSocketActions = () => {
+    this.props.setEmit(this.emit);
+    this.socket.on(WS_ACTION_ROOM, this.props.setRoom);
+    this.socket.on(WS_ACTION_USER, this.props.setCurrentUser);
+    this.socket.on(WS_ACTION_SEEK, this.props.setSeek);
+    this.socket.on(WS_ACTION_SKIP, this.props.setSkip);
+    this.socket.on(WS_ACTION_REMOVE_VIDEO, this.props.setRemoveVideo);
+    this.socket.on(WS_ACTION_PLAY_ORDER, this.props.setPlayOrder);
+    this.socket.on(WS_ACTION_IS_PLAYING, this.props.setRoomIsPlaying);
+    this.socket.on(WS_ACTION_ADD_VIDEO, this.props.addVideo);
+    this.socket.on(WS_ACTION_NEXT_VIDEO, this.props.setNextVideo);
+    this.socket.on(WS_ACTION_USER_LEAVE, this.props.setUserLeave);
+    this.socket.on(WS_ACTION_USER_JOIN, this.props.setUserJoin);
+    this.socket.on(WS_ACTION_MESSAGE, this.props.setUserMessage);
+    this.socket.on(WS_ACTION_REORDER, this.props.setReorder);
+    this.socket.on(
+      WS_ACTION_USER_USERNAME_CHANGE,
+      this.props.setUsernameChange,
+    );
+  };
 
   componentWillUnmount() {
+    // Clear emit so page actions are not linked to socket
     this.props.setEmit();
     this.socket.disconnect();
   }
-
-  setUser = user => {
-    setItem(USERNAME, user.username);
-    setItem(TOKEN, user.token);
-    this.props.setCurrentUser(user);
-  };
 
   emit = (type, value) => this.socket.emit(type, value);
 
