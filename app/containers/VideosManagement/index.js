@@ -21,6 +21,7 @@ import History from 'containers/History';
 import Queue from 'containers/Queue';
 import Tabs from 'components/Tabs';
 import Tab from 'components/Tab';
+import Tooltip from 'components/Tooltip';
 import ListSVG from 'svgs/List';
 import RandomSVG from 'svgs/Random';
 import ForwardSVG from 'svgs/Forward';
@@ -33,6 +34,14 @@ import messages from './messages';
 
 const PLAY_ORDER_LINEAR = 'linear';
 const PLAY_ORDER_RANDOM = 'random';
+
+// eslint-disable-next-line react/prop-types
+const TooltipWrapper = ({ label, children, ...rest }) => {
+  const childrenWithProps = React.Children.map(children, child =>
+    React.cloneElement(child, rest),
+  );
+  return <Tooltip label={label}>{childrenWithProps}</Tooltip>;
+};
 
 export function VideosManagement({ playing, playOrder, setPlayOrder, skip }) {
   const [activeTab, setActiveTab] = useState(0);
@@ -84,15 +93,21 @@ export function VideosManagement({ playing, playOrder, setPlayOrder, skip }) {
         </MenuWrapper>
         <MenuWrapper>
           <Tabs value={playOrder} onChange={handlePlayOrder}>
-            <Tab onClick={handleSkip}>
-              <ForwardSVG />
-            </Tab>
-            <Tab value={PLAY_ORDER_LINEAR}>
-              <ListSVG />
-            </Tab>
-            <Tab value={PLAY_ORDER_RANDOM}>
-              <RandomSVG />
-            </Tab>
+            <TooltipWrapper label="SKIP">
+              <Tab onClick={handleSkip}>
+                <ForwardSVG />
+              </Tab>
+            </TooltipWrapper>
+            <TooltipWrapper label="ORDERED">
+              <Tab value={PLAY_ORDER_LINEAR}>
+                <ListSVG />
+              </Tab>
+            </TooltipWrapper>
+            <TooltipWrapper label="RANDOM">
+              <Tab value={PLAY_ORDER_RANDOM}>
+                <RandomSVG />
+              </Tab>
+            </TooltipWrapper>
           </Tabs>
         </MenuWrapper>
       </MenusWrapper>
