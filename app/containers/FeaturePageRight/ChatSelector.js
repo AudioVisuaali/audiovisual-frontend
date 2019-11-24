@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import SettingsModal from 'containers/SettingsModal';
 import Tab from 'components/Tab';
-import Menu from 'components/Menu';
+import Tabs from 'components/Tabs';
 import Label from 'components/Label';
 import { setItem, USERNAME } from 'utils/localStorage';
 import CogSVG from 'svgs/Cog';
@@ -72,23 +72,17 @@ const ChatSelector = ({ currentUser, onUsername, twitchChannel, onClick }) => {
         <FormattedMessage {...messages.chatRooms} />
       </Label>
       <ChatActions>
-        <Menu>
-          <Tab
-            active={selectedTab === defaultChat}
-            onClick={() => handleTabClick(defaultChat)}
-          >
+        <Tabs value={selectedTab} onChange={handleTabClick}>
+          <Tab value={defaultChat}>
             <FormattedMessage {...messages.room} />
           </Tab>
           {twitchChannel && (
-            <Tab
-              active={selectedTab === twitch}
-              onClick={() => handleTabClick(twitch)}
-            >
+            <Tab value={twitch}>
               <TwitchSVG style={{ marginRight: 6 }} />
               {twitchChannel}
             </Tab>
           )}
-        </Menu>
+        </Tabs>
         <Button active={isModalOpen} onClick={handleOpenModal}>
           <CogSVG />
         </Button>
