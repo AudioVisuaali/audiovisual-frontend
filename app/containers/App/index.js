@@ -13,6 +13,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import { pathHome, pathRoom, pathNotFound } from 'utils/paths';
 
 import GlobalStyle from '../../global-styles';
 
@@ -22,10 +23,10 @@ const App = () => (
       <meta name="description" content="Visuals for watching vidoes together" />
     </Helmet>
     <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/room/:roomcode" component={FeaturePage} exact />
-      <Route path="/not-found" component={NotFoundPage} />
-      <Redirect to="/not-found" />
+      <Route exact path={pathHome} component={HomePage} />
+      <Route path={pathRoom} component={FeaturePage} exact />
+      <Route path={pathNotFound} component={NotFoundPage} />
+      <Redirect to={pathNotFound} />
     </Switch>
     <GlobalStyle />
   </>

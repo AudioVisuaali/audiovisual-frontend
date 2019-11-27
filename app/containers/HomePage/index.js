@@ -13,6 +13,7 @@ import LocaleToggle from 'containers/LocaleToggle';
 import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
 import { generateName } from 'utils/name';
+import { generatePathRoom } from 'utils/paths';
 
 import messages from './messages';
 import Wrapper from './styles/Wrapper';
@@ -33,7 +34,8 @@ export const HomePage = () => {
   const redirectToRoom = () => {
     setIsTransparent(true);
     const unique = uuid().substring(0, 8);
-    setTimeout(() => history.push(`/room/${unique}`), 200);
+    const roomURL = generatePathRoom(unique);
+    setTimeout(() => history.push(roomURL), 200);
   };
 
   const handleUsernameChange = e => {
