@@ -28,7 +28,7 @@ import ThemeProvider from 'containers/ThemeProvider';
 
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon-visuals.ico';
-import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
+// import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 
 import configureStore from './configureStore';
 
