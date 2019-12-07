@@ -16,6 +16,8 @@ const svgColor = props =>
   props.theme.isDark ? props.theme.light[50] : props.theme.grey[800];
 
 const Colored = styled.div`
+  display: inline;
+
   & svg {
     color: ${svgColor};
   }

@@ -8,6 +8,10 @@ const VideoHeaderContent = styled.div`
   font-weight: 500;
   font-size: 20px;
 
+  & a {
+    width: 100%;
+  }
+
   & svg {
     height: 32px;
     margin-right: 10px;
