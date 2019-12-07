@@ -54,12 +54,16 @@ import saga from './saga';
 
 export class WebSocket extends React.Component {
   componentDidMount() {
-    const port = process.env.WEBSOCKET_PORT;
-    const url = port ? `:${port}` : null;
-    this.socket = socketIO.connect(url, this.createAuthObject());
-
+    this.socket = socketIO.connect(this.createPath(), this.createAuthObject());
     this.socket.on('connect', this.bindSocketActions);
   }
+
+  createPath = () => {
+    const { hostname } = window.location;
+    const { WEBSOCKET_PORT } = process.env;
+    const port = WEBSOCKET_PORT === undefined ? '' : `:${WEBSOCKET_PORT}`;
+    return `${hostname}${port}`;
+  };
 
   createAuthObject = () => {
     const { roomcode } = this.props.match.params;
