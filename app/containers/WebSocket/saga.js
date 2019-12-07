@@ -56,11 +56,10 @@ export function* addVideo({ video }) {
   emit(WS_ACTION_ADD_VIDEO, video);
 }
 
-export function* delVideo() {
+export function* delVideo({ video }) {
   const emit = yield select(makeSelectEmit());
-  const playing = yield select(makeSelectCurrentlyPlaying());
 
-  emit(WS_ACTION_REMOVE_VIDEO, playing.unique);
+  emit(WS_ACTION_REMOVE_VIDEO, video.unique);
 }
 
 export function* playOrder({ playType }) {

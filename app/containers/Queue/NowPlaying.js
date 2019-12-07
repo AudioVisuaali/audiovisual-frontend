@@ -6,13 +6,14 @@ import BigLabel from 'components/BigLabel';
 import messages from './messages';
 import NowPlayingWrapper from './styles/NowPlayingWrapper';
 
-const NowPlaying = ({ currentlyPlaying, onSkip }) => (
+const NowPlaying = ({ currentlyPlaying, onSkip, onRepeat }) => (
   <NowPlayingWrapper>
     <BigLabel>
       <FormattedMessage {...messages.currentlyPlayingLabel} />
     </BigLabel>
     <QueueItem
       onSkip={onSkip}
+      onRepeat={onRepeat}
       video={currentlyPlaying}
       user={currentlyPlaying.addedBy}
     />
@@ -21,6 +22,7 @@ const NowPlaying = ({ currentlyPlaying, onSkip }) => (
 
 NowPlaying.propTypes = {
   onSkip: PropTypes.func.isRequired,
+  onRepeat: PropTypes.func.isRequired,
   currentlyPlaying: PropTypes.object,
 };
 

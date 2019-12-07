@@ -19,6 +19,7 @@ import {
   makeSelectLastReorder,
 } from 'containers/WebSocket/selectors';
 import {
+  emitRoomAddVideo,
   emitRoomSkip,
   emitRoomDelVideo,
   emitRoomReorder,
@@ -32,6 +33,7 @@ import NowPlaying from './NowPlaying';
 import SortableContainerUl from './styles/SortableContainerUl';
 
 const Queue = ({
+  addVideo,
   lastReorder,
   skip,
   deleteVideo,
@@ -54,9 +56,9 @@ const Queue = ({
     skip(video.unique);
   };
 
-  const handleDelete = video => {
-    deleteVideo(video.unique);
-  };
+  const handleDelete = video => deleteVideo(video);
+
+  const handleRepeat = video => addVideo(video.repeat);
 
   const handleSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex === newIndex) return;
@@ -79,6 +81,7 @@ const Queue = ({
       video={video}
       showMove
       onDelete={handleDelete}
+      onRepeat={handleRepeat}
       user={video.addedBy}
     />
   ));
@@ -115,7 +118,11 @@ const Queue = ({
   return (
     <>
       {currentlyPlaying && (
-        <NowPlaying currentlyPlaying={currentlyPlaying} onSkip={handleSkip} />
+        <NowPlaying
+          currentlyPlaying={currentlyPlaying}
+          onSkip={handleSkip}
+          onRepeat={handleRepeat}
+        />
       )}
       {queue.length ? <QueueItems /> : <EmptyQueue />}
     </>
@@ -130,6 +137,7 @@ Queue.propTypes = {
   skip: PropTypes.func.isRequired,
   deleteVideo: PropTypes.func.isRequired,
   reorder: PropTypes.func.isRequired,
+  addVideo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -143,6 +151,7 @@ const mapDispatchToProps = dispatch => ({
   skip: evt => dispatch(emitRoomSkip(evt)),
   deleteVideo: evt => dispatch(emitRoomDelVideo(evt)),
   reorder: evt => dispatch(emitRoomReorder(evt)),
+  addVideo: evt => dispatch(emitRoomAddVideo(evt)),
 });
 
 const withConnect = connect(

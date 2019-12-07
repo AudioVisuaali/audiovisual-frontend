@@ -52,33 +52,32 @@ const AddForm = ({ addVideo }) => {
     setIsVideoAddable(false);
   };
 
-  const AddSubtitle = () => (
+  const AddSubtitle = !showSubtitleAdd && (
     <ShowSubtitleURLAdd onClick={handleShowSubtitleURL}>
       <FormattedMessage {...messages.addSubtitle} />
     </ShowSubtitleURLAdd>
   );
 
-  const URLField = () => (
+  const URLField = (
     <InputWrapper>
       <Label>
         <FormattedMessage {...messages.videoInputFieldLabel} />
       </Label>
       <TextField value={videoUrl} onChange={handleInputChange} />
-      {!showSubtitleAdd && <AddSubtitle />}
+      {AddSubtitle}
     </InputWrapper>
   );
 
-  const CaptionsField = () =>
-    showSubtitleAdd && (
-      <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
-        </Label>
-        <TextField value={subtitleUrl} onChange={handleOnTranslation} />
-      </InputWrapper>
-    );
+  const CaptionsField = showSubtitleAdd && (
+    <InputWrapper>
+      <Label>
+        <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
+      </Label>
+      <TextField value={subtitleUrl} onChange={handleOnTranslation} />
+    </InputWrapper>
+  );
 
-  const Submit = () => (
+  const Submit = (
     <Button type="submit" disabled={!isVideoAddable} onClick={addVideoHandler}>
       <FormattedMessage {...messages.addVideoToQueueButton} />
     </Button>
@@ -87,13 +86,11 @@ const AddForm = ({ addVideo }) => {
   return (
     <Form onSubmit={addVideoHandler}>
       <Inputs>
-        <URLField />
-        <CaptionsField />
+        {URLField}
+        {CaptionsField}
       </Inputs>
 
-      <Actions>
-        <Submit />
-      </Actions>
+      <Actions>{Submit}</Actions>
     </Form>
   );
 };
