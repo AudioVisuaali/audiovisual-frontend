@@ -21,4 +21,16 @@ export default defineMessages({
     id: `${scope}.videoMenu.history`,
     defaultMessage: 'History',
   },
+  skip: {
+    id: `${scope}.videoMenu.skip`,
+    defaultMessage: 'Skip',
+  },
+  ordered: {
+    id: `${scope}.videoMenu.ordered`,
+    defaultMessage: 'Ordered',
+  },
+  random: {
+    id: `${scope}.videoMenu.random`,
+    defaultMessage: 'Random',
+  },
 });

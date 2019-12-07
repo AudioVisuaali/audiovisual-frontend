@@ -10,6 +10,7 @@ const dark = {
   70: transparencyDark(0.7),
   80: transparencyDark(0.8),
   90: transparencyDark(0.9),
+  95: transparencyDark(0.95),
   100: transparencyDark(1),
 };
 

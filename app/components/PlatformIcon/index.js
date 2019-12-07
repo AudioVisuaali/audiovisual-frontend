@@ -8,10 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import platforms from './platforms';
 
-const PlatformIcon = ({ type }) => {
-  const SVG = platforms[type];
-  return <SVG />;
-};
+const PlatformIcon = React.forwardRef(function PlatformIcon(props, ref) {
+  const SVG = platforms[props.type];
+  return <SVG ref={ref} />;
+});
 
 PlatformIcon.propTypes = {
   type: PropTypes.string,

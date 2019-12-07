@@ -1,6 +1,6 @@
 /**
  *
- * SupportedPlatform
+ * Platform
  *
  */
 
@@ -8,16 +8,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Wrapper from './styles/Wrapper';
 
-const SupportedPlatform = ({ SVG, name }) => (
-  <Wrapper>
-    <SVG />
-    {name}
-  </Wrapper>
-);
+const Platform = React.forwardRef(function Platform(props, ref) {
+  const { name, SVG } = props;
+  return (
+    <Wrapper ref={ref}>
+      <SVG />
+      {name}
+    </Wrapper>
+  );
+});
 
-SupportedPlatform.propTypes = {
+Platform.propTypes = {
   SVG: PropTypes.func,
   name: PropTypes.string,
 };
 
-export default SupportedPlatform;
+export default Platform;
