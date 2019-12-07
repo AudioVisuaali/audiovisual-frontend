@@ -20,7 +20,7 @@ const Button = styled.button`
   border: none;
   background-color: transparent;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 500;
   color: ${color};
   padding: 12px 20px;
 
@@ -31,17 +31,18 @@ const Button = styled.button`
     color: ${svgColor};
   }
 
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+
+  &:hover:not(:disabled) {
     color: ${hoverColor};
 
     & svg {
       width: 12px;
       color: ${svgHoverColor};
     }
-  }
-
-  &:focus {
-    font-weight: 500;
   }
 
   @media screen and (${device.tablet}) {

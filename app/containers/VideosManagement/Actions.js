@@ -36,30 +36,33 @@ const Actions = props => {
     skip();
   };
 
-  const handlePlayOrder = type => {
-    if (type === 0) {
-      return;
-    }
-
+  const handlePlayOrder = (e, type) => {
     if (type === playOrder) return;
 
     setPlayOrder(type);
   };
 
+  // Can't use onChange event since Tabs are wrapped with ToolTip
   return (
-    <Tabs value={playOrder} onChange={handlePlayOrder}>
-      <Tooltip label={intl.formatMessage(messages.skip)}>
-        <Tab onClick={handleSkip}>
+    <Tabs value={playOrder}>
+      {playing ? (
+        <Tooltip label={intl.formatMessage(messages.skip)}>
+          <Tab disabled={!playing} onClick={handleSkip}>
+            <ForwardSVG />
+          </Tab>
+        </Tooltip>
+      ) : (
+        <Tab disabled onClick={handleSkip}>
           <ForwardSVG />
         </Tab>
-      </Tooltip>
+      )}
       <Tooltip label={intl.formatMessage(messages.ordered)}>
-        <Tab value={PLAY_ORDER_LINEAR}>
+        <Tab value={PLAY_ORDER_LINEAR} onClick={handlePlayOrder}>
           <ListSVG />
         </Tab>
       </Tooltip>
       <Tooltip label={intl.formatMessage(messages.random)}>
-        <Tab value={PLAY_ORDER_RANDOM}>
+        <Tab value={PLAY_ORDER_RANDOM} onClick={handlePlayOrder}>
           <RandomSVG />
         </Tab>
       </Tooltip>

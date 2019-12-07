@@ -25,7 +25,7 @@ const Tab = React.forwardRef(function Tab(props, ref) {
     }
 
     if (onClick) {
-      onClick(event);
+      onClick(event, value);
     }
   };
 

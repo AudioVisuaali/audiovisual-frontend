@@ -4,16 +4,12 @@ import Wrapper from './styles/Wrapper';
 import TooltipText from './styles/TooltipText';
 
 const Tooltip = React.forwardRef(function Tooltip(props, ref) {
-  const { children, label, onClick, ...rest } = props;
+  const { children, label, ...rest } = props;
 
   const [showLabel, setShowLabel] = useState(false);
 
   const handleShow = () => setShowLabel(true);
   const handleHidden = () => setShowLabel(false);
-
-  const childrenWithProps = React.Children.map(children, child =>
-    React.cloneElement(child, { onClick }),
-  );
 
   const interactiveWrapperListeners = {
     onTouchStart: handleShow,
@@ -24,7 +20,7 @@ const Tooltip = React.forwardRef(function Tooltip(props, ref) {
 
   return (
     <Wrapper ref={ref} label={label} {...interactiveWrapperListeners} {...rest}>
-      {childrenWithProps}
+      {children}
       <TooltipText showing={showLabel}>{label.toUpperCase()}</TooltipText>
     </Wrapper>
   );
