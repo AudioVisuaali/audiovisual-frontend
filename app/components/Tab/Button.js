@@ -10,8 +10,6 @@ const color = p => {
 };
 const hoverColor = p =>
   p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.dark[900];
-const svgColor = p =>
-  p.theme.isDark ? p.theme.whiteRGBA[60] : p.theme.grey[500];
 const svgHoverColor = p =>
   p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.grey[700];
 
@@ -28,7 +26,7 @@ const Button = styled.button`
 
   & svg {
     width: 12px;
-    color: ${svgColor};
+    color: 'inherit';
   }
 
   &:disabled {

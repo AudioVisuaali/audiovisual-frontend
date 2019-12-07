@@ -27,6 +27,15 @@ import messages from './messages';
 const PLAY_ORDER_LINEAR = 'linear';
 const PLAY_ORDER_RANDOM = 'random';
 
+// eslint-disable-next-line react/prop-types
+const ForwardRef = ({ label, SVG, ...rest }) => (
+  <Tooltip label={label}>
+    <Tab {...rest}>
+      <SVG />
+    </Tab>
+  </Tooltip>
+);
+
 const Actions = props => {
   const { intl, playing, playOrder, setPlayOrder, skip } = props;
 
@@ -36,7 +45,11 @@ const Actions = props => {
     skip();
   };
 
-  const handlePlayOrder = (e, type) => {
+  const handlePlayOrder = type => {
+    if (type === 0) {
+      return;
+    }
+
     if (type === playOrder) return;
 
     setPlayOrder(type);
@@ -44,7 +57,7 @@ const Actions = props => {
 
   // Can't use onChange event since Tabs are wrapped with ToolTip
   return (
-    <Tabs value={playOrder}>
+    <Tabs onChange={handlePlayOrder} value={playOrder}>
       {playing ? (
         <Tooltip label={intl.formatMessage(messages.skip)}>
           <Tab disabled={!playing} onClick={handleSkip}>
@@ -56,16 +69,16 @@ const Actions = props => {
           <ForwardSVG />
         </Tab>
       )}
-      <Tooltip label={intl.formatMessage(messages.ordered)}>
-        <Tab value={PLAY_ORDER_LINEAR} onClick={handlePlayOrder}>
-          <ListSVG />
-        </Tab>
-      </Tooltip>
-      <Tooltip label={intl.formatMessage(messages.random)}>
-        <Tab value={PLAY_ORDER_RANDOM} onClick={handlePlayOrder}>
-          <RandomSVG />
-        </Tab>
-      </Tooltip>
+      <ForwardRef
+        label={intl.formatMessage(messages.ordered)}
+        value={PLAY_ORDER_LINEAR}
+        SVG={ListSVG}
+      />
+      <ForwardRef
+        label={intl.formatMessage(messages.random)}
+        value={PLAY_ORDER_RANDOM}
+        SVG={RandomSVG}
+      />
     </Tabs>
   );
 };
