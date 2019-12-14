@@ -74,7 +74,7 @@ const AddForm = ({ addVideo }) => {
     </ShowMoreOptions>
   );
 
-  const URLField = (
+  const URLField = () => (
     <InputWrapper>
       <Label>
         <FormattedMessage {...messages.videoInputFieldLabel} />
@@ -84,28 +84,29 @@ const AddForm = ({ addVideo }) => {
     </InputWrapper>
   );
 
-  const CaptionsField = showSubtitleAdd && (
-    <>
-      <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
-        </Label>
-        <TextField value={subtitleUrl} onChange={handleOnTranslation} />
-      </InputWrapper>
-      <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.base64URL} />
-        </Label>
-        <TextField value={base64URL} onChange={handleBase64URL} />
-      </InputWrapper>
-    </>
-  );
+  const CaptionsField = () =>
+    showSubtitleAdd && (
+      <>
+        <InputWrapper>
+          <Label>
+            <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
+          </Label>
+          <TextField value={subtitleUrl} onChange={handleOnTranslation} />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>
+            <FormattedMessage {...messages.base64URL} />
+          </Label>
+          <TextField value={base64URL} onChange={handleBase64URL} />
+        </InputWrapper>
+      </>
+    );
 
   return (
     <Form onSubmit={addVideoHandler}>
       <Inputs>
-        {URLField}
-        {CaptionsField}
+        <URLField />
+        <CaptionsField />
       </Inputs>
 
       <Actions>
