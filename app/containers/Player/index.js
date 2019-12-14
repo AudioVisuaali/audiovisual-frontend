@@ -191,7 +191,12 @@ class Player extends React.Component {
 
   handlePlay = state => this.props.setIsPlaying(state);
 
-  handleSeek = seconds => this.props.seekTo(seconds);
+  handleSeek = seconds => {
+    if (seconds === null) {
+      return;
+    }
+    this.props.seekTo(seconds);
+  };
 
   handlePlayerPlay = () => {
     this.setState({ playing: true });
