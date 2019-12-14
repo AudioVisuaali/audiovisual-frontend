@@ -21,6 +21,10 @@ export default defineMessages({
     id: `${scope}.translationFieldURL`,
     defaultMessage: 'Translation URL',
   },
+  base64URL: {
+    id: `${scope}.base64URL`,
+    defaultMessage: 'Base64 URL',
+  },
   supportedPlatforms: {
     id: `${scope}.supportedPlatforms`,
     defaultMessage: 'Supported platforms',
@@ -29,8 +33,8 @@ export default defineMessages({
     id: `${scope}.title`,
     defaultMessage: 'Add',
   },
-  addSubtitle: {
-    id: `${scope}.addSubtitle`,
-    defaultMessage: 'Add subtitle',
+  moreOptions: {
+    id: `${scope}.moreOptions`,
+    defaultMessage: 'More options',
   },
 });
