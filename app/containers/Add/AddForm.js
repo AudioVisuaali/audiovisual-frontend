@@ -34,14 +34,17 @@ const AddForm = ({ addVideo }) => {
   const handleBase64URL = e => setBase64URL(e.target.value);
   const handleURLChange = e => setVideoUrl(e.target.value);
 
+  const generateNewVideo = () => ({
+    url: videoUrl,
+    subtitle: subtitleUrl,
+  });
+
   const addVideoHandler = e => {
     e.preventDefault();
     if (!isVideoAddable()) return;
 
-    addVideo({
-      url: videoUrl,
-      subtitle: subtitleUrl,
-    });
+    const newVideo = videoUrl ? generateNewVideo() : base64URLDecode(base64URL);
+    addVideo(newVideo);
 
     setVideoUrl('');
     setSubtitleUrl('');
@@ -74,7 +77,7 @@ const AddForm = ({ addVideo }) => {
     </ShowMoreOptions>
   );
 
-  const URLField = () => (
+  const URLField = (
     <InputWrapper>
       <Label>
         <FormattedMessage {...messages.videoInputFieldLabel} />
@@ -84,29 +87,32 @@ const AddForm = ({ addVideo }) => {
     </InputWrapper>
   );
 
-  const CaptionsField = () =>
-    showSubtitleAdd && (
-      <>
-        <InputWrapper>
-          <Label>
-            <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
-          </Label>
-          <TextField value={subtitleUrl} onChange={handleOnTranslation} />
-        </InputWrapper>
-        <InputWrapper>
-          <Label>
-            <FormattedMessage {...messages.base64URL} />
-          </Label>
-          <TextField value={base64URL} onChange={handleBase64URL} />
-        </InputWrapper>
-      </>
-    );
+  const CaptionsField = showSubtitleAdd && (
+    <>
+      <InputWrapper>
+        <Label>
+          <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
+        </Label>
+        <TextField value={subtitleUrl} onChange={handleOnTranslation} />
+      </InputWrapper>
+      <InputWrapper>
+        <Label>
+          <FormattedMessage {...messages.base64URL} />
+        </Label>
+        <TextField
+          disabled={videoUrl || subtitleUrl}
+          value={base64URL}
+          onChange={handleBase64URL}
+        />
+      </InputWrapper>
+    </>
+  );
 
   return (
     <Form onSubmit={addVideoHandler}>
       <Inputs>
-        <URLField />
-        <CaptionsField />
+        {URLField}
+        {CaptionsField}
       </Inputs>
 
       <Actions>
