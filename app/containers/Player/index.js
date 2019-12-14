@@ -174,7 +174,7 @@ class Player extends React.Component {
 
   setSeek = seconds =>
     // eslint-disable-next-line radix
-    this.playerRef && this.playerRef.seekTo(parseInt(seconds), 'seconds');
+    this.playerRef && this.playerRef.seekTo(parseInt(seconds));
 
   handleProgress = played => this.setState({ played: played.playedSeconds });
 

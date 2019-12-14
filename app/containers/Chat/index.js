@@ -15,7 +15,6 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import Message from 'components/Message';
 import { makeSelectRoomMessages } from 'containers/WebSocket/selectors';
 
-import { MESSAGE_VIDEO_SEEK } from './constants';
 import getTypeVariables from './getTypeVariables';
 import messages from './messages';
 import Welcome from './styles/Welcome';
@@ -39,40 +38,12 @@ export function Chat({ isMobile, roomMessages }) {
     window.requestAnimationFrame(scrollToBottom);
   }
 
-  const getMessages = () => {
-    const newMessages = [];
-    const duplicateTypes = [MESSAGE_VIDEO_SEEK];
-    // eslint-disable-next-line no-plusplus
-    for (let i = roomMessages.length - 1; i >= 0; i--) {
-      if (newMessages.length >= 30) {
-        break;
-      }
-
-      const current = roomMessages[i];
-      if (i === roomMessages.length) {
-        newMessages.push(current);
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      const next = roomMessages[i + 1];
-      if (duplicateTypes.includes(current.type) && current.type === next.type) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      newMessages.push(current);
-    }
-
-    return newMessages.reverse();
-  };
-
   const selectedMessages = () => (
     <Messages>
       <Welcome>
         <FormattedMessage {...messages.welcomeText} />
       </Welcome>
-      {getMessages().map(msg => {
+      {roomMessages.map(msg => {
         const { icon, content, userContent } = getTypeVariables(msg);
         return (
           <Message
