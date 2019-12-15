@@ -14,6 +14,7 @@ import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
 import { generateName } from 'utils/name';
 import { generatePathRoom } from 'utils/paths';
+import CodedWithLove from 'components/CodedWithLove';
 
 import messages from './messages';
 import Wrapper from './styles/Wrapper';
@@ -23,7 +24,6 @@ import Button from './styles/Button';
 import Label from './styles/Label';
 import TextField from './styles/TextField';
 import Description from './styles/Description';
-import CodedWithLove from './CodedWithLove';
 
 const FullWidth = { width: '100%' };
 

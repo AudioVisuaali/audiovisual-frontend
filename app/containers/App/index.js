@@ -10,10 +10,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import Base64 from 'containers/Base64/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import { pathHome, pathRoom, pathNotFound } from 'utils/paths';
+import { pathHome, pathRoom, pathBase64, pathNotFound } from 'utils/paths';
 
 import GlobalStyle from '../../global-styles';
 
@@ -25,6 +26,7 @@ const App = () => (
     <Switch>
       <Route exact path={pathHome} component={HomePage} />
       <Route path={pathRoom} component={FeaturePage} exact />
+      <Route exact path={pathBase64} component={Base64} />
       <Route path={pathNotFound} component={NotFoundPage} />
       <Redirect to={pathNotFound} />
     </Switch>

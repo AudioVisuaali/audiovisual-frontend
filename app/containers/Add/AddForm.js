@@ -13,8 +13,10 @@ import { compose } from 'redux';
 import Label from 'components/Label';
 import Button from 'components/Button';
 import TextField from 'components/TextField';
+import A from 'components/A';
 import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import { canPlayVideo, base64URLDecode } from 'utils/video';
+import { blur } from 'utils/jsEvents';
 
 import messages from './messages';
 import Inputs from './styles/Inputs';
@@ -22,17 +24,20 @@ import Form from './styles/Form';
 import Actions from './styles/Actions';
 import InputWrapper from './styles/InputWrapper';
 import ShowMoreOptions from './styles/ShowMoreOptions';
+import MultipleOptionsInput from './styles/MultipleOptionsInput';
 
 const AddForm = ({ addVideo }) => {
   const [videoUrl, setVideoUrl] = useState('');
   const [subtitleUrl, setSubtitleUrl] = useState('');
   const [base64URL, setBase64URL] = useState('');
-  const [showSubtitleAdd, setShowSubtitleAdd] = useState(false);
+  const [videoTitle, setVideoTitle] = useState('');
+  const [showOptione, setShowOptione] = useState(false);
 
-  const handleShowMoreOptions = () => setShowSubtitleAdd(true);
+  const handleShowMoreOptions = () => setShowOptione(true);
   const handleOnTranslation = e => setSubtitleUrl(e.target.value);
   const handleBase64URL = e => setBase64URL(e.target.value);
   const handleURLChange = e => setVideoUrl(e.target.value);
+  const handleTitleChange = e => setVideoTitle(e.target.value);
 
   const generateNewVideo = () => ({
     url: videoUrl,
@@ -49,7 +54,7 @@ const AddForm = ({ addVideo }) => {
     setVideoUrl('');
     setSubtitleUrl('');
     setBase64URL('');
-    setShowSubtitleAdd(false);
+    setShowOptione(false);
   };
 
   const isVideoAddable = () => {
@@ -71,7 +76,7 @@ const AddForm = ({ addVideo }) => {
     return canPlayVideo(base64.url);
   };
 
-  const AddSubtitle = !showSubtitleAdd && (
+  const AddSubtitle = !showOptione && (
     <ShowMoreOptions onClick={handleShowMoreOptions}>
       <FormattedMessage {...messages.moreOptions} />
     </ShowMoreOptions>
@@ -82,23 +87,46 @@ const AddForm = ({ addVideo }) => {
       <Label>
         <FormattedMessage {...messages.videoInputFieldLabel} />
       </Label>
-      <TextField value={videoUrl} onChange={handleURLChange} />
+      <TextField
+        disabled={base64URL}
+        value={videoUrl}
+        onChange={handleURLChange}
+      />
       {AddSubtitle}
     </InputWrapper>
   );
 
-  const CaptionsField = showSubtitleAdd && (
+  const CaptionsField = showOptione && (
     <>
+      <InputWrapper>
+        <Label>
+          <FormattedMessage {...messages.videoTitle} />
+        </Label>
+        <TextField
+          disabled={base64URL}
+          value={subtitleUrl}
+          onChange={handleOnTranslation}
+        />
+      </InputWrapper>
       <InputWrapper>
         <Label>
           <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
         </Label>
-        <TextField value={subtitleUrl} onChange={handleOnTranslation} />
+        <TextField
+          disabled={base64URL}
+          value={videoTitle}
+          onChange={handleTitleChange}
+        />
       </InputWrapper>
       <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.base64URL} />
-        </Label>
+        <MultipleOptionsInput>
+          <Label>
+            <FormattedMessage {...messages.base64URL} />
+          </Label>
+          <A onClick={blur} href="/base64">
+            What is this?
+          </A>
+        </MultipleOptionsInput>
         <TextField
           disabled={videoUrl || subtitleUrl}
           value={base64URL}

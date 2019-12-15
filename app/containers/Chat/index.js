@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -20,30 +20,34 @@ import messages from './messages';
 import Welcome from './styles/Welcome';
 import Messages from './styles/Messages';
 
+function checkNode(ref) {
+  if (!ref || !ref.current || !ref.current.container) {
+    return null;
+  }
+
+  return ref.current.container.childNodes[0];
+}
+
 export function Chat({ isMobile, roomMessages }) {
-  const [messagesAmount, setMessagesAmount] = useState(roomMessages.length);
   const refContainer = useRef(null);
 
-  const scrollToBottom = smoothScroll => {
-    const node = refContainer.current.container.childNodes[0];
-    const properties = { top: node.scrollHeight - node.clientHeight };
-    if (smoothScroll) {
-      properties.behavior = 'smooth';
+  const handleRef = () => {
+    const node = checkNode(refContainer);
+    if (!node) {
+      return;
     }
+
+    const properties = { top: node.scrollHeight - node.clientHeight };
+    properties.behavior = 'smooth';
     node.scrollTo(properties);
   };
 
-  if (messagesAmount !== roomMessages.length) {
-    setMessagesAmount(roomMessages.length);
-    window.requestAnimationFrame(scrollToBottom);
-  }
-
   const selectedMessages = () => (
-    <Messages>
+    <Messages ref={handleRef}>
       <Welcome>
         <FormattedMessage {...messages.welcomeText} />
       </Welcome>
-      {roomMessages.map(msg => {
+      {roomMessages.slice(-40).map(msg => {
         const { icon, content, userContent } = getTypeVariables(msg);
         return (
           <Message
@@ -68,6 +72,20 @@ export function Chat({ isMobile, roomMessages }) {
       autoHide
       autoHideTimeout={200}
       autoHideDuration={200}
+      renderTrackVertical={props => (
+        <div
+          {...props}
+          className="track-vertical"
+          style={{ display: 'none' }}
+        />
+      )}
+      renderThumbVertical={props => (
+        <div
+          {...props}
+          className="thumb-vertical"
+          style={{ display: 'none' }}
+        />
+      )}
       universal
     >
       {renderedMessages}

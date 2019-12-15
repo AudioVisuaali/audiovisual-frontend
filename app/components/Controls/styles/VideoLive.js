@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const VideoLive = styled.div`
+const VideoLive = styled.code`
   display: flex;
   align-items: center;
   justify-content: center;

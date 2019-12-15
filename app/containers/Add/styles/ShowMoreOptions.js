@@ -8,6 +8,7 @@ const ShowMoreOptions = styled.div`
   padding: 0;
   font-size: 10px;
   cursor: pointer;
+  display: inline;
 
   &:hover {
     text-decoration: underline;

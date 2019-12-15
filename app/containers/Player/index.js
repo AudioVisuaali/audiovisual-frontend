@@ -44,7 +44,7 @@ const createTrackNode = trackRaw => {
 
   // Cross url doesn't work (browser end, NOT CORS)
   const base64 = btoa(unescape(encodeURIComponent(trackRaw)));
-  node.src = `data:image/png;base64, ${base64}`;
+  node.src = `data:TextTrack;base64, ${base64}`;
   return node;
 };
 
@@ -192,9 +192,6 @@ class Player extends React.Component {
   handlePlay = state => this.props.setIsPlaying(state);
 
   handleSeek = seconds => {
-    if (seconds === null) {
-      return;
-    }
     this.props.seekTo(seconds);
   };
 

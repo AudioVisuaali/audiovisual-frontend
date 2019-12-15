@@ -37,4 +37,8 @@ export default defineMessages({
     id: `${scope}.moreOptions`,
     defaultMessage: 'More options',
   },
+  videoTitle: {
+    id: `${scope}.videoTitle`,
+    defaultMessage: 'Video title',
+  },
 });

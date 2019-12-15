@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import Selected from './Selected';
 import Button from './Button';
 
+const cursorDefault = { cursor: 'default' };
+
 const Tab = React.forwardRef(function Tab(props, ref) {
   const {
     children,
@@ -29,10 +31,13 @@ const Tab = React.forwardRef(function Tab(props, ref) {
     }
   };
 
+  const buttonStyle = selected ? cursorDefault : null;
+
   return (
     <Button
       ref={ref}
       role="tab"
+      style={buttonStyle}
       selected={selected}
       aria-selected={selected}
       onClick={handleChange}

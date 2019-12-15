@@ -48,14 +48,21 @@ const Controls = ({
 
   const handlePlayPause = () => onPlay(!playing);
 
-  const handleSeek = e => setSeekingAt(e.target.value);
+  const handleSeek = e => {
+    // eslint-disable-next-line radix
+    setSeekingAt(parseInt(e.target.value));
+  };
   const handleOnMouseDown = () => {
     setSeeking(true);
     setIsUserSeeking(true);
   };
   const handleOnMouseUp = () => {
-    onSeek(seekingAt);
     setIsUserSeeking(false);
+    if (typeof seekingAt === 'object') {
+      return;
+    }
+
+    onSeek(seekingAt);
   };
 
   const playedOrSeek = seeking ? seekingAt : played;
@@ -67,7 +74,11 @@ const Controls = ({
           <PlayButton onClick={handlePlayPause}>
             {playing ? <PauseSVG /> : <PlaySVG />}
           </PlayButton>
-          <Stats isLive={isLive} played={playedOrSeek} duration={duration} />
+          <Stats
+            isLive={isLive}
+            played={playedOrSeek || 0}
+            duration={duration}
+          />
         </ControlLeft>
         <ControlRight>
           <Volume volume={volume} onVolume={onVolume} />
@@ -84,7 +95,7 @@ const Controls = ({
             type="range"
             min="0"
             max={duration}
-            value={playedOrSeek}
+            value={playedOrSeek || 0}
             onTouchStart={handleOnMouseDown} // touch
             onMouseDown={handleOnMouseDown}
             onTouchEnd={handleOnMouseUp} // touch
