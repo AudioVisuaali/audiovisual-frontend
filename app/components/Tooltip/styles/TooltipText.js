@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const TooltipText = styled.div`
   visibility: ${p => (p.showing ? 'visible' : 'hidden')};
-  width: 80px;
+  width: ${props => props.width}px;
   background-color: ${p => p.theme.darkRGBA[90]};
   color: #fff;
   text-align: center;
@@ -15,7 +15,7 @@ const TooltipText = styled.div`
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -40px;
+  margin-left: -${props => props.width / 2}px;
 
   /* Fade in tooltip */
   opacity: ${p => (p.showing ? 1 : 0)};

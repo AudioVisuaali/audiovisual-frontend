@@ -35,7 +35,7 @@ const buttonStyle = {
 };
 
 // eslint-disable-next-line react/prop-types
-const CodeBlock = ({ url, subtitle }) => (
+const CodeBlock = ({ url, title, subtitle }) => (
   <Code>
     <Scrollbars
       autoHide
@@ -51,6 +51,9 @@ const CodeBlock = ({ url, subtitle }) => (
           {whiteSpace(2)}&quot;url&quot;: &quot;{url}&quot;,
         </CodeRow>
         <CodeRow>
+          {whiteSpace(2)}&quot;title&quot;: &quot;{title}&quot;,
+        </CodeRow>
+        <CodeRow>
           {whiteSpace(2)}&quot;subtitle&quot;: &quot;{subtitle}&quot;,
         </CodeRow>
         <CodeRow>{'}'}</CodeRow>
@@ -61,14 +64,17 @@ const CodeBlock = ({ url, subtitle }) => (
 
 export const Base64 = () => {
   const [URL, setURL] = useState('');
+  const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
 
   const handleURLChange = e => setURL(e.target.value);
+  const handleTitleChange = e => setTitle(e.target.value);
   const handleSubtitleChange = e => setSubtitle(e.target.value);
 
   const getNewVideo = () => ({
     url: URL,
     subtitle,
+    title,
   });
 
   const getAsBase64 = btoa(JSON.stringify(getNewVideo()));
@@ -107,7 +113,13 @@ export const Base64 = () => {
         </InputGroup>
         <InputGroup>
           <Label>
-            <FormattedMessage {...messages.translationFieldURL} />
+            <FormattedMessage {...messages.videoTitle} />
+          </Label>
+          <TextField value={title} onChange={handleTitleChange} />
+        </InputGroup>
+        <InputGroup>
+          <Label>
+            <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
           </Label>
           <TextField value={subtitle} onChange={handleSubtitleChange} />
         </InputGroup>
@@ -115,7 +127,7 @@ export const Base64 = () => {
           <Label>
             <FormattedMessage {...messages.jsonPreview} />
           </Label>
-          <CodeBlock url={URL} subtitle={subtitle} />
+          <CodeBlock url={URL} title={title} subtitle={subtitle} />
         </InputGroup>
         <InputGroup>
           <Label>

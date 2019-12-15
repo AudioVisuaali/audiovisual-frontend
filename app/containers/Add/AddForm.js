@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { compose } from 'redux';
 
 import Label from 'components/Label';
@@ -17,16 +17,30 @@ import A from 'components/A';
 import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import { canPlayVideo, base64URLDecode } from 'utils/video';
 import { blur } from 'utils/jsEvents';
+import QuestionSVG from 'svgs/Question';
 
 import messages from './messages';
 import Inputs from './styles/Inputs';
 import Form from './styles/Form';
+import Tooltip from './styles/Tooltip';
 import Actions from './styles/Actions';
 import InputWrapper from './styles/InputWrapper';
 import ShowMoreOptions from './styles/ShowMoreOptions';
 import MultipleOptionsInput from './styles/MultipleOptionsInput';
 
-const AddForm = ({ addVideo }) => {
+const isFile = url => isVideo(url) || isAudio(url);
+
+const isVideo = url => {
+  const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
+  return url.match(VIDEO_EXTENSIONS);
+};
+
+const isAudio = url => {
+  const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i;
+  return url.match(AUDIO_EXTENSIONS);
+};
+
+const AddForm = ({ addVideo, intl }) => {
   const [videoUrl, setVideoUrl] = useState('');
   const [subtitleUrl, setSubtitleUrl] = useState('');
   const [base64URL, setBase64URL] = useState('');
@@ -42,6 +56,7 @@ const AddForm = ({ addVideo }) => {
   const generateNewVideo = () => ({
     url: videoUrl,
     subtitle: subtitleUrl,
+    title: videoTitle,
   });
 
   const addVideoHandler = e => {
@@ -99,21 +114,31 @@ const AddForm = ({ addVideo }) => {
   const CaptionsField = showOptione && (
     <>
       <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.videoTitle} />
-        </Label>
+        <MultipleOptionsInput>
+          <Label>
+            <FormattedMessage {...messages.videoTitle} />
+          </Label>
+          <Tooltip label={intl.formatMessage(messages.filesOnly)}>
+            <QuestionSVG />
+          </Tooltip>
+        </MultipleOptionsInput>
         <TextField
-          disabled={base64URL}
+          disabled={base64URL || !isFile(videoUrl)}
           value={subtitleUrl}
           onChange={handleOnTranslation}
         />
       </InputWrapper>
       <InputWrapper>
-        <Label>
-          <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
-        </Label>
+        <MultipleOptionsInput>
+          <Label>
+            <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
+          </Label>
+          <Tooltip width={100} label={intl.formatMessage(messages.videosOnly)}>
+            <QuestionSVG />
+          </Tooltip>
+        </MultipleOptionsInput>
         <TextField
-          disabled={base64URL}
+          disabled={base64URL || !isVideo(videoUrl)}
           value={videoTitle}
           onChange={handleTitleChange}
         />
@@ -158,6 +183,7 @@ const AddForm = ({ addVideo }) => {
 
 AddForm.propTypes = {
   addVideo: PropTypes.func,
+  intl: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -169,4 +195,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(AddForm);
+export default injectIntl(compose(withConnect)(AddForm));

@@ -29,4 +29,8 @@ export default defineMessages({
     id: `${scope}.base64Preview`,
     defaultMessage: 'Base64 preview',
   },
+  videoTitle: {
+    id: `${scope}.videoTitle`,
+    defaultMessage: 'Video title',
+  },
 });

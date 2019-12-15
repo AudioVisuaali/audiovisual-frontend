@@ -41,4 +41,12 @@ export default defineMessages({
     id: `${scope}.videoTitle`,
     defaultMessage: 'Video title',
   },
+  filesOnly: {
+    id: `${scope}.filesOnly`,
+    defaultMessage: 'Files only',
+  },
+  videosOnly: {
+    id: `${scope}.videosOnly`,
+    defaultMessage: 'Videos only',
+  },
 });
