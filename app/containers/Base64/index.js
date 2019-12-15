@@ -5,12 +5,15 @@
  */
 
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import TextField from 'components/TextField';
 import CodedWithLove from 'components/CodedWithLove';
 import Copy from 'components/CopyText';
+import QuestionSVG from 'svgs/Question';
+import { isFile, isVideo } from 'utils/url';
 
 import CodeRow from './styles/CodeRow';
 import Code from './styles/Code';
@@ -24,6 +27,8 @@ import Description from './styles/Description';
 import Comment from './styles/Comment';
 import CommentCode from './styles/CommentCode';
 import CodeContent from './styles/CodeContent';
+import Tooltip from './styles/Tooltip';
+import MultipleOptionsInput from './styles/MultipleOptionsInput';
 
 const whiteSpace = amount => ' '.repeat(amount);
 
@@ -59,7 +64,7 @@ const CodeBlock = ({ url, title, subtitle }) => (
   </Code>
 );
 
-export const Base64 = () => {
+export const Base64 = ({ intl }) => {
   const [URL, setURL] = useState('');
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
@@ -109,16 +114,37 @@ export const Base64 = () => {
           <TextField value={URL} onChange={handleURLChange} />
         </InputGroup>
         <InputGroup>
-          <Label>
-            <FormattedMessage {...messages.videoTitle} />
-          </Label>
-          <TextField value={title} onChange={handleTitleChange} />
+          <MultipleOptionsInput>
+            <Label>
+              <FormattedMessage {...messages.videoTitle} />
+            </Label>
+            <Tooltip label={intl.formatMessage(messages.filesOnly)}>
+              <QuestionSVG />
+            </Tooltip>
+          </MultipleOptionsInput>
+          <TextField
+            disabled={!isFile(URL)}
+            value={title}
+            onChange={handleTitleChange}
+          />
         </InputGroup>
         <InputGroup>
-          <Label>
-            <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
-          </Label>
-          <TextField value={subtitle} onChange={handleSubtitleChange} />
+          <MultipleOptionsInput>
+            <Label>
+              <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
+            </Label>
+            <Tooltip
+              width={100}
+              label={intl.formatMessage(messages.videosOnly)}
+            >
+              <QuestionSVG />
+            </Tooltip>
+          </MultipleOptionsInput>
+          <TextField
+            disabled={!isVideo(URL)}
+            value={subtitle}
+            onChange={handleSubtitleChange}
+          />
         </InputGroup>
         <InputGroup>
           <Label>
@@ -130,7 +156,7 @@ export const Base64 = () => {
           <Label>
             <FormattedMessage {...messages.base64Preview} />
           </Label>
-          <TextField ref={handleRef} value={getAsBase64} />
+          <TextField ref={handleRef} value={getAsBase64} readOnly />
         </InputGroup>
         <Copy copyMe={getAsBase64} style={buttonStyle} />
         <CodedWithLove />
@@ -139,4 +165,8 @@ export const Base64 = () => {
   );
 };
 
-export default Base64;
+Base64.propTypes = {
+  intl: PropTypes.object,
+};
+
+export default injectIntl(Base64);

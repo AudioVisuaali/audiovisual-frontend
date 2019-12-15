@@ -18,6 +18,7 @@ import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import { canPlayVideo, base64URLDecode } from 'utils/video';
 import { blur } from 'utils/jsEvents';
 import QuestionSVG from 'svgs/Question';
+import { isFile, isVideo } from 'utils/url';
 
 import messages from './messages';
 import Inputs from './styles/Inputs';
@@ -27,18 +28,6 @@ import Actions from './styles/Actions';
 import InputWrapper from './styles/InputWrapper';
 import ShowMoreOptions from './styles/ShowMoreOptions';
 import MultipleOptionsInput from './styles/MultipleOptionsInput';
-
-const isFile = url => isVideo(url) || isAudio(url);
-
-const isVideo = url => {
-  const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
-  return url.match(VIDEO_EXTENSIONS);
-};
-
-const isAudio = url => {
-  const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i;
-  return url.match(AUDIO_EXTENSIONS);
-};
 
 const AddForm = ({ addVideo, intl }) => {
   const [videoUrl, setVideoUrl] = useState('');

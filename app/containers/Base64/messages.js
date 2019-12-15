@@ -45,4 +45,12 @@ export default defineMessages({
     id: `${scope}.descriptionAnd`,
     defaultMessage: `and`,
   },
+  filesOnly: {
+    id: `${scope}.filesOnly`,
+    defaultMessage: 'Files only',
+  },
+  videosOnly: {
+    id: `${scope}.videosOnly`,
+    defaultMessage: 'Videos only',
+  },
 });
