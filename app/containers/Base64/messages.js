@@ -23,7 +23,7 @@ export default defineMessages({
   },
   jsonPreview: {
     id: `${scope}.jsonPreview`,
-    defaultMessage: 'JSON review',
+    defaultMessage: 'JSON preview',
   },
   base64Preview: {
     id: `${scope}.base64Preview`,
@@ -32,5 +32,17 @@ export default defineMessages({
   videoTitle: {
     id: `${scope}.videoTitle`,
     defaultMessage: 'Video title',
+  },
+  description: {
+    id: `${scope}.description`,
+    defaultMessage: `Base64 links allow you to share videos with links and subtitles without sending multiple links. The title of the video will be the filename.`,
+  },
+  descriptionConvertedWith: {
+    id: `${scope}.descriptionConvertedWith`,
+    defaultMessage: `Converted by using`,
+  },
+  descriptionAnd: {
+    id: `${scope}.descriptionAnd`,
+    defaultMessage: `and`,
   },
 });

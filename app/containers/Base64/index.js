@@ -5,10 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { compose } from 'redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import TextField from 'components/TextField';
@@ -97,12 +94,12 @@ export const Base64 = () => {
           <FormattedMessage {...messages.header} />
         </Description>
         <Comment>
-          Base64 links allow you to share videos with links and subtitles
-          without sending multiple links. The title of the video will be your
-          filename
+          <FormattedMessage {...messages.description} />
         </Comment>
         <Comment>
-          Converted with <CommentCode>btoa()</CommentCode> and{' '}
+          <FormattedMessage {...messages.descriptionConvertedWith} />{' '}
+          <CommentCode>btoa()</CommentCode>{' '}
+          <FormattedMessage {...messages.descriptionAnd} />{' '}
           <CommentCode>JSON.stringify()</CommentCode>
         </Comment>
         <InputGroup>
@@ -142,19 +139,4 @@ export const Base64 = () => {
   );
 };
 
-Base64.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(Base64);
+export default Base64;

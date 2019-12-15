@@ -100,7 +100,7 @@ const AddForm = ({ addVideo, intl }) => {
   const URLField = (
     <InputWrapper>
       <Label>
-        <FormattedMessage {...messages.videoInputFieldLabel} />
+        <FormattedMessage {...messages.sourceURLLabel} />
       </Label>
       <TextField
         disabled={base64URL}
@@ -116,7 +116,7 @@ const AddForm = ({ addVideo, intl }) => {
       <InputWrapper>
         <MultipleOptionsInput>
           <Label>
-            <FormattedMessage {...messages.videoTitle} />
+            <FormattedMessage {...messages.titleURL} />
           </Label>
           <Tooltip label={intl.formatMessage(messages.filesOnly)}>
             <QuestionSVG />
@@ -174,7 +174,7 @@ const AddForm = ({ addVideo, intl }) => {
           disabled={!isVideoAddable()}
           onClick={addVideoHandler}
         >
-          <FormattedMessage {...messages.addVideoToQueueButton} />
+          <FormattedMessage {...messages.addToQueueButton} />
         </Button>
       </Actions>
     </Form>

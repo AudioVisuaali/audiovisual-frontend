@@ -9,12 +9,12 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.Add';
 
 export default defineMessages({
-  videoInputFieldLabel: {
-    id: `${scope}.videoInputFieldLabel`,
-    defaultMessage: 'Video URL',
+  sourceURLLabel: {
+    id: `${scope}.sourceURLLabel`,
+    defaultMessage: 'URL',
   },
-  addVideoToQueueButton: {
-    id: `${scope}.addVideoToQueueButton`,
+  addToQueueButton: {
+    id: `${scope}.addToQueueButton`,
     defaultMessage: 'Add to queue',
   },
   translationFieldURL: {
@@ -37,9 +37,9 @@ export default defineMessages({
     id: `${scope}.moreOptions`,
     defaultMessage: 'More options',
   },
-  videoTitle: {
-    id: `${scope}.videoTitle`,
-    defaultMessage: 'Video title',
+  titleURL: {
+    id: `${scope}.titleURL`,
+    defaultMessage: 'Title',
   },
   filesOnly: {
     id: `${scope}.filesOnly`,
