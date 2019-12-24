@@ -10,7 +10,7 @@ const hoverBackgroundColor = p =>
 
 const RoundButton = styled(Button)`
   position: absolute;
-  top: 0;
+  top: ${p => (p.visible ? 0 : '200px')};
   right: 0;
   left: 0;
   margin: 0 auto;
@@ -23,9 +23,9 @@ const RoundButton = styled(Button)`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
   color: ${color};
   background-color: ${backgroundColor};
-  opacity: ${p => (p.visible ? '0' : '1')};
+  opacity: ${p => (p.visible ? '1' : '0')};
 
-  transition: all 1000;
+  transition: all 200;
 
   &:hover {
     background-color: ${hoverBackgroundColor};

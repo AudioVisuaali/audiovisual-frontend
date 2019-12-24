@@ -14,12 +14,12 @@ const getState = getItem(TUTORIAL_SHOW_TABS_SCOLL_DOWN) !== 'true';
 
 const FirstTimeTutorial = ({ onClick }) => {
   const [show, setShow] = useState(getState);
-  const [isVisible, setIsVisible] = useState(!getState);
+  const [isVisible, setIsVisible] = useState(getState);
 
   const handleClick = () => {
-    setIsVisible(true);
+    setIsVisible(false);
     onClick();
-    setTimeout(() => setShow(false), 200);
+    setTimeout(() => setShow(true), 200);
     setItem(TUTORIAL_SHOW_TABS_SCOLL_DOWN, 'true');
   };
 
