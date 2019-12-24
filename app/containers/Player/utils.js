@@ -1,4 +1,6 @@
 import Axios from 'axios';
+import { VOLUME, getItem } from 'utils/localStorage';
+
 import nextVideoSound from './audio';
 
 export function createTrackNode(trackRaw) {
@@ -32,4 +34,10 @@ export function playNextSound() {
   const audio = new Audio(nextVideoSound);
 
   audio.play();
+}
+
+export function getVolume() {
+  const volume = parseFloat(getItem(VOLUME));
+  const isVolume = typeof volume === 'number';
+  return isVolume ? volume : 0.2;
 }

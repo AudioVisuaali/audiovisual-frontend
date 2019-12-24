@@ -98,16 +98,18 @@ export class WebSocket extends React.Component {
       WS_ACTION_USER_USERNAME_CHANGE,
       this.props.setUsernameChange,
     );
-    this.socket.on('discconect', this.handleDisconnect);
+    this.socket.on('discconect', this.destroySocket);
   };
 
   componentWillUnmount() {
+    this.destroySocket();
+  }
+
+  destroySocket = () => {
     // Clear emit so page actions are not linked to socket
     this.props.setEmit();
     this.socket.disconnect();
-  }
-
-  handleDisconnect = () => {};
+  };
 
   emit = (type, value) => this.socket.emit(type, value);
 
@@ -157,7 +159,6 @@ const mapDispatchToProps = dispatch => ({
   setEmit: evt => dispatch(setEmit(evt)),
 });
 
-// eslint-disable-next-line prettier/prettier
 const withConnect = connect(null, mapDispatchToProps);
 
 export default injectReducer({ key, reducer })(

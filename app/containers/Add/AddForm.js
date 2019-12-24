@@ -175,7 +175,6 @@ const mapDispatchToProps = dispatch => ({
   addVideo: evt => dispatch(emitRoomAddVideo(evt)),
 });
 
-// eslint-disable-next-line prettier/prettier
 const withConnect = connect(null, mapDispatchToProps);
 
 export default injectIntl(compose(withConnect)(AddForm));
