@@ -24,26 +24,26 @@ import {
 import Controls from 'components/Controls';
 import Fullscreen from 'components/Fullscreen';
 import ShowOnHover from 'components/ShowOnHover';
-import { VOLUME, setItem, getItem } from 'utils/localStorage';
+import { VOLUME, setItem } from 'utils/localStorage';
 import { getSeeked } from 'utils/time';
 import VideoHeader from './VideoHeader';
 import VideoPlayer from './VideoPlayer';
 
 import Wrapper from './styles/Wrapper';
 import GreyBG from './styles/GreyBG';
-import { addSubtitle, playNextSound } from './utils';
+import { addSubtitle, playNextSound, getVolume } from './utils';
 
 class Player extends React.Component {
   constructor(props) {
     super();
+    const { currentVideo, playing } = props;
     this.playerRef = React.createRef();
     this.state = {
-      playing: props.playing,
-      url: props.currentVideo && props.currentVideo.url,
-      allowNext: true,
+      playing,
+      video: currentVideo,
       played: 0,
       duration: 0,
-      volume: parseFloat(getItem(VOLUME)) || 0.2,
+      volume: getVolume(),
       initialSeeked: false,
       showPlayer: true,
     };
@@ -74,7 +74,7 @@ class Player extends React.Component {
 
     const newState = {
       played: 0,
-      url: nextProps.currentVideo ? nextProps.currentVideo.url : null,
+      video: nextProps.currentVideo,
     };
 
     const noNeedOfReload =
@@ -117,7 +117,7 @@ class Player extends React.Component {
     const seconds = initialSeeked ? 0 : getSeeked(timelineAction, playing);
     this.setSeek(seconds);
 
-    this.setState({ initialSeeked: true, duration, allowNext: true });
+    this.setState({ initialSeeked: true, duration });
     this.setSubtitle();
   };
 
@@ -127,24 +127,26 @@ class Player extends React.Component {
     this.props.seekTo(seconds);
   };
 
-  handlePlayerPlay = () => {
+  handlePlayerPlay = async () => {
     this.setState({ playing: true });
     if (this.props.playing) return;
 
-    setTimeout(() => this.setState({ playing: false }), 0);
+    await this.forceUpdate();
+
+    this.setState({ playing: false });
   };
 
-  handlePlayerPause = () => {
+  handlePlayerPause = async () => {
     this.setState({ playing: false });
     if (!this.props.playing) return;
 
-    setTimeout(() => this.setState({ playing: true }), 0);
+    await this.forceUpdate();
+
+    this.setState({ playing: true });
   };
 
-  handleEnded = () => {
-    if (!this.state.allowNext) return;
-    this.setState({ allowNext: false });
-    this.props.nextVideo();
+  handleEnded = async () => {
+    this.setState({ played: 0 }, this.props.nextVideo);
   };
 
   setSubtitle = () => {
@@ -157,50 +159,55 @@ class Player extends React.Component {
     this.playerRef = ref;
   };
 
+  getPlayer = (toggleFullscreen, isFullscreen) => {
+    const { duration, played, playing, video, volume, showPlayer } = this.state;
+
+    if (!showPlayer) {
+      return null;
+    }
+
+    const isLive = video.type === 'twitch-live';
+
+    return (
+      <Wrapper>
+        <VideoPlayer
+          onDuration={this.handleDuration}
+          onPause={this.handlePlayerPause}
+          onPlay={this.handlePlayerPlay}
+          onProgress={this.handleProgress}
+          onEnded={this.handleEnded}
+          ref={this.handlePlayerRef}
+          playing={playing}
+          url={video.url}
+          volume={volume}
+        />
+        <ShowOnHover show={!playing}>
+          <VideoHeader video={video} />
+          <Controls
+            onToggleFullscreen={toggleFullscreen}
+            onVolume={this.handleVolume}
+            onSeek={this.handleSeek}
+            onPlay={this.handlePlay}
+            duration={duration}
+            isFullscreen={isFullscreen}
+            playing={playing}
+            played={played}
+            volume={volume}
+            isLive={isLive}
+          />
+        </ShowOnHover>
+      </Wrapper>
+    );
+  };
+
   render() {
     const { currentVideo } = this.props;
-    const { duration, played, playing, url, volume, showPlayer } = this.state;
 
-    if (!currentVideo || !showPlayer) {
+    if (!currentVideo) {
       return <GreyBG />;
     }
 
-    const isLive = currentVideo.type === 'twitch-live';
-
-    return (
-      <Fullscreen style={{ height: '100%' }}>
-        {(toggleFullscreen, isFullscreen) => (
-          <Wrapper>
-            <VideoPlayer
-              onDuration={this.handleDuration}
-              onPause={this.handlePlayerPause}
-              onPlay={this.handlePlayerPlay}
-              onProgress={this.handleProgress}
-              onEnded={this.handleEnded}
-              ref={this.handlePlayerRef}
-              playing={playing}
-              url={url}
-              volume={volume}
-            />
-            <ShowOnHover show={!playing}>
-              <VideoHeader video={currentVideo} />
-              <Controls
-                onToggleFullscreen={toggleFullscreen}
-                onVolume={this.handleVolume}
-                onSeek={this.handleSeek}
-                onPlay={this.handlePlay}
-                duration={duration}
-                isFullscreen={isFullscreen}
-                playing={playing}
-                played={played}
-                volume={volume}
-                isLive={isLive}
-              />
-            </ShowOnHover>
-          </Wrapper>
-        )}
-      </Fullscreen>
-    );
+    return <Fullscreen style={{ height: '100%' }}>{this.getPlayer}</Fullscreen>;
   }
 }
 
@@ -230,7 +237,6 @@ const mapDispatchToProps = dispatch => ({
   nextVideo: () => dispatch(emitRoomNextVideo()),
 });
 
-// eslint-disable-next-line prettier/prettier
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(Player);
