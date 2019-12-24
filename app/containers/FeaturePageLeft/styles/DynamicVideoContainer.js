@@ -5,6 +5,7 @@ import fadeAndSlideInFromTop from 'styles/animations/fadeAndSlideInFromTop';
 
 const fixed = css`
   position: fixed;
+  font-size: 10px;
   z-index: 999;
   top: 30px;
   right: 30px;
@@ -37,6 +38,7 @@ const fixed = css`
 const normal = css`
   width: 100%;
   height: 100%;
+  font-size: 16px;
 
   animation: ${fadeIn} ease 450ms;
 `;

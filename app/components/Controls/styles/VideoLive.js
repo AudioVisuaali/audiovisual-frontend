@@ -4,7 +4,7 @@ const VideoLive = styled.code`
   display: flex;
   align-items: center;
   justify-content: center;
-  color #fff;
+  color: #fff;
 `;
 
 export default VideoLive;
