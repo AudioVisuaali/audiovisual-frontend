@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -25,25 +25,29 @@ function checkNode(ref) {
     return null;
   }
 
-  return ref.current.container.childNodes[0];
+  return ref.current.container.firstChild;
 }
 
 export function Chat({ isMobile, roomMessages }) {
   const refContainer = useRef(null);
 
-  const handleRef = () => {
+  useEffect(() => scrollBottom(), []);
+
+  const scrollBottom = (smooth = true) => {
     const node = checkNode(refContainer);
     if (!node) {
       return;
     }
 
     const properties = { top: node.scrollHeight - node.clientHeight };
-    properties.behavior = 'smooth';
-    node.scrollTo(properties);
+    if (smooth) {
+      properties.behavior = 'smooth';
+    }
+    setTimeout(() => node.scrollTo(properties), 20);
   };
 
   const selectedMessages = () => (
-    <Messages ref={handleRef}>
+    <Messages ref={scrollBottom}>
       <Welcome>
         <FormattedMessage {...messages.welcomeText} />
       </Welcome>

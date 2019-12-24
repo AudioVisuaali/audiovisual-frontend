@@ -44,8 +44,8 @@ const AddForm = ({ addVideo, intl }) => {
 
   const generateNewVideo = () => ({
     url: videoUrl,
-    subtitle: subtitleUrl,
-    title: videoTitle,
+    subtitle: videoTitle,
+    title: subtitleUrl,
   });
 
   const addVideoHandler = e => {
@@ -158,11 +158,7 @@ const AddForm = ({ addVideo, intl }) => {
       </Inputs>
 
       <Actions>
-        <Button
-          type="submit"
-          disabled={!isVideoAddable()}
-          onClick={addVideoHandler}
-        >
+        <Button type="submit" disabled={!isVideoAddable()}>
           <FormattedMessage {...messages.addToQueueButton} />
         </Button>
       </Actions>
@@ -179,9 +175,7 @@ const mapDispatchToProps = dispatch => ({
   addVideo: evt => dispatch(emitRoomAddVideo(evt)),
 });
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+// eslint-disable-next-line prettier/prettier
+const withConnect = connect(null, mapDispatchToProps);
 
 export default injectIntl(compose(withConnect)(AddForm));

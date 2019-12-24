@@ -24,8 +24,6 @@ import Actions from './Actions';
 const VideosManagement = () => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleActiveTab = type => setActiveTab(type);
-
   const getTab = key => {
     switch (key) {
       case 0:
@@ -42,7 +40,7 @@ const VideosManagement = () => {
     <Wrapper>
       <MenusWrapper>
         <MenuWrapper>
-          <Tabs value={activeTab} onChange={handleActiveTab}>
+          <Tabs value={activeTab} onChange={setActiveTab}>
             <Tab>
               <FormattedMessage {...messages.queue} />
             </Tab>

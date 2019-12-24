@@ -94,9 +94,7 @@ const mapDispatchToProps = dispatch => ({
   addVideo: evt => dispatch(emitRoomAddVideo(evt)),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+// eslint-disable-next-line prettier/prettier
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(History);

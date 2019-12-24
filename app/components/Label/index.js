@@ -6,6 +6,7 @@ const Label = styled.label`
   color: ${color};
   margin-bottom: 2px;
   display: block;
+  font-size: 12px;
 `;
 
 export default Label;

@@ -5,18 +5,14 @@ import A from 'components/A';
 import PlatFormIcon from 'components/PlatformIcon';
 import VideoHeaderContent from './styles/VideoHeaderContent';
 
-const VideoHeader = ({ video }) => {
-  if (!video) return null;
-
-  return (
-    <VideoHeaderContent>
-      <A href={video.url}>
-        <PlatFormIcon type={video.type} />
-        {video.title}
-      </A>
-    </VideoHeaderContent>
-  );
-};
+const VideoHeader = ({ video }) => (
+  <VideoHeaderContent>
+    <A href={video.url}>
+      <PlatFormIcon type={video.type} />
+      {video.title}
+    </A>
+  </VideoHeaderContent>
+);
 
 VideoHeader.propTypes = {
   video: PropTypes.shape({

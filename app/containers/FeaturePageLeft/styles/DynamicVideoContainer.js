@@ -8,6 +8,8 @@ const fixed = css`
   z-index: 999;
   top: 30px;
   right: 30px;
+  border-radius: 8px;
+  overflow: hidden;
 
   width: 800px;
   height: 450px;

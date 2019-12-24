@@ -10,6 +10,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import ErrorBoundary from 'containers/ErrorBoundary';
 import Base64 from 'containers/Base64/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -19,7 +20,7 @@ import { pathHome, pathRoom, pathBase64, pathNotFound } from 'utils/paths';
 import GlobalStyle from '../../global-styles';
 
 const App = () => (
-  <>
+  <ErrorBoundary>
     <Helmet titleTemplate="%s - Visuals" defaultTitle="Visuals">
       <meta name="description" content="Visuals for watching vidoes together" />
     </Helmet>
@@ -31,7 +32,7 @@ const App = () => (
       <Redirect to={pathNotFound} />
     </Switch>
     <GlobalStyle />
-  </>
+  </ErrorBoundary>
 );
 
 export default App;

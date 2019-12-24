@@ -19,20 +19,18 @@ import messages from './messages';
 import Users from './Users';
 import Wrapper from './Wrapper';
 
-export function UsersInformation({ viewers }) {
-  return (
-    <Wrapper>
-      <Label>
-        <FormattedMessage {...messages.viewers} />
-      </Label>
-      <Users>
-        {viewers.map(v => (
-          <User key={v.unique} user={v} />
-        ))}
-      </Users>
-    </Wrapper>
-  );
-}
+export const UsersInformation = ({ viewers }) => (
+  <Wrapper>
+    <Label>
+      <FormattedMessage {...messages.viewers} />
+    </Label>
+    <Users>
+      {viewers.map(v => (
+        <User key={v.unique} user={v} />
+      ))}
+    </Users>
+  </Wrapper>
+);
 
 UsersInformation.propTypes = {
   viewers: PropTypes.arrayOf(
@@ -48,9 +46,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = disaptch => ({ disaptch });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+// eslint-disable-next-line prettier/prettier
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(UsersInformation);

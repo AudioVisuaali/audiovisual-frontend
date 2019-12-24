@@ -60,8 +60,9 @@ class FeaturePage extends React.Component {
 
   render() {
     const { isConnected } = this.props;
+
     return (
-      <Wrapper>
+      <>
         <Helmet>
           <title>Feature Page</title>
           <meta
@@ -70,8 +71,8 @@ class FeaturePage extends React.Component {
           />
         </Helmet>
         <WebSocket />
-        {isConnected && this.featurePage()}
-      </Wrapper>
+        {isConnected && <Wrapper>{this.featurePage()}</Wrapper>}
+      </>
     );
   }
 }
