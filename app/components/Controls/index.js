@@ -50,7 +50,7 @@ const Controls = ({
 
   const handleSeek = e => {
     // eslint-disable-next-line radix
-    setSeekingAt(parseInt(e.target.value));
+    setSeekingAt(e.target.value);
   };
   const handleOnMouseDown = () => {
     setSeeking(true);
