@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Add from 'containers/Add';
 import History from 'containers/History';
@@ -20,8 +20,9 @@ import MenusWrapper from './styles/MenusWrapper';
 import MenuWrapper from './styles/MenuWrapper';
 import messages from './messages';
 import Actions from './Actions';
+import FirstTimeTutorial from './FirstTimeTutorial';
 
-const VideosManagement = () => {
+const VideosManagement = ({ onRequestScroll }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const getTab = key => {
@@ -56,6 +57,7 @@ const VideosManagement = () => {
           <Actions />
         </MenuWrapper>
       </MenusWrapper>
+      <FirstTimeTutorial onClick={onRequestScroll} />
       <Contents key={activeTab} /* forces remount for animation */>
         {getTab(activeTab)}
       </Contents>
@@ -64,7 +66,7 @@ const VideosManagement = () => {
 };
 
 VideosManagement.propTypes = {
-  intl: PropTypes.object,
+  onRequestScroll: PropTypes.func,
 };
 
-export default injectIntl(VideosManagement);
+export default VideosManagement;

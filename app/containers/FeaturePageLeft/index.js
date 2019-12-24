@@ -27,6 +27,7 @@ export class FeaturePageLeft extends React.Component {
   constructor() {
     super();
     this.playerContainer = React.createRef();
+    this.scrollBars = React.createRef();
     this.state = {
       playerHeight: 0,
       smallPlayer: false,
@@ -62,6 +63,17 @@ export class FeaturePageLeft extends React.Component {
     this.setState({ smallPlayer: isLargePlayer });
   };
 
+  handleRequestScroll = () => {
+    const { playerHeight } = this.state;
+    const node = this.scrollBars.current.container.firstChild;
+
+    const fromTop = playerHeight < 500 ? 200 : playerHeight - 200;
+
+    const properties = { top: fromTop };
+    properties.behavior = 'smooth';
+    node.scrollTo(properties);
+  };
+
   handlePopUp = value => this.setState({ isVideoManagementSelected: value });
 
   innerContent = () => {
@@ -78,7 +90,7 @@ export class FeaturePageLeft extends React.Component {
           </DynamicVideoContainer>
         </VideoContainer>
         {!isMobile || (isMobile && isVideoManagementSelected) ? (
-          <VideosManagement />
+          <VideosManagement onRequestScroll={this.handleRequestScroll} />
         ) : (
           <FeaturePageRight isMobile={isMobile} />
         )}
@@ -95,6 +107,7 @@ export class FeaturePageLeft extends React.Component {
 
     return (
       <Scrollbars
+        ref={this.scrollBars}
         onUpdate={this.handleScroll}
         autoHide
         autoHideTimeout={200}
