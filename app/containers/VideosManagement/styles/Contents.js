@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import device from 'styles/device';
 import fadeIn from 'styles/animations/fadeIn';
+import fadeOut from 'styles/animations/fadeOut';
 
 const Contents = styled.div`
   min-height: 600px;
@@ -9,7 +10,8 @@ const Contents = styled.div`
   padding-bottom: 600px;
   margin: 0px auto;
 
-  animation: ${fadeIn} 800ms;
+  animation: ${p => (p.hidden ? fadeOut : fadeIn)}
+    ${p => (p.hidden ? '60ms forwards' : '120ms')};
 
   @media screen and (${device.laptopL}) {
     padding-bottom: 0;

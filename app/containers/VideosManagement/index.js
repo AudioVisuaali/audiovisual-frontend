@@ -32,7 +32,6 @@ function getLastTab() {
   const parsed = parseInt(active, 10);
 
   if (Number.isNaN(parsed)) {
-    console.log('isnan');
     setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, 0);
     return 0;
   }
@@ -42,9 +41,21 @@ function getLastTab() {
 
 const VideosManagement = ({ onRequestScroll }) => {
   const [activeTab, setActiveTab] = useState(getLastTab());
+  const [activeTabShowing, setActiveTabShowing] = useState(getLastTab());
+  const [hidden, setHidden] = useState(false);
 
   const handleChange = value => {
+    if (value === activeTab) {
+      return;
+    }
+
     setActiveTab(value);
+    setHidden(true);
+
+    setTimeout(() => {
+      setHidden(false);
+      setActiveTabShowing(value);
+    }, 60);
     setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, value);
   };
 
@@ -81,9 +92,7 @@ const VideosManagement = ({ onRequestScroll }) => {
         </MenuWrapper>
       </MenusWrapper>
       <FirstTimeTutorial onClick={onRequestScroll} />
-      <Contents key={activeTab} /* forces remount for animation */>
-        {getTab(activeTab)}
-      </Contents>
+      <Contents hidden={hidden}>{getTab(activeTabShowing)}</Contents>
     </Wrapper>
   );
 };
