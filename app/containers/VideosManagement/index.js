@@ -19,6 +19,7 @@ import {
   getItem,
 } from 'utils/localStorage';
 
+import Shadow from './styles/Shadow';
 import Wrapper from './styles/Wrapper';
 import Contents from './styles/Contents';
 import MenusWrapper from './styles/MenusWrapper';
@@ -90,6 +91,7 @@ const VideosManagement = ({ onRequestScroll }) => {
         <MenuWrapper>
           <Actions />
         </MenuWrapper>
+        <Shadow />
       </MenusWrapper>
       <FirstTimeTutorial onClick={onRequestScroll} />
       <Contents showing={showing} key={activeTabShowing}>
