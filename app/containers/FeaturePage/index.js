@@ -14,7 +14,7 @@ import WebSocket from 'containers/WebSocket';
 import FeaturePageRight from 'containers/FeaturePageRight';
 import FeaturePageLeft from 'containers/FeaturePageLeft';
 import { makeSelectEmit } from 'containers/WebSocket/selectors';
-import LoadingDots from 'components/LoadingDots';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 import Wrapper from './Wrapper';
 import LoadingContainer from './LoadingContainer';
@@ -56,7 +56,7 @@ class FeaturePage extends React.Component {
     if (!isConnected) {
       return (
         <LoadingContainer>
-          <LoadingDots />
+          <LoadingIndicator />
         </LoadingContainer>
       );
     }
