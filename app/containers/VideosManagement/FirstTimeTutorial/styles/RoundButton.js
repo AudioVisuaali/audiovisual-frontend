@@ -38,7 +38,7 @@ const RoundButton = styled(Button)`
     width: 30px;
   }
 
-  @keyframes bounceBack {
+  @keyframes bouncing {
     0% {
       transform: translateY(-38%);
     }
@@ -50,7 +50,7 @@ const RoundButton = styled(Button)`
     }
   }
 
-  animation: bounceBack 5s infinite;
+  animation: bouncing 5s infinite;
 `;
 
 export default RoundButton;
