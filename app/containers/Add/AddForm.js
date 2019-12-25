@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -35,6 +35,11 @@ const AddForm = ({ addVideo, intl }) => {
   const [base64URL, setBase64URL] = useState('');
   const [videoTitle, setVideoTitle] = useState('');
   const [showOptione, setShowOptione] = useState(false);
+  const videoURLRef = useRef(null);
+
+  useEffect(() => {
+    videoURLRef.current.focus();
+  }, []);
 
   const handleShowMoreOptions = () => setShowOptione(true);
   const handleOnTranslation = e => setSubtitleUrl(e.target.value);
@@ -92,6 +97,7 @@ const AddForm = ({ addVideo, intl }) => {
         <FormattedMessage {...messages.sourceURLLabel} />
       </Label>
       <TextField
+        ref={videoURLRef}
         disabled={base64URL}
         value={videoUrl}
         onChange={handleURLChange}
