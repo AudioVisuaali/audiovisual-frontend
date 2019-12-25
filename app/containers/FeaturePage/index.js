@@ -14,8 +14,10 @@ import WebSocket from 'containers/WebSocket';
 import FeaturePageRight from 'containers/FeaturePageRight';
 import FeaturePageLeft from 'containers/FeaturePageLeft';
 import { makeSelectEmit } from 'containers/WebSocket/selectors';
+import LoadingDots from 'components/LoadingDots';
 
 import Wrapper from './Wrapper';
+import LoadingContainer from './LoadingContainer';
 
 class FeaturePage extends React.Component {
   constructor() {
@@ -48,19 +50,26 @@ class FeaturePage extends React.Component {
   };
 
   featurePage = () => {
+    const { isConnected } = this.props;
     const { isMobile } = this.state;
 
+    if (!isConnected) {
+      return (
+        <LoadingContainer>
+          <LoadingDots />
+        </LoadingContainer>
+      );
+    }
+
     return (
-      <>
+      <Wrapper>
         <FeaturePageLeft isMobile={isMobile} />
         {!isMobile && <FeaturePageRight />}
-      </>
+      </Wrapper>
     );
   };
 
   render() {
-    const { isConnected } = this.props;
-
     return (
       <>
         <Helmet>
@@ -71,7 +80,7 @@ class FeaturePage extends React.Component {
           />
         </Helmet>
         <WebSocket />
-        {isConnected && <Wrapper>{this.featurePage()}</Wrapper>}
+        {this.featurePage()}
       </>
     );
   }
