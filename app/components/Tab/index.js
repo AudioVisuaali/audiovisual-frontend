@@ -4,7 +4,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Selected from './Selected';
 import Button from './Button';
 
 const cursorDefault = { cursor: 'default' };
@@ -45,7 +44,6 @@ const Tab = React.forwardRef(function Tab(props, ref) {
       {...other}
     >
       {label || children}
-      <Selected selected={selected} />
     </Button>
   );
 });
