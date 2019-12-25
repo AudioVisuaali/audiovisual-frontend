@@ -13,7 +13,7 @@ const RoundButton = styled(Button)`
   top: ${p => (p.visible ? 0 : '200px')};
   right: 0;
   left: 0;
-  z-index: 20;
+  z-index: 24;
   margin: 0 auto;
   height: 50px;
   width: 50px;

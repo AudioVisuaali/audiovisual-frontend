@@ -45,6 +45,11 @@ const VideosManagement = ({ onRequestScroll }) => {
   const [activeTabShowing, setActiveTabShowing] = useState(getLastTab());
   const [showing, setShowing] = useState(true);
 
+  const handleRequestScroll = () => {
+    onRequestScroll();
+    handleChange(1);
+  };
+
   const handleChange = value => {
     if (value === activeTab) {
       return;
@@ -91,9 +96,9 @@ const VideosManagement = ({ onRequestScroll }) => {
         <MenuWrapper>
           <Actions />
         </MenuWrapper>
+        <FirstTimeTutorial onClick={handleRequestScroll} />
         <Shadow />
       </MenusWrapper>
-      <FirstTimeTutorial onClick={onRequestScroll} />
       <Contents showing={showing} key={activeTabShowing}>
         {getTab(activeTabShowing)}
       </Contents>

@@ -8,6 +8,7 @@ import {
 import ChevronDownSVG from 'svgs/ChevronDown';
 
 import Wrapper from './styles/Wrapper';
+import Container from './styles/Container';
 import RoundButton from './styles/RoundButton';
 
 const getState = getItem(TUTORIAL_SHOW_TABS_SCOLL_DOWN) !== 'true';
@@ -29,9 +30,11 @@ const FirstTimeTutorial = ({ onClick }) => {
 
   return (
     <Wrapper>
-      <RoundButton visible={isVisible} onClick={handleClick}>
-        <ChevronDownSVG />
-      </RoundButton>
+      <Container>
+        <RoundButton visible={isVisible} onClick={handleClick}>
+          <ChevronDownSVG />
+        </RoundButton>
+      </Container>
     </Wrapper>
   );
 };
