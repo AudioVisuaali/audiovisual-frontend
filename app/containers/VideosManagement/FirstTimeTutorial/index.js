@@ -19,7 +19,7 @@ const FirstTimeTutorial = ({ onClick }) => {
   const handleClick = () => {
     setIsVisible(false);
     onClick();
-    setTimeout(() => setShow(true), 200);
+    setTimeout(() => setShow(false), 200);
     setItem(TUTORIAL_SHOW_TABS_SCOLL_DOWN, 'true');
   };
 
