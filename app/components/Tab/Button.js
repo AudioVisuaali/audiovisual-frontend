@@ -22,7 +22,8 @@ const Button = styled.button`
   color: ${color};
   padding: 12px 20px;
 
-  transition: background-color 200ms;
+  transition-property: background-color, color;
+  transition-duration: 200ms;
 
   & svg {
     width: 12px;
