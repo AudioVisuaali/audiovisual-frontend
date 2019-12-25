@@ -46,8 +46,6 @@ const Controls = ({
     setSeeking(false);
   }, [played]);
 
-  const handlePlayPause = () => onPlay(!playing);
-
   const handleSeek = e => {
     // eslint-disable-next-line radix
     setSeekingAt(e.target.value);
@@ -71,7 +69,7 @@ const Controls = ({
     <Wrapper>
       <ControlWrapper>
         <ControlLeft>
-          <PlayButton onClick={handlePlayPause}>
+          <PlayButton onClick={onPlay}>
             {playing ? <PauseSVG /> : <PlaySVG />}
           </PlayButton>
           <Stats

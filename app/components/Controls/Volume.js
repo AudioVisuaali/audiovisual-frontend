@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -75,6 +75,10 @@ const SliderContainer = styled.div`
 const Volume = ({ volume, onVolume }) => {
   const [volumE, setVolume] = useState(volume);
   const [muted, setMuted] = useState(volume === 0);
+
+  useEffect(() => {
+    setVolume(volume);
+  }, [volume]);
 
   const onClick = () => {
     if (muted) {

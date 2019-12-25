@@ -20,7 +20,9 @@ import {
   emitRoomSeek,
   emitRoomIsPlaying,
   emitRoomNextVideo,
+  emitRoomAddVideo,
 } from 'containers/WebSocket/actions';
+import Hotkeys from 'containers/Hotkeys';
 import Controls from 'components/Controls';
 import Fullscreen from 'components/Fullscreen';
 import ShowOnHover from 'components/ShowOnHover';
@@ -121,10 +123,33 @@ class Player extends React.Component {
     this.setSubtitle();
   };
 
-  handlePlay = state => this.props.setIsPlaying(state);
+  handlePlay = () => {
+    const { playing } = this.state;
+    this.props.setIsPlaying(!playing);
+  };
+
+  rewind = () => {
+    const { played } = this.state;
+    const newPlayed = played < 5 ? 0 : played - 5;
+    this.handleSeek(newPlayed);
+  };
+
+  windForward = () => {
+    const { played, duration } = this.state;
+    let newPlayed = played + 5;
+    if (newPlayed > duration) {
+      newPlayed = duration;
+    }
+    this.handleSeek(newPlayed);
+  };
 
   handleSeek = seconds => {
     this.props.seekTo(seconds);
+  };
+
+  handleRepeat = () => {
+    const { video } = this.state;
+    this.props.addVideo(video.repeat);
   };
 
   handlePlayerPlay = async () => {
@@ -159,6 +184,14 @@ class Player extends React.Component {
     this.playerRef = ref;
   };
 
+  handleToggleMute = () => {
+    const { volume } = this.state;
+
+    this.setState({
+      volume: volume ? 0 : getVolume(),
+    });
+  };
+
   getPlayer = (toggleFullscreen, isFullscreen) => {
     const { duration, played, playing, video, volume, showPlayer } = this.state;
 
@@ -182,6 +215,14 @@ class Player extends React.Component {
           volume={volume}
         />
         <ShowOnHover show={!playing}>
+          <Hotkeys
+            onToggleFullscreen={toggleFullscreen}
+            onForward={this.windForward}
+            onRewind={this.rewind}
+            onRepeat={this.handleRepeat}
+            onTogglePlay={this.handlePlay}
+            onToggleMute={this.handleToggleMute}
+          />
           <VideoHeader video={video} />
           <Controls
             onToggleFullscreen={toggleFullscreen}
@@ -218,6 +259,7 @@ Player.propTypes = {
   timelineAction: PropTypes.object,
   currentVideo: PropTypes.object,
   playing: PropTypes.bool,
+  addVideo: PropTypes.func.isRequired,
   seek: PropTypes.shape({
     updatedAt: PropTypes.number.isRequired,
     seekTo: PropTypes.number,
@@ -234,6 +276,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setIsPlaying: evt => dispatch(emitRoomIsPlaying(evt)),
   seekTo: evt => dispatch(emitRoomSeek(evt)),
+  addVideo: evt => dispatch(emitRoomAddVideo(evt)),
   nextVideo: () => dispatch(emitRoomNextVideo()),
 });
 
