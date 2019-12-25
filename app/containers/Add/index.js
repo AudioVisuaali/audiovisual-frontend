@@ -13,9 +13,10 @@ import SupportedPlatforms from 'components/SupportedPlatforms';
 import messages from './messages';
 import AddForm from './AddForm';
 import Platforms from './styles/Platforms';
+import Wrapper from './styles/Wrapper';
 
 const Add = () => (
-  <>
+  <Wrapper>
     <BigLabel>
       <FormattedMessage {...messages.title} />
     </BigLabel>
@@ -27,7 +28,7 @@ const Add = () => (
     <Platforms>
       <SupportedPlatforms />
     </Platforms>
-  </>
+  </Wrapper>
 );
 
 export default Add;

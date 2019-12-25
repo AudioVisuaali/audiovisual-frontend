@@ -42,7 +42,7 @@ function getLastTab() {
 const VideosManagement = ({ onRequestScroll }) => {
   const [activeTab, setActiveTab] = useState(getLastTab());
   const [activeTabShowing, setActiveTabShowing] = useState(getLastTab());
-  const [hidden, setHidden] = useState(false);
+  const [showing, setShowing] = useState(true);
 
   const handleChange = value => {
     if (value === activeTab) {
@@ -50,12 +50,12 @@ const VideosManagement = ({ onRequestScroll }) => {
     }
 
     setActiveTab(value);
-    setHidden(true);
+    setShowing(false);
 
     setTimeout(() => {
-      setHidden(false);
+      setShowing(true);
       setActiveTabShowing(value);
-    }, 60);
+    }, 80);
     setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, value);
   };
 
@@ -92,7 +92,9 @@ const VideosManagement = ({ onRequestScroll }) => {
         </MenuWrapper>
       </MenusWrapper>
       <FirstTimeTutorial onClick={onRequestScroll} />
-      <Contents hidden={hidden}>{getTab(activeTabShowing)}</Contents>
+      <Contents showing={showing} key={activeTabShowing}>
+        {getTab(activeTabShowing)}
+      </Contents>
     </Wrapper>
   );
 };

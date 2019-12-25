@@ -7,8 +7,8 @@ const fixed = css`
   position: fixed;
   font-size: 10px;
   z-index: 999;
-  top: 30px;
-  right: 30px;
+  top: ${p => (p.sticky ? 70 : 30)}px;
+  right: ${p => (p.sticky ? 50 : 30)}px;
   border-radius: 8px;
   overflow: hidden;
 
@@ -16,6 +16,8 @@ const fixed = css`
   height: 450px;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.3),
     0px 4px 5px 0px rgba(0, 0, 0, 0.21), 0px 1px 10px 0px rgba(0, 0, 0, 0.4);
+
+  transition: top 200ms, right 200ms;
 
   animation: ${fadeAndSlideInFromTop} ease 500ms;
 

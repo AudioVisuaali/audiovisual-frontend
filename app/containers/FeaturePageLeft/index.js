@@ -31,6 +31,7 @@ export class FeaturePageLeft extends React.Component {
     this.scrollBars = React.createRef();
     this.state = {
       playerHeight: 0,
+      isFixedPlayer: false,
       smallPlayer: false,
       isVideoManagementSelected: true,
     };
@@ -56,19 +57,24 @@ export class FeaturePageLeft extends React.Component {
   };
 
   handleScroll = e => {
-    const { smallPlayer } = this.state;
+    const { smallPlayer, playerHeight, isFixedPlayer } = this.state;
     const isLargePlayer = e.scrollTop > smallPlayerOffset;
+    const newIsFixedPlayer = e.scrollTop > playerHeight;
 
-    if (isLargePlayer === smallPlayer) return;
+    if (isLargePlayer !== smallPlayer) {
+      this.setState({ smallPlayer: isLargePlayer });
+    }
 
-    this.setState({ smallPlayer: isLargePlayer });
+    if (newIsFixedPlayer !== isFixedPlayer) {
+      this.setState({ isFixedPlayer: newIsFixedPlayer });
+    }
   };
 
   handleRequestScroll = () => {
     const { playerHeight } = this.state;
     const node = this.scrollBars.current.container.firstChild;
 
-    const fromTop = playerHeight < 500 ? 200 : playerHeight - 200;
+    const fromTop = playerHeight < 500 ? 200 : playerHeight - 60;
 
     const properties = { top: fromTop };
     properties.behavior = 'smooth';
@@ -79,7 +85,12 @@ export class FeaturePageLeft extends React.Component {
 
   innerContent = () => {
     const { isMobile, currentVideo } = this.props;
-    const { isVideoManagementSelected, smallPlayer, playerHeight } = this.state;
+    const {
+      isVideoManagementSelected,
+      smallPlayer,
+      playerHeight,
+      isFixedPlayer,
+    } = this.state;
 
     const smallPlayerAndAllowed = currentVideo && smallPlayer;
     const VideoPlayerStyle = { height: playerHeight };
@@ -88,7 +99,10 @@ export class FeaturePageLeft extends React.Component {
       <>
         <VideoContainerPixelFix style={pixelFixStyle}>
           <VideoContainer style={VideoPlayerStyle}>
-            <DynamicVideoContainer dynamic={smallPlayerAndAllowed}>
+            <DynamicVideoContainer
+              sticky={isFixedPlayer}
+              dynamic={smallPlayerAndAllowed}
+            >
               <Player />
             </DynamicVideoContainer>
           </VideoContainer>

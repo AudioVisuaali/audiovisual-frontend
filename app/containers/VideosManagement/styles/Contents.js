@@ -5,16 +5,16 @@ import fadeOut from 'styles/animations/fadeOut';
 
 const Contents = styled.div`
   min-height: 600px;
-  max-width: 1000px;
+  max-width: 800px;
   padding: 40px 30px;
-  padding-bottom: 600px;
+  padding-bottom: 100px;
   margin: 0px auto;
 
-  animation: ${p => (p.hidden ? fadeOut : fadeIn)}
-    ${p => (p.hidden ? '60ms forwards' : '120ms')};
+  animation: ${p => (p.showing ? fadeIn : fadeOut)}
+    ${p => (p.showing ? '120ms' : '80ms forwards')};
 
   @media screen and (${device.laptopL}) {
-    padding-bottom: 0;
+    padding-bottom: 40px;
     min-height: auto;
   }
 `;
