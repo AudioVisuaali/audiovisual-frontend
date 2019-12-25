@@ -3,6 +3,7 @@ export const TOKEN = 'TOKEN';
 export const VOLUME = 'VOLUME';
 export const LOCALE = 'LOCALE';
 export const THEME = 'THEME';
+export const ACTIVE_VIDEO_MANAGEMENT_TAB = 'ACTIVE_VIDEO_MANAGEMENT_TAB';
 export const TUTORIAL_SHOW_TABS_SCOLL_DOWN = 'TUTORIAL_SHOW_TABS_SCOLL_DOWN';
 
 export function setItem(name, value) {

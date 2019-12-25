@@ -13,6 +13,11 @@ import History from 'containers/History';
 import Queue from 'containers/Queue';
 import Tabs from 'components/Tabs';
 import Tab from 'components/Tab';
+import {
+  ACTIVE_VIDEO_MANAGEMENT_TAB,
+  setItem,
+  getItem,
+} from 'utils/localStorage';
 
 import Wrapper from './styles/Wrapper';
 import Contents from './styles/Contents';
@@ -22,8 +27,26 @@ import messages from './messages';
 import Actions from './Actions';
 import FirstTimeTutorial from './FirstTimeTutorial';
 
+function getLastTab() {
+  const active = getItem(ACTIVE_VIDEO_MANAGEMENT_TAB);
+  const parsed = parseInt(active, 10);
+
+  if (Number.isNaN(parsed)) {
+    console.log('isnan');
+    setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, 0);
+    return 0;
+  }
+
+  return parsed;
+}
+
 const VideosManagement = ({ onRequestScroll }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(getLastTab());
+
+  const handleChange = value => {
+    setActiveTab(value);
+    setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, value);
+  };
 
   const getTab = key => {
     switch (key) {
@@ -41,7 +64,7 @@ const VideosManagement = ({ onRequestScroll }) => {
     <Wrapper>
       <MenusWrapper>
         <MenuWrapper>
-          <Tabs value={activeTab} onChange={setActiveTab}>
+          <Tabs value={activeTab} onChange={handleChange}>
             <Tab>
               <FormattedMessage {...messages.queue} />
             </Tab>
