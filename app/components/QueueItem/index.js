@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import RandomSVG from 'svgs/Random';
@@ -17,7 +17,7 @@ import ForwardSVG from 'svgs/Forward';
 import A from 'components/A';
 import PlatformIcon from 'components/PlatformIcon';
 
-// import messages from './messages';
+import messages from './messages';
 import Img from './styles/Img';
 import Title from './styles/Title';
 import Channel from './styles/Channel';
@@ -42,6 +42,7 @@ const QueueItem = ({
   placement,
   video,
   user,
+  intl,
 }) => (
   <Wrapper>
     {showPlacement && (
@@ -72,28 +73,48 @@ const QueueItem = ({
           <PlatformIcon type={video.type} />
         </PlatformWrapper>
         {onRepeat && (
-          <Tooltip arrow title="Repeat" enterDelay={400} placement="top">
+          <Tooltip
+            arrow
+            title={intl.formatMessage(messages.repeat)}
+            enterDelay={400}
+            placement="top"
+          >
             <RepeatButton onClick={() => onRepeat(video)}>
               <RepeatSVG />
             </RepeatButton>
           </Tooltip>
         )}
         {(showMove || onMove) && (
-          <Tooltip arrow title="Move" enterDelay={400} placement="top">
+          <Tooltip
+            arrow
+            title={intl.formatMessage(messages.move)}
+            enterDelay={400}
+            placement="top"
+          >
             <RepeatButton onClick={() => onMove && onMove(video)}>
               <ArrowsSVG />
             </RepeatButton>
           </Tooltip>
         )}
         {onSkip && (
-          <Tooltip arrow title="Skip" enterDelay={400} placement="top">
+          <Tooltip
+            arrow
+            title={intl.formatMessage(messages.skip)}
+            enterDelay={400}
+            placement="top"
+          >
             <RepeatButton onClick={() => onSkip(video)}>
               <ForwardSVG />
             </RepeatButton>
           </Tooltip>
         )}
         {onDelete && (
-          <Tooltip arrow title="Remove" enterDelay={400} placement="top">
+          <Tooltip
+            arrow
+            title={intl.formatMessage(messages.remove)}
+            enterDelay={400}
+            placement="top"
+          >
             <RepeatButton onClick={() => onDelete(video)}>
               <TrashSVG />
             </RepeatButton>
@@ -130,6 +151,7 @@ QueueItem.propTypes = {
       video: PropTypes.string,
     }),
   }),
+  intl: PropTypes.object,
 };
 
-export default QueueItem;
+export default injectIntl(QueueItem);

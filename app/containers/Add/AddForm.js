@@ -150,7 +150,7 @@ const AddForm = ({ addVideo, intl }) => {
             <FormattedMessage {...messages.base64URL} />
           </Label>
           <A onClick={blur} href="/base64">
-            What is this?
+            <FormattedMessage {...messages.whatIsThis} />
           </A>
         </MultipleOptionsInput>
         <TextField

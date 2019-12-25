@@ -49,4 +49,8 @@ export default defineMessages({
     id: `${scope}.videosOnly`,
     defaultMessage: 'Videos only',
   },
+  whatIsThis: {
+    id: `${scope}.whatIsThis`,
+    defaultMessage: 'What is this?',
+  },
 });
