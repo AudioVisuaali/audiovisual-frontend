@@ -26,14 +26,14 @@ import Hotkeys from 'containers/Hotkeys';
 import Controls from 'components/Controls';
 import Fullscreen from 'components/Fullscreen';
 import ShowOnHover from 'components/ShowOnHover';
-import { VOLUME, setItem } from 'utils/localStorage';
+import { VOLUME, MUTED, setItem } from 'utils/localStorage';
 import { getSeeked } from 'utils/time';
 import VideoHeader from './VideoHeader';
 import VideoPlayer from './VideoPlayer';
 
 import Wrapper from './styles/Wrapper';
 import GreyBG from './styles/GreyBG';
-import { addSubtitle, playNextSound, getVolume } from './utils';
+import { addSubtitle, playNextSound, getVolume, getMuted } from './utils';
 
 class Player extends React.Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class Player extends React.Component {
       video: currentVideo,
       played: 0,
       duration: 0,
+      muted: getMuted(),
       volume: getVolume(),
       initialSeeked: false,
       showPlayer: true,
@@ -101,14 +102,12 @@ class Player extends React.Component {
     this.setState({ showPlayer: true });
   }
 
-  handleVolume = volume => {
-    this.setState({ volume });
-    setItem(VOLUME, volume);
+  setSeek = seconds => {
+    if (!this.playerRef || !this.playerRef.seekTo) {
+      return;
+    }
+    this.playerRef.seekTo(parseFloat(seconds, 10));
   };
-
-  setSeek = seconds =>
-    // eslint-disable-next-line radix
-    this.playerRef && this.playerRef.seekTo(parseFloat(seconds));
 
   handleProgress = played => this.setState({ played: played.playedSeconds });
 
@@ -184,22 +183,38 @@ class Player extends React.Component {
     this.playerRef = ref;
   };
 
-  handleToggleMute = () => {
-    const { volume } = this.state;
-
-    this.setState({
-      volume: volume ? 0 : getVolume(),
+  handleMute = () => {
+    this.setState(prevState => {
+      setItem(MUTED, !prevState.muted);
+      return {
+        muted: !prevState.muted,
+      };
     });
   };
 
+  handleVolume = volume => {
+    this.setState({ volume, muted: false });
+    setItem(VOLUME, volume);
+  };
+
   getPlayer = (toggleFullscreen, isFullscreen) => {
-    const { duration, played, playing, video, volume, showPlayer } = this.state;
+    const {
+      duration,
+      played,
+      playing,
+      video,
+      volume,
+      showPlayer,
+      muted,
+    } = this.state;
 
     if (!showPlayer) {
       return null;
     }
 
     const isLive = video.type === 'twitch-live';
+
+    const playerVolume = muted ? 0 : volume;
 
     return (
       <Wrapper>
@@ -212,7 +227,7 @@ class Player extends React.Component {
           ref={this.handlePlayerRef}
           playing={playing}
           url={video.url}
-          volume={volume}
+          volume={playerVolume}
         />
         <ShowOnHover show={!playing}>
           <Hotkeys
@@ -221,7 +236,7 @@ class Player extends React.Component {
             onRewind={this.rewind}
             onRepeat={this.handleRepeat}
             onTogglePlay={this.handlePlay}
-            onToggleMute={this.handleToggleMute}
+            onToggleMute={this.handleMute}
           />
           <VideoHeader video={video} />
           <Controls
@@ -235,6 +250,8 @@ class Player extends React.Component {
             played={played}
             volume={volume}
             isLive={isLive}
+            muted={muted}
+            onMute={this.handleMute}
           />
         </ShowOnHover>
       </Wrapper>

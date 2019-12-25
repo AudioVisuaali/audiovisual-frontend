@@ -2,11 +2,10 @@ import styled from 'styled-components';
 
 const FullScreenContainer = styled.div`
   flex-shrink: 0;
-  padding-left: 6px;
 
   & svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
   }
 `;
 

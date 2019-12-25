@@ -36,6 +36,8 @@ const Controls = ({
   onToggleFullscreen,
   isFullscreen,
   isLive,
+  muted,
+  onMute,
 }) => {
   const [isUserSeeking, setIsUserSeeking] = useState(false);
   const [seeking, setSeeking] = useState(false);
@@ -67,26 +69,6 @@ const Controls = ({
 
   return (
     <Wrapper>
-      <ControlWrapper>
-        <ControlLeft>
-          <PlayButton onClick={onPlay}>
-            {playing ? <PauseSVG /> : <PlaySVG />}
-          </PlayButton>
-          <Stats
-            isLive={isLive}
-            played={playedOrSeek || 0}
-            duration={duration}
-          />
-        </ControlLeft>
-        <ControlRight>
-          <Volume volume={volume} onVolume={onVolume} />
-          <FullScreenContainer>
-            <PlayButton onClick={onToggleFullscreen}>
-              {isFullscreen ? <CompressSVG /> : <ExpandSVG />}
-            </PlayButton>
-          </FullScreenContainer>
-        </ControlRight>
-      </ControlWrapper>
       {!isLive && (
         <SliderContainer>
           <Slider
@@ -104,6 +86,31 @@ const Controls = ({
           />
         </SliderContainer>
       )}
+      <ControlWrapper>
+        <ControlLeft>
+          <PlayButton onClick={onPlay}>
+            {playing ? <PauseSVG /> : <PlaySVG />}
+          </PlayButton>
+          <Volume
+            volume={volume}
+            muted={muted}
+            onMute={onMute}
+            onVolume={onVolume}
+          />
+          <Stats
+            isLive={isLive}
+            played={playedOrSeek || 0}
+            duration={duration}
+          />
+        </ControlLeft>
+        <ControlRight>
+          <FullScreenContainer>
+            <PlayButton onClick={onToggleFullscreen}>
+              {isFullscreen ? <CompressSVG /> : <ExpandSVG />}
+            </PlayButton>
+          </FullScreenContainer>
+        </ControlRight>
+      </ControlWrapper>
     </Wrapper>
   );
 };
@@ -119,6 +126,8 @@ Controls.propTypes = {
   volume: PropTypes.number,
   played: PropTypes.number,
   duration: PropTypes.number,
+  muted: PropTypes.bool,
+  onMute: PropTypes.func,
 };
 
 export default Controls;

@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import VolumeUpSVG from 'svgs/VolumeUp';
+import VolumeDownSVG from 'svgs/VolumeDown';
 import VolumeSVG from 'svgs/Volume';
 import VolumeMutedSVG from 'svgs/VolumeMuted';
 
@@ -13,10 +15,11 @@ const Wrapper = styled.div`
   align-items: center;
   transition: all 0.2s;
   padding: 0;
+  margin-left: 5px;
 
   &:hover {
     width: 160px;
-    padding-left: 14px;
+    padding-right: 14px;
     background-color: rgba(0, 0, 0, 0.6);
   }
 `;
@@ -33,16 +36,17 @@ const Button = styled.button`
 `;
 
 const Slider = styled.input`
+  display: block;
   appearance: none;
-  flex-grow: 1;
   cursor: pointer;
   width: 100%;
-  height: 5px;
+  height: 4px;
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.9;
   transition: opacity 0.2s;
+  margin: 5px 0;
 
   &:hover {
     opacity: 1;
@@ -72,34 +76,33 @@ const SliderContainer = styled.div`
   height: 100%;
 `;
 
-const Volume = ({ volume, onVolume }) => {
-  const [volumE, setVolume] = useState(volume);
-  const [muted, setMuted] = useState(volume === 0);
+function getVolumeSVG(volume) {
+  if (!volume) {
+    return <VolumeMutedSVG />;
+  }
 
-  useEffect(() => {
-    setVolume(volume);
-  }, [volume]);
+  if (volume < 0.33) {
+    return <VolumeDownSVG />;
+  }
 
-  const onClick = () => {
-    if (muted) {
-      onVolume(volumE);
-    } else {
-      onVolume(0);
-    }
-    setMuted(!muted);
-  };
+  if (volume < 0.66) {
+    return <VolumeSVG />;
+  }
 
+  return <VolumeUpSVG />;
+}
+
+const Volume = ({ volume, muted, onMute, onVolume }) => {
   const onSliderVolume = e => {
     const value = parseFloat(e.target.value);
-    setMuted(value === 0);
-    setVolume(value);
     onVolume(value);
   };
 
-  const currentVolume = muted ? 0 : volumE;
+  const currentVolume = muted ? 0 : volume;
 
   return (
     <Wrapper>
+      <Button onClick={onMute}>{getVolumeSVG(currentVolume)}</Button>
       <SliderContainer>
         <Slider
           value={currentVolume}
@@ -110,9 +113,6 @@ const Volume = ({ volume, onVolume }) => {
           step="any"
         />
       </SliderContainer>
-      <Button onClick={onClick}>
-        {currentVolume ? <VolumeSVG /> : <VolumeMutedSVG />}
-      </Button>
     </Wrapper>
   );
 };
@@ -120,6 +120,8 @@ const Volume = ({ volume, onVolume }) => {
 Volume.propTypes = {
   onVolume: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired,
+  muted: PropTypes.bool.isRequired,
+  onMute: PropTypes.func.isRequired,
 };
 
 export default Volume;

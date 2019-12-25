@@ -18,16 +18,16 @@ const Slider = styled.input`
 
   &::-webkit-slider-thumb {
     appearance: none;
-    width: 1.2em;
-    height: 1.2em;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: #fff;
     cursor: pointer;
   }
 
   &::-moz-range-thumb {
-    width: 1.2em;
-    height: 1.2em;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: #fff;
     cursor: pointer;

@@ -1,6 +1,7 @@
 export const USERNAME = 'USERNAME';
 export const TOKEN = 'TOKEN';
 export const VOLUME = 'VOLUME';
+export const MUTED = 'MUTED';
 export const LOCALE = 'LOCALE';
 export const THEME = 'THEME';
 export const ACTIVE_VIDEO_MANAGEMENT_TAB = 'ACTIVE_VIDEO_MANAGEMENT_TAB';

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { VOLUME, getItem } from 'utils/localStorage';
+import { VOLUME, MUTED, getItem } from 'utils/localStorage';
 
 import nextVideoSound from './audio';
 
@@ -40,4 +40,9 @@ export function getVolume() {
   const volume = parseFloat(getItem(VOLUME));
   const isVolume = typeof volume === 'number';
   return isVolume ? volume : 0.2;
+}
+
+export function getMuted() {
+  const muted = getItem(MUTED);
+  return muted === 'true';
 }

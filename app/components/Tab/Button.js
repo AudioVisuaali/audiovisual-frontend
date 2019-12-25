@@ -20,7 +20,7 @@ const Button = styled.button`
   font-size: 16px;
   font-weight: 500;
   color: ${color};
-  padding: 12px 20px;
+  padding: 14px 22px;
 
   transition-property: background-color, color;
   transition-duration: 200ms;
