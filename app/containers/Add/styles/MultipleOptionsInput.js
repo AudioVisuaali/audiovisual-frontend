@@ -8,6 +8,7 @@ const MultipleOptionsInput = styled.div`
 
   & a {
     color: #aaa;
+    font-size: 12px;
   }
 
   & svg {
