@@ -7,8 +7,8 @@ const fixed = css`
   position: fixed;
   font-size: 10px;
   z-index: 999;
-  top: ${p => (p.sticky ? 70 : 30)}px;
-  right: ${p => (p.sticky ? 50 : 30)}px;
+  top: ${p => (p.sticky ? 150 : 30)}px;
+  right: ${p => (p.sticky ? 10 : 30)}px;
   border-radius: 8px;
   overflow: hidden;
 
