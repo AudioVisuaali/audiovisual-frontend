@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import TextField from 'components/TextField';
 import CodedWithLove from 'components/CodedWithLove';
@@ -27,7 +28,6 @@ import Description from './styles/Description';
 import Comment from './styles/Comment';
 import CommentCode from './styles/CommentCode';
 import CodeContent from './styles/CodeContent';
-import Tooltip from './styles/Tooltip';
 import MultipleOptionsInput from './styles/MultipleOptionsInput';
 
 const whiteSpace = amount => ' '.repeat(amount);
@@ -118,8 +118,14 @@ export const Base64 = ({ intl }) => {
             <Label>
               <FormattedMessage {...messages.videoTitle} />
             </Label>
-            <Tooltip label={intl.formatMessage(messages.filesOnly)}>
-              <QuestionSVG />
+            <Tooltip
+              arrow
+              placement="right"
+              title={intl.formatMessage(messages.filesOnly)}
+            >
+              <div>
+                <QuestionSVG />
+              </div>
             </Tooltip>
           </MultipleOptionsInput>
           <TextField
@@ -134,10 +140,13 @@ export const Base64 = ({ intl }) => {
               <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
             </Label>
             <Tooltip
-              width={100}
-              label={intl.formatMessage(messages.videosOnly)}
+              arrow
+              placement="right"
+              title={intl.formatMessage(messages.videosOnly)}
             >
-              <QuestionSVG />
+              <div>
+                <QuestionSVG />
+              </div>
             </Tooltip>
           </MultipleOptionsInput>
           <TextField

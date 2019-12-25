@@ -16,10 +16,9 @@ const Tabs = React.forwardRef(function Tabs(props, ref) {
     setMounted(true);
   }, []);
 
-  const handleOnChange = (v, e) => {
-    onChange(v, e);
-    setTab(v);
-  };
+  useEffect(() => {
+    setTab(value);
+  }, [value]);
 
   const setTab = v => {
     const tabsNode = childrensRef.current;
@@ -48,7 +47,7 @@ const Tabs = React.forwardRef(function Tabs(props, ref) {
     childIndex += 1;
     return React.cloneElement(child, {
       selected,
-      onChange: handleOnChange,
+      onChange,
       value: childValue,
     });
   });

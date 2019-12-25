@@ -4,6 +4,7 @@ const backgroundColor = p =>
   p.theme.isDark ? p.theme.whiteRGBA[100] : p.theme.grey[700];
 
 const Selected = styled.span`
+  pointer-events: none;
   height: 2px;
   background-color: ${backgroundColor};
   position: absolute;

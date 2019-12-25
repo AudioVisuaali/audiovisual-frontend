@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { compose } from 'redux';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Label from 'components/Label';
 import Button from 'components/Button';
@@ -23,7 +24,6 @@ import { isFile, isVideo } from 'utils/url';
 import messages from './messages';
 import Inputs from './styles/Inputs';
 import Form from './styles/Form';
-import Tooltip from './styles/Tooltip';
 import Actions from './styles/Actions';
 import InputWrapper from './styles/InputWrapper';
 import ShowMoreOptions from './styles/ShowMoreOptions';
@@ -107,8 +107,14 @@ const AddForm = ({ addVideo, intl }) => {
           <Label>
             <FormattedMessage {...messages.titleURL} />
           </Label>
-          <Tooltip label={intl.formatMessage(messages.filesOnly)}>
-            <QuestionSVG />
+          <Tooltip
+            arrow
+            placement="right"
+            title={intl.formatMessage(messages.filesOnly)}
+          >
+            <div>
+              <QuestionSVG />
+            </div>
           </Tooltip>
         </MultipleOptionsInput>
         <TextField
@@ -122,8 +128,14 @@ const AddForm = ({ addVideo, intl }) => {
           <Label>
             <FormattedMessage {...messages.translationFieldURL} /> (.vtt)
           </Label>
-          <Tooltip width={100} label={intl.formatMessage(messages.videosOnly)}>
-            <QuestionSVG />
+          <Tooltip
+            arrow
+            placement="right"
+            title={intl.formatMessage(messages.videosOnly)}
+          >
+            <div>
+              <QuestionSVG />
+            </div>
           </Tooltip>
         </MultipleOptionsInput>
         <TextField

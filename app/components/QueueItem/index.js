@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage } from 'react-intl';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import RandomSVG from 'svgs/Random';
 import RepeatSVG from 'svgs/Repeat';
@@ -71,24 +72,32 @@ const QueueItem = ({
           <PlatformIcon type={video.type} />
         </PlatformWrapper>
         {onRepeat && (
-          <RepeatButton onClick={() => onRepeat(video)}>
-            <RepeatSVG />
-          </RepeatButton>
+          <Tooltip arrow title="Repeat" enterDelay={400} placement="top">
+            <RepeatButton onClick={() => onRepeat(video)}>
+              <RepeatSVG />
+            </RepeatButton>
+          </Tooltip>
         )}
         {(showMove || onMove) && (
-          <RepeatButton onClick={() => onMove && onMove(video)}>
-            <ArrowsSVG />
-          </RepeatButton>
+          <Tooltip arrow title="Move" enterDelay={400} placement="top">
+            <RepeatButton onClick={() => onMove && onMove(video)}>
+              <ArrowsSVG />
+            </RepeatButton>
+          </Tooltip>
         )}
         {onSkip && (
-          <RepeatButton onClick={() => onSkip(video)}>
-            <ForwardSVG />
-          </RepeatButton>
+          <Tooltip arrow title="Skip" enterDelay={400} placement="top">
+            <RepeatButton onClick={() => onSkip(video)}>
+              <ForwardSVG />
+            </RepeatButton>
+          </Tooltip>
         )}
         {onDelete && (
-          <RepeatButton onClick={() => onDelete(video)}>
-            <TrashSVG />
-          </RepeatButton>
+          <Tooltip arrow title="Remove" enterDelay={400} placement="top">
+            <RepeatButton onClick={() => onDelete(video)}>
+              <TrashSVG />
+            </RepeatButton>
+          </Tooltip>
         )}
         {user && (
           <AddedBy>
