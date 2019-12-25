@@ -14,24 +14,19 @@ const fixed = css`
 
   width: 800px;
   height: 450px;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.3),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.21), 0px 1px 10px 0px rgba(0, 0, 0, 0.4);
 
   animation: ${fadeAndSlideInFromTop} ease 500ms;
 
   @media screen and (${device.desktop}) {
-    width: 600px;
-    height: 337px;
+    width: 640px;
+    height: 360px;
   }
 
   @media screen and (${device.laptopL}) {
     width: 400px;
     height: 225px;
-  }
-
-  @media screen and (${device.tablet}) {
-    width: 300px;
-    height: 167px;
   }
 `;
 

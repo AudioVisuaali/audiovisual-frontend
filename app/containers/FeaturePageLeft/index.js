@@ -16,6 +16,7 @@ import VideosManagement from 'containers/VideosManagement';
 import { makeSelectCurrentlyPlaying } from 'containers/WebSocket/selectors';
 import FeaturePageRight from 'containers/FeaturePageRight';
 
+import VideoContainerPixelFix from './styles/VideoContainerPixelFix';
 import Wrapper from './styles/Wrapper';
 import VideoContainer from './styles/VideoContainer';
 import DynamicVideoContainer from './styles/DynamicVideoContainer';
@@ -47,11 +48,11 @@ export class FeaturePageLeft extends React.Component {
   resize = () => {
     const { width } = this.playerContainer.current.getBoundingClientRect();
 
-    const newWidth = Math.ceil((width * 9) / 16);
+    const newHeight = Math.ceil((width * 9) / 16);
 
-    if (this.state.playerHeight === newWidth) return;
+    if (this.state.playerHeight === newHeight) return;
 
-    this.setState({ playerHeight: newWidth });
+    this.setState({ playerHeight: newHeight });
   };
 
   handleScroll = e => {
@@ -82,13 +83,16 @@ export class FeaturePageLeft extends React.Component {
 
     const smallPlayerAndAllowed = currentVideo && smallPlayer;
     const VideoPlayerStyle = { height: playerHeight };
+    const pixelFixStyle = { height: playerHeight - 1 };
     return (
       <>
-        <VideoContainer style={VideoPlayerStyle}>
-          <DynamicVideoContainer dynamic={smallPlayerAndAllowed}>
-            <Player />
-          </DynamicVideoContainer>
-        </VideoContainer>
+        <VideoContainerPixelFix style={pixelFixStyle}>
+          <VideoContainer style={VideoPlayerStyle}>
+            <DynamicVideoContainer dynamic={smallPlayerAndAllowed}>
+              <Player />
+            </DynamicVideoContainer>
+          </VideoContainer>
+        </VideoContainerPixelFix>
         {!isMobile || (isMobile && isVideoManagementSelected) ? (
           <VideosManagement onRequestScroll={this.handleRequestScroll} />
         ) : (
