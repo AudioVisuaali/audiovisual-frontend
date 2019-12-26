@@ -100,9 +100,6 @@ const mapDispatchToProps = dispatch => ({
   changeName: evt => dispatch(emitUserChangeUsername(evt)),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(FeaturePageRight);
