@@ -39,6 +39,9 @@ export function playNextSound() {
 export function getVolume() {
   const volume = parseFloat(getItem(VOLUME));
   const isVolume = typeof volume === 'number';
+  if (Number.isNaN(volume)) {
+    return 0.2;
+  }
   return isVolume ? volume : 0.2;
 }
 
