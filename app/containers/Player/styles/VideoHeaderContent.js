@@ -3,10 +3,11 @@ import styled from 'styled-components';
 const VideoHeaderContent = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 0.8em;
   color: #fff;
   font-weight: 500;
   font-size: 1.25em;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 
   & a {
     width: 100%;
