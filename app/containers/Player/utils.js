@@ -1,7 +1,22 @@
 import Axios from 'axios';
-import { VOLUME, MUTED, getItem } from 'utils/localStorage';
+import {
+  VIDEO_SYNC_THRESHOLD,
+  VOLUME,
+  MUTED,
+  getItem,
+} from 'utils/localStorage';
 
 import nextVideoSound from './audio';
+
+export const getThresholdValue = () => {
+  const value = getItem(VIDEO_SYNC_THRESHOLD);
+  const parsed = parseFloat(value, 10);
+  if (Number.isNaN(parsed)) {
+    return 1;
+  }
+
+  return parsed;
+};
 
 export function createTrackNode(trackRaw) {
   const node = document.createElement('track');

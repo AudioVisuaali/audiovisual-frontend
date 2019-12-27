@@ -49,34 +49,34 @@ export function setRoom(room) {
 
 /**
  * Plays or pauses the current video
- * @param {Boolean} isPlaying
+ * @param {Object} param0
  */
-export function setRoomIsPlaying(isPlaying) {
-  return { type: WS_SET_ROOM_IS_PLAYING, isPlaying };
+export function setRoomIsPlaying({ isPlaying, timelineAction }) {
+  return { type: WS_SET_ROOM_IS_PLAYING, isPlaying, timelineAction };
 }
 
 /**
  * Updates timeline status
- * @param {Number} timeline
+ * @param {Object} param0
  */
-export function setSeek(timeline) {
-  return { type: WS_SET_ROOM_TIMELINE, timeline };
+export function setSeek({ seek, timelineAction }) {
+  return { type: WS_SET_ROOM_TIMELINE, seek, timelineAction };
 }
 
 /**
  * Update all videos(queue, now playing and history)
- * @param {Object} videos
+ * @param {Object} param0
  */
-export function skipVideo(videos) {
-  return { type: WS_SET_ROOM_SKIP, videos };
+export function skipVideo({ playing, timelineAction }) {
+  return { type: WS_SET_ROOM_SKIP, playing, timelineAction };
 }
 
 /**
  * Update all videos(queue, now playing and history)
- * @param {Object} videos
+ * @param {Object} param0
  */
-export function addVideo(videos) {
-  return { type: WS_ADD_ROOM_VIDEO, videos };
+export function addVideo({ video, timelineAction }) {
+  return { type: WS_ADD_ROOM_VIDEO, video, timelineAction };
 }
 
 /**
@@ -97,10 +97,10 @@ export function setPlayOrder(order) {
 
 /**
  * Plays next video
- * @param {Object} videos
+ * @param {Object} param0
  */
-export function setNextVideo(videos) {
-  return { type: WS_SET_ROOM_NEXT_VIDEO, videos };
+export function setNextVideo({ playing, timelineAction }) {
+  return { type: WS_SET_ROOM_NEXT_VIDEO, playing, timelineAction };
 }
 
 /**

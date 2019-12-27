@@ -26,6 +26,7 @@ import Hotkeys from 'containers/Hotkeys';
 import Controls from 'components/Controls';
 import Fullscreen from 'components/Fullscreen';
 import ShowOnHover from 'components/ShowOnHover';
+import RunningBehind from 'components/RunningBehind';
 import { VOLUME, MUTED, setItem } from 'utils/localStorage';
 import { getSeeked } from 'utils/time';
 import VideoHeader from './VideoHeader';
@@ -33,7 +34,13 @@ import VideoPlayer from './VideoPlayer';
 
 import Wrapper from './styles/Wrapper';
 import GreyBG from './styles/GreyBG';
-import { addSubtitle, playNextSound, getVolume, getMuted } from './utils';
+import {
+  addSubtitle,
+  playNextSound,
+  getThresholdValue,
+  getVolume,
+  getMuted,
+} from './utils';
 
 class Player extends React.Component {
   constructor(props) {
@@ -41,6 +48,7 @@ class Player extends React.Component {
     const { currentVideo, playing } = props;
     this.playerRef = React.createRef();
     this.state = {
+      syncing: false,
       playing,
       video: currentVideo,
       played: 0,
@@ -106,16 +114,66 @@ class Player extends React.Component {
     if (!this.playerRef || !this.playerRef.seekTo) {
       return;
     }
+
     this.playerRef.seekTo(parseFloat(seconds, 10));
+    this.setState({ syncing: false });
   };
 
-  handleProgress = played => this.setState({ played: played.playedSeconds });
+  getCurrentTime = () => {
+    if (!this.playerRef || !this.playerRef.seekTo) {
+      return null;
+    }
+    return this.playerRef.getCurrentTime();
+  };
+
+  checkAndSync = playedSeconds => {
+    const { timelineAction } = this.props;
+
+    const accuratePlayTime = getSeeked(timelineAction);
+    // Video should never be ahead
+    const offsetVal = getThresholdValue();
+    const offset = offsetVal < 0.04 ? 0.04 : offsetVal;
+    const played = this.getCurrentTime();
+    const min = accuratePlayTime - offset;
+    const max = accuratePlayTime + offset;
+    const isOutOfBoundary = min > played || max < played;
+
+    console.log(
+      `[Offset] ${accuratePlayTime}s±${offset}s, offset: ${Math.ceil(
+        (accuratePlayTime - playedSeconds) * 1000,
+      )}ms`,
+    );
+
+    if (isOutOfBoundary) {
+      this.setState({ playing: false });
+      this.setSeek(accuratePlayTime + 0.3);
+
+      setTimeout(() => {
+        this.setState({ playing: true });
+      }, 300);
+    }
+
+    return isOutOfBoundary;
+  };
+
+  handleProgress = played => {
+    const { syncing, duration } = this.state;
+    const { playedSeconds } = played;
+
+    const newState = { played: playedSeconds };
+
+    if (!syncing && duration) {
+      newState.syncing = this.checkAndSync(playedSeconds);
+    }
+
+    this.setState(newState);
+  };
 
   handleDuration = duration => {
-    const { timelineAction, playing } = this.props;
+    const { timelineAction } = this.props;
     const { initialSeeked } = this.state;
 
-    const seconds = initialSeeked ? 0 : getSeeked(timelineAction, playing);
+    const seconds = initialSeeked ? 0 : getSeeked(timelineAction);
     this.setSeek(seconds);
 
     this.setState({ initialSeeked: true, duration });
@@ -143,6 +201,7 @@ class Player extends React.Component {
   };
 
   handleSeek = seconds => {
+    this.setState({ syncing: true });
     this.props.seekTo(seconds);
   };
 
@@ -206,6 +265,7 @@ class Player extends React.Component {
       volume,
       showPlayer,
       muted,
+      syncing,
     } = this.state;
 
     if (!showPlayer) {
@@ -218,6 +278,7 @@ class Player extends React.Component {
 
     return (
       <Wrapper>
+        <RunningBehind show={syncing} />
         <VideoPlayer
           onDuration={this.handleDuration}
           onPause={this.handlePlayerPause}

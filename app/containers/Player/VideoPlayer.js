@@ -17,7 +17,7 @@ const Player = React.forwardRef((props, ref) => (
     height="100%"
     width="100%"
     config={playerConfig}
-    progressInterval={500}
+    progressInterval={1000}
   />
 ));
 

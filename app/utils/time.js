@@ -24,31 +24,19 @@ export function dateToDoublePercision(date) {
   )}`;
 }
 
-export function getSeeked(timelineAction, playing) {
-  switch (timelineAction.action) {
-    case 'seek': {
-      if (!playing) return timelineAction.seeked;
-      const date1 = new Date(timelineAction.updatedAt);
-      const date2 = new Date();
-      const diffTime = Math.abs(date2 - date1);
-      const diffSeconds = Math.floor(diffTime / 1000);
-      return parseFloat(timelineAction.seeked) + diffSeconds;
-    }
+export function getSeeked(timelineAction) {
+  const { seeked, updatedAt, playing } = timelineAction;
+  let totalTime = seeked;
 
-    case 'play': {
-      if (!playing) return timelineAction.seeked;
-      const date1 = new Date(timelineAction.updatedAt);
-      const date2 = new Date();
-      const diffTime = Math.abs(date2 - date1);
-      const diffSeconds = Math.floor(diffTime / 1000);
-      return parseFloat(timelineAction.seeked) + diffSeconds;
-    }
+  // If video is playing we need to calculate time from start to now
+  if (playing) {
+    const date1 = new Date(updatedAt);
+    const date2 = new Date();
+    const diffTime = Math.abs(date2 - date1); // ? TODO
+    const diffSeconds = diffTime / 1000;
 
-    case 'pause': {
-      return timelineAction.seeked;
-    }
-
-    default:
-      return '0';
+    totalTime += diffSeconds;
   }
+
+  return totalTime;
 }

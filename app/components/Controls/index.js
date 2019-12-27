@@ -12,6 +12,7 @@ import PlaySVG from 'svgs/Play';
 import PauseSVG from 'svgs/Pause';
 import ExpandSVG from 'svgs/Expand';
 import CompressSVG from 'svgs/Compress';
+import Slider from 'components/Slider';
 
 // import messages from './messages';
 import Wrapper from './styles/Wrapper';
@@ -21,7 +22,6 @@ import ControlRight from './styles/ControlRight';
 import ControlWrapper from './styles/ControlWrapper';
 import SliderContainer from './styles/SliderContainer';
 import FullScreenContainer from './styles/FullScreenContainer';
-import Slider from './Slider';
 import Volume from './Volume';
 import Stats from './Stats';
 

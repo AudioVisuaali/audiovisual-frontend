@@ -25,4 +25,20 @@ export default defineMessages({
     id: `${scope}.changeTheme`,
     defaultMessage: 'Change theme',
   },
+  syncSensitivity: {
+    id: `${scope}.syncSensitivity`,
+    defaultMessage: 'Video sync threshold',
+  },
+  realtime: {
+    id: `${scope}.realtime`,
+    defaultMessage: 'Realtime',
+  },
+  tenSecondsPrural: {
+    id: `${scope}.tenSecondsPrural`,
+    defaultMessage: '10 seconds',
+  },
+  youmayExperienceStuttering: {
+    id: `${scope}.youmayExperienceStuttering`,
+    defaultMessage: 'You may experience extreme stuttering',
+  },
 });

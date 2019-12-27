@@ -6,6 +6,7 @@ import LocaleToggle from 'containers/LocaleToggle';
 import ThemeToggle from 'containers/ThemeToggle';
 import TextField from 'components/TextField';
 import Modal from 'components/Modal';
+import SyncSensitivity from './SyncSensitivity';
 
 import messages from './messages';
 import Label from './Label';
@@ -37,6 +38,13 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
           <FormattedMessage {...messages.changeLanguage} />
         </Label>
         <LocaleToggle />
+      </Section>
+
+      <Section>
+        <Label>
+          <FormattedMessage {...messages.syncSensitivity} />
+        </Label>
+        <SyncSensitivity />
       </Section>
 
       <Section>

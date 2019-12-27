@@ -65,23 +65,40 @@ const webSocketReducer = (state = initialState, action) =>
 
       case WS_SET_ROOM_IS_PLAYING:
         draft.playing = action.isPlaying;
+        draft.timelineAction = action.timelineAction;
         break;
 
       case WS_SET_ROOM_TIMELINE:
-        draft.seek.seekTo = action.timeline;
+        draft.seek.seekTo = action.seek;
         draft.seek.updatedAt = new Date().getTime();
+        draft.timelineAction = action.timelineAction;
         break;
 
       case WS_SET_ROOM_SKIP:
-        draft.videos = action.videos;
+        draft.videos.history = state.videos.playing;
+        draft.videos.playing = action.playing;
+        draft.videos.playlist = state.videos.playlist.filter(
+          video => video.unique !== action.playing.unique,
+        );
+        draft.timelineAction = action.timelineAction;
         break;
 
       case WS_ADD_ROOM_VIDEO:
-        draft.videos = action.videos;
+        if (draft.videos.playing) {
+          draft.videos.playlist = [...state.videos.playlist, action.video];
+        } else {
+          draft.videos.playing = action.video;
+        }
+        draft.timelineAction = action.timelineAction;
         break;
 
       case WS_SET_ROOM_NEXT_VIDEO:
-        draft.videos = action.videos;
+        draft.videos.history = state.videos.playing;
+        draft.videos.playing = action.playing;
+        draft.videos.playlist = state.videos.playlist.filter(
+          video => video.unique !== action.video.unique,
+        );
+        draft.timelineAction = action.timelineAction;
         break;
 
       case WS_DEL_ROOM_VIDEO:

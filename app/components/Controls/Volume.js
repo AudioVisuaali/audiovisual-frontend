@@ -6,6 +6,7 @@ import VolumeUpSVG from 'svgs/VolumeUp';
 import VolumeDownSVG from 'svgs/VolumeDown';
 import VolumeSVG from 'svgs/Volume';
 import VolumeMutedSVG from 'svgs/VolumeMuted';
+import Slider from 'components/Slider';
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,41 +34,6 @@ const Button = styled.button`
   border: none;
   color: #fff;
   padding: 8px 8px 8px 8px;
-`;
-
-const Slider = styled.input`
-  display: block;
-  appearance: none;
-  cursor: pointer;
-  width: 100%;
-  height: 4px;
-  border-radius: 5px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.9;
-  transition: opacity 0.2s;
-  margin: 5px 0;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #fff;
-    cursor: pointer;
-  }
-
-  &::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #fff;
-    cursor: pointer;
-  }
 `;
 
 const SliderContainer = styled.div`
