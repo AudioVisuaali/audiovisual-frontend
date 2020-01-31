@@ -5,7 +5,6 @@
   "app.components.CopyText.copied": "Kopieras",
   "app.components.CopyText.copy": "Kopia",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Spelar för närvarande",
-  "app.components.QueueItem.move": "Flytta",
   "app.components.QueueItem.remove": "Ta bort",
   "app.components.QueueItem.repeat": "Upprepa",
   "app.components.QueueItem.skip": "Hoppa",

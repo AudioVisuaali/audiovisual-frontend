@@ -17,10 +17,6 @@ export default defineMessages({
     id: `${scope}.skip`,
     defaultMessage: 'Skip',
   },
-  move: {
-    id: `${scope}.move`,
-    defaultMessage: 'Move',
-  },
   repeat: {
     id: `${scope}.repeat`,
     defaultMessage: 'Repeat',

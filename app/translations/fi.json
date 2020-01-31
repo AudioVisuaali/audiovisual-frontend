@@ -5,7 +5,6 @@
   "app.components.CopyText.copied": "Kopioitu",
   "app.components.CopyText.copy": "Kopioi",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Toistossa",
-  "app.components.QueueItem.move": "Siirrä",
   "app.components.QueueItem.remove": "Poista",
   "app.components.QueueItem.repeat": "Toista uudelleen",
   "app.components.QueueItem.skip": "Jätä väliin",

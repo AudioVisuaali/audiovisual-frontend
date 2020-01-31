@@ -129,24 +129,21 @@ class Player extends React.Component {
   checkAndSync = playedSeconds => {
     const { timelineAction } = this.props;
 
-    const accuratePlayTime = getSeeked(timelineAction);
+    const accPlayTime = getSeeked(timelineAction);
     // Video should never be ahead
     const offsetVal = getThresholdValue();
     const offset = offsetVal < 0.04 ? 0.04 : offsetVal;
     const played = this.getCurrentTime();
-    const min = accuratePlayTime - offset;
-    const max = accuratePlayTime + offset;
+    const min = accPlayTime - offset;
+    const max = accPlayTime + offset;
     const isOutOfBoundary = min > played || max < played;
 
-    console.log(
-      `[Offset] ${accuratePlayTime}s±${offset}s, offset: ${Math.ceil(
-        (accuratePlayTime - playedSeconds) * 1000,
-      )}ms`,
-    );
+    const offsetMs = Math.ceil((accPlayTime - playedSeconds) * 1000);
+    console.log(`[Offset] ${accPlayTime}s±${offset}s, offset: ${offsetMs}ms`);
 
     if (isOutOfBoundary) {
       this.setState({ playing: false });
-      this.setSeek(accuratePlayTime + 0.3);
+      this.setSeek(accPlayTime + 0.3);
 
       setTimeout(() => {
         this.setState({ playing: true });

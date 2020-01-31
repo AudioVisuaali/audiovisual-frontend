@@ -5,7 +5,6 @@
   "app.components.CopyText.copied": "Kopiert",
   "app.components.CopyText.copy": "Kopiere",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Spiller for tiden",
-  "app.components.QueueItem.move": "Bevege seg",
   "app.components.QueueItem.remove": "Fjerne",
   "app.components.QueueItem.repeat": "Gjenta",
   "app.components.QueueItem.skip": "Skip",

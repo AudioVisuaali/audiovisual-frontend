@@ -5,7 +5,6 @@
   "app.components.CopyText.copied": "Copied",
   "app.components.CopyText.copy": "Copy",
   "app.components.CurrentlyPlaying.curentlyPlaying": "Currently Playing",
-  "app.components.QueueItem.move": "Move",
   "app.components.QueueItem.remove": "Remove",
   "app.components.QueueItem.repeat": "Repeat",
   "app.components.QueueItem.skip": "Skip",

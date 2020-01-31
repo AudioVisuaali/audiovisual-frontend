@@ -23,6 +23,7 @@ import {
 import ChatTextField from 'components/ChatTextField';
 import TwitchChat from 'components/TwitchChat';
 
+import Header from './styles/Header';
 import Wrapper from './styles/Wrapper';
 import ChatFieldContainer from './styles/ChatFieldContainer';
 import ChatSelector from './ChatSelector';
@@ -60,13 +61,15 @@ const FeaturePageRight = ({
 
   return (
     <Wrapper>
-      <Viewers />
-      <ChatSelector
-        onUsername={handleUsername}
-        twitchChannel={twitchChannelName()}
-        currentUser={currentUser}
-        onClick={setChatChannel}
-      ></ChatSelector>
+      <Header>
+        <Viewers />
+        <ChatSelector
+          onUsername={handleUsername}
+          twitchChannel={twitchChannelName()}
+          currentUser={currentUser}
+          onClick={setChatChannel}
+        />
+      </Header>
       <HiddableContainer hidden={!isDefaultChat}>
         <Chat isMobile={isMobile} channel={chatChannel} />
         <ChatFieldContainer>
