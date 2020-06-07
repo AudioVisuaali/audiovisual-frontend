@@ -12,7 +12,7 @@ const Selected = styled.span`
   left: ${p => p.left}px;
   width: ${p => p.spread}px;
 
-  transition: all 200ms;
+  transition: all 250ms cubic-bezier(0.33, 1, 0.68, 1);
 `;
 
 export default Selected;

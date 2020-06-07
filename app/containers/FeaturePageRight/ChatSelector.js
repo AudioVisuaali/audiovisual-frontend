@@ -18,6 +18,12 @@ const Wrapper = styled.div`
   padding: 0 10px;
 `;
 
+const CustomTab = styled(Tab)({
+  margin: '0 14px',
+  paddingRight: 0,
+  paddingLeft: 0,
+});
+
 const ChatActions = styled.div`
   display: flex;
   align-items: center;
@@ -42,7 +48,6 @@ const ChatSelector = ({ currentUser, onUsername, twitchChannel, onClick }) => {
   };
 
   const handleNameSave = name => {
-    setIsModalOpen(false);
     setItem(USERNAME, name);
     onUsername(name);
   };
@@ -69,14 +74,14 @@ const ChatSelector = ({ currentUser, onUsername, twitchChannel, onClick }) => {
       </Label>
       <ChatActions>
         <Tabs value={selectedTab} onChange={handleTabClick}>
-          <Tab value={defaultChat}>
+          <CustomTab value={defaultChat}>
             <FormattedMessage {...messages.room} />
-          </Tab>
+          </CustomTab>
           {twitchChannel && (
-            <Tab value={twitch}>
+            <CustomTab value={twitch}>
               <TwitchSVG style={{ marginRight: 6 }} />
               {twitchChannel}
-            </Tab>
+            </CustomTab>
           )}
         </Tabs>
         <Button active={isModalOpen} onClick={handleOpenModal}>

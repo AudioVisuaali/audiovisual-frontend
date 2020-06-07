@@ -4,11 +4,7 @@ const HiddableContainer = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  ${props =>
-    props.hidden &&
-    `
-        display: none;
-    `}
+  ${props => props.hidden && 'display: none;'}
 `;
 
 export default HiddableContainer;

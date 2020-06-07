@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const getBackgroundGradient = theme => {
   const { dark, isDark, light } = theme;
@@ -6,6 +6,15 @@ const getBackgroundGradient = theme => {
   const end = isDark ? dark[700] : light[700];
   return `background-image: radial-gradient(${start}, ${end});`;
 };
+
+const fadein = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,8 +27,8 @@ const Wrapper = styled.div`
   ${props => getBackgroundGradient(props.theme)};
 
   transition: opacity 200ms ease-in-out;
-
   opacity: ${props => (props.transparent ? '0' : '1')};
+  animation: ${fadein} 200ms;
 `;
 
 export default Wrapper;

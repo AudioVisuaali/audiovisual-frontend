@@ -8,12 +8,16 @@ import VolumeSVG from 'svgs/Volume';
 import VolumeMutedSVG from 'svgs/VolumeMuted';
 import Slider from 'components/Slider';
 
+const hoverBackground = p =>
+  p.theme.isDark ? p.theme.whiteRGBA[10] : p.theme.grey[700];
+
 const Wrapper = styled.div`
   display: flex;
   border-radius: 20px;
   width: 40px;
   background-color: rgba(0, 0, 0, 0);
   align-items: center;
+  justify-content: center;
   transition: all 0.2s;
   padding: 0;
   margin-left: 5px;
@@ -21,7 +25,7 @@ const Wrapper = styled.div`
   &:hover {
     width: 160px;
     padding-right: 14px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: ${hoverBackground};
   }
 `;
 
@@ -38,8 +42,9 @@ const Button = styled.button`
 
 const SliderContainer = styled.div`
   width: 100%;
-  overflow: hidden;
   height: 100%;
+  padding: 0.2em;
+  margin-bottom: 0.19125em;
 `;
 
 function getVolumeSVG(volume) {
@@ -69,16 +74,19 @@ const Volume = ({ volume, muted, onMute, onVolume }) => {
   return (
     <Wrapper>
       <Button onClick={onMute}>{getVolumeSVG(currentVolume)}</Button>
-      <SliderContainer>
-        <Slider
-          value={currentVolume}
-          onChange={onSliderVolume}
-          type="range"
-          min="0"
-          max="1"
-          step="any"
-        />
-      </SliderContainer>
+
+      <div style={{ overflow: 'hidden' }}>
+        <SliderContainer>
+          <Slider
+            value={currentVolume}
+            onChange={onSliderVolume}
+            type="range"
+            min="0"
+            max="1"
+            step="any"
+          />
+        </SliderContainer>
+      </div>
     </Wrapper>
   );
 };

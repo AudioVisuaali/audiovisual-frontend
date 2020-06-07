@@ -97,6 +97,7 @@ const AddForm = ({ addVideo, intl }) => {
         <FormattedMessage {...messages.sourceURLLabel} />
       </Label>
       <TextField
+        placeholder="https..."
         ref={videoURLRef}
         disabled={base64URL}
         value={videoUrl}

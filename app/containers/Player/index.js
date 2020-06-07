@@ -15,12 +15,14 @@ import {
   makeSelectSeek,
   makeSelectPlaying,
   makeSelectTimelineAction,
+  makeSelectClientServerTimeOffset,
 } from 'containers/WebSocket/selectors';
 import {
   emitRoomSeek,
   emitRoomIsPlaying,
   emitRoomNextVideo,
   emitRoomAddVideo,
+  setPlayerOffset,
 } from 'containers/WebSocket/actions';
 import Hotkeys from 'containers/Hotkeys';
 import Controls from 'components/Controls';
@@ -40,6 +42,7 @@ import {
   getThresholdValue,
   getVolume,
   getMuted,
+  getYoutubeVideoId,
 } from './utils';
 
 class Player extends React.Component {
@@ -48,6 +51,7 @@ class Player extends React.Component {
     const { currentVideo, playing } = props;
     this.playerRef = React.createRef();
     this.state = {
+      isControlsDisabled: false,
       syncing: false,
       playing,
       video: currentVideo,
@@ -55,9 +59,13 @@ class Player extends React.Component {
       duration: 0,
       muted: getMuted(),
       volume: getVolume(),
-      initialSeeked: false,
-      showPlayer: true,
+      onProgressCount: 0,
     };
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.syncTimeout);
+    clearTimeout(this.hideControlsTimeout);
   }
 
   // eslint-disable-next-line camelcase
@@ -85,29 +93,28 @@ class Player extends React.Component {
 
     const newState = {
       played: 0,
+      onProgressCount: 0,
+      playing: nextProps.playing,
       video: nextProps.currentVideo,
     };
 
     const noNeedOfReload =
       currentVideo &&
       nextProps.currentVideo &&
-      nextProps.currentVideo.url === currentVideo.url;
+      nextProps.currentVideo.type === currentVideo.type &&
+      nextProps.currentVideo.type === 'youtube';
 
     // Youtube player allows to play next video when tab is not active.
     //   Remounting the player requires an active tab to resume playback
     if (noNeedOfReload) {
+      const player = this.playerRef.getInternalPlayer();
+      const ytId = getYoutubeVideoId(nextProps.currentVideo.url);
+      player.loadVideoById(ytId);
       this.setState(newState);
-      this.setSeek(0);
       return;
     }
 
-    newState.duration = 0;
-    newState.showPlayer = false;
     await this.setState(newState);
-
-    await this.forceUpdate();
-
-    this.setState({ showPlayer: true });
   }
 
   setSeek = seconds => {
@@ -116,7 +123,6 @@ class Player extends React.Component {
     }
 
     this.playerRef.seekTo(parseFloat(seconds, 10));
-    this.setState({ syncing: false });
   };
 
   getCurrentTime = () => {
@@ -127,59 +133,77 @@ class Player extends React.Component {
   };
 
   checkAndSync = playedSeconds => {
-    const { timelineAction } = this.props;
+    const { timelineAction, clientServerTimeOffset } = this.props;
 
-    const accPlayTime = getSeeked(timelineAction);
+    const accPlayTime = getSeeked(timelineAction, clientServerTimeOffset);
     // Video should never be ahead
     const offsetVal = getThresholdValue();
-    const offset = offsetVal < 0.04 ? 0.04 : offsetVal;
-    const played = this.getCurrentTime();
+    const offset = offsetVal < 0.03 ? 0.03 : offsetVal;
     const min = accPlayTime - offset;
     const max = accPlayTime + offset;
+    const played = this.getCurrentTime();
     const isOutOfBoundary = min > played || max < played;
 
+    if (isOutOfBoundary) {
+      const { playing } = this.state;
+      this.setState({ playing: false });
+      this.setSeek(playing ? accPlayTime + 0.15 : accPlayTime);
+
+      if (this.props.playing) {
+        this.syncTimeout = setTimeout(
+          () => this.setState({ playing: true }),
+          400,
+        );
+      }
+    }
+
     const offsetMs = Math.ceil((accPlayTime - playedSeconds) * 1000);
-    console.log(`[Offset] ${accPlayTime}s±${offset}s, offset: ${offsetMs}ms`);
+    this.props.setPlayerOffset(offsetMs);
 
     if (isOutOfBoundary) {
-      this.setState({ playing: false });
-      this.setSeek(accPlayTime + 0.3);
-
-      setTimeout(() => {
-        this.setState({ playing: true });
-      }, 300);
+      console.log(
+        `%c[Offset]%c ${accPlayTime}s±${offset}s, offset: ${offsetMs}ms`,
+        'color:red;',
+        'color: inherit;',
+      );
     }
 
     return isOutOfBoundary;
   };
 
   handleProgress = played => {
-    const { syncing, duration } = this.state;
+    const { onProgressCount } = this.state;
     const { playedSeconds } = played;
 
-    const newState = { played: playedSeconds };
-
-    if (!syncing && duration) {
-      newState.syncing = this.checkAndSync(playedSeconds);
+    if (this.isLive()) {
+      return;
     }
 
-    this.setState(newState);
+    this.setState({
+      played: playedSeconds,
+      onProgressCount: onProgressCount + 1,
+    });
+
+    if (!onProgressCount) {
+      return;
+    }
+
+    const isSynced = this.checkAndSync(playedSeconds);
+    this.setState({ syncing: isSynced });
   };
 
   handleDuration = duration => {
-    const { timelineAction } = this.props;
-    const { initialSeeked } = this.state;
-
-    const seconds = initialSeeked ? 0 : getSeeked(timelineAction);
-    this.setSeek(seconds);
-
-    this.setState({ initialSeeked: true, duration });
+    this.setState({ played: 0, duration });
     this.setSubtitle();
   };
 
   handlePlay = () => {
-    const { playing } = this.state;
-    this.props.setIsPlaying(!playing);
+    const { playing, played } = this.state;
+    if (this.isLive()) {
+      this.setState({ playing: !playing });
+      return;
+    }
+    this.props.setIsPlaying(!playing, played);
   };
 
   rewind = () => {
@@ -202,13 +226,13 @@ class Player extends React.Component {
     this.props.seekTo(seconds);
   };
 
-  handleRepeat = () => {
-    const { video } = this.state;
-    this.props.addVideo(video.repeat);
-  };
-
   handlePlayerPlay = async () => {
     this.setState({ playing: true });
+
+    if (this.isLive()) {
+      return;
+    }
+
     if (this.props.playing) return;
 
     await this.forceUpdate();
@@ -218,6 +242,11 @@ class Player extends React.Component {
 
   handlePlayerPause = async () => {
     this.setState({ playing: false });
+
+    if (this.isLive()) {
+      return;
+    }
+
     if (!this.props.playing) return;
 
     await this.forceUpdate();
@@ -225,33 +254,58 @@ class Player extends React.Component {
     this.setState({ playing: true });
   };
 
-  handleEnded = async () => {
-    this.setState({ played: 0 }, this.props.nextVideo);
-  };
-
   setSubtitle = () => {
+    if (!this.playerRef.getInternalPlayer) {
+      return;
+    }
+
     const player = this.playerRef.getInternalPlayer();
     const { currentVideo } = this.props;
     addSubtitle(currentVideo, player);
   };
 
-  handlePlayerRef = ref => {
-    this.playerRef = ref;
-  };
-
   handleMute = () => {
-    this.setState(prevState => {
-      setItem(MUTED, !prevState.muted);
-      return {
-        muted: !prevState.muted,
-      };
-    });
+    const { muted } = this.state;
+    setItem(MUTED, !muted);
+    this.setState({ muted: !muted });
   };
 
   handleVolume = volume => {
     this.setState({ volume, muted: false });
     setItem(VOLUME, volume);
+    setItem(MUTED, !volume);
   };
+
+  handleRef = ref => {
+    this.playerRef = ref;
+  };
+
+  handleHideControls = () => {
+    this.setState({ isControlsDisabled: true });
+
+    this.hideControlsTimeout = setTimeout(
+      () => this.setState({ isControlsDisabled: false }),
+      8000,
+    );
+  };
+
+  handleEnded = () => {
+    const { video } = this.state;
+    if (!video) {
+      return;
+    }
+
+    const { timeStamp, timeStampType } = this.props.timelineAction;
+    if (timeStampType === 'next-video') {
+      const timeDiff = new Date().getTime() - timeStamp;
+      if (timeDiff < 500) return;
+    }
+
+    this.setState({ syncing: false, played: 0 });
+    this.props.nextVideo(video.unique);
+  };
+
+  isLive = () => this.state.video.type === 'twitch-live';
 
   getPlayer = (toggleFullscreen, isFullscreen) => {
     const {
@@ -260,18 +314,16 @@ class Player extends React.Component {
       playing,
       video,
       volume,
-      showPlayer,
       muted,
       syncing,
+      isControlsDisabled,
     } = this.state;
 
-    if (!showPlayer) {
+    const playerVolume = muted ? 0 : volume;
+
+    if (!video) {
       return null;
     }
-
-    const isLive = video.type === 'twitch-live';
-
-    const playerVolume = muted ? 0 : volume;
 
     return (
       <Wrapper>
@@ -282,36 +334,39 @@ class Player extends React.Component {
           onPlay={this.handlePlayerPlay}
           onProgress={this.handleProgress}
           onEnded={this.handleEnded}
-          ref={this.handlePlayerRef}
+          ref={this.handleRef}
           playing={playing}
           url={video.url}
           volume={playerVolume}
         />
-        <ShowOnHover show={!playing}>
-          <Hotkeys
-            onToggleFullscreen={toggleFullscreen}
-            onForward={this.windForward}
-            onRewind={this.rewind}
-            onRepeat={this.handleRepeat}
-            onTogglePlay={this.handlePlay}
-            onToggleMute={this.handleMute}
-          />
-          <VideoHeader video={video} />
-          <Controls
-            onToggleFullscreen={toggleFullscreen}
-            onVolume={this.handleVolume}
-            onSeek={this.handleSeek}
-            onPlay={this.handlePlay}
-            duration={duration}
-            isFullscreen={isFullscreen}
-            playing={playing}
-            played={played}
-            volume={volume}
-            isLive={isLive}
-            muted={muted}
-            onMute={this.handleMute}
-          />
-        </ShowOnHover>
+        <Hotkeys
+          onToggleFullscreen={toggleFullscreen}
+          onForward={this.windForward}
+          onRewind={this.rewind}
+          onTogglePlay={this.handlePlay}
+          onToggleMute={this.handleMute}
+        />
+        {!isControlsDisabled && (
+          <ShowOnHover currentId={video.unique} show={!playing}>
+            <VideoHeader video={video} />
+            <Controls
+              onHideControls={this.handleHideControls}
+              onToggleFullscreen={toggleFullscreen}
+              onVolume={this.handleVolume}
+              onSeek={this.handleSeek}
+              onPlay={this.handlePlay}
+              duration={duration}
+              isFullscreen={isFullscreen}
+              playing={playing}
+              played={played}
+              volume={volume}
+              isLive={this.isLive()}
+              video={video}
+              muted={muted}
+              onMute={this.handleMute}
+            />
+          </ShowOnHover>
+        )}
       </Wrapper>
     );
   };
@@ -330,11 +385,13 @@ class Player extends React.Component {
 Player.propTypes = {
   setIsPlaying: PropTypes.func.isRequired,
   seekTo: PropTypes.func.isRequired,
+  setPlayerOffset: PropTypes.func.isRequired,
   nextVideo: PropTypes.func.isRequired,
   timelineAction: PropTypes.object,
   currentVideo: PropTypes.object,
   playing: PropTypes.bool,
   addVideo: PropTypes.func.isRequired,
+  clientServerTimeOffset: PropTypes.number,
   seek: PropTypes.shape({
     updatedAt: PropTypes.number.isRequired,
     seekTo: PropTypes.number,
@@ -346,13 +403,16 @@ const mapStateToProps = createStructuredSelector({
   playing: makeSelectPlaying(),
   currentVideo: makeSelectCurrentlyPlaying(),
   timelineAction: makeSelectTimelineAction(),
+  clientServerTimeOffset: makeSelectClientServerTimeOffset(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  setIsPlaying: evt => dispatch(emitRoomIsPlaying(evt)),
+  setIsPlaying: (isPlaying, played) =>
+    dispatch(emitRoomIsPlaying(isPlaying, played)),
   seekTo: evt => dispatch(emitRoomSeek(evt)),
   addVideo: evt => dispatch(emitRoomAddVideo(evt)),
-  nextVideo: () => dispatch(emitRoomNextVideo()),
+  nextVideo: evt => dispatch(emitRoomNextVideo(evt)),
+  setPlayerOffset: evt => dispatch(setPlayerOffset(evt)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

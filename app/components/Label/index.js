@@ -7,6 +7,7 @@ const Label = styled.label`
   margin-bottom: 2px;
   display: block;
   font-size: 12px;
+  line-height: 1.5;
 `;
 
 export default Label;

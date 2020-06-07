@@ -11,6 +11,7 @@ import Film from 'svgs/Film';
 import Wistia from 'svgs/Wistia';
 import MixCloud from 'svgs/MixCloud';
 import Dailymotion from 'svgs/Dailymotion';
+import TikTok from 'svgs/TikTok';
 
 const svgColor = props =>
   props.theme.isDark ? props.theme.light[50] : props.theme.grey[800];
@@ -36,6 +37,7 @@ const MixCloudWrapped = () => (
 export const platforms = [
   { SVG: Youtube, name: 'Youtube' },
   { SVG: Twitch, name: 'Twitch' },
+  { SVG: TikTok, name: 'TikTok' },
   { SVG: Facebook, name: 'Facebook' },
   { SVG: Vimeo, name: 'Vimeo' },
   { SVG: SoundCloud, name: 'SoundCloud' },

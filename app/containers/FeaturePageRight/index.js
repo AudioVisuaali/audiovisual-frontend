@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { clamp } from 'lodash';
 
 import Chat from 'containers/Chat';
 import Viewers from 'containers/Viewers';
@@ -22,14 +23,21 @@ import {
 } from 'containers/WebSocket/actions';
 import ChatTextField from 'components/ChatTextField';
 import TwitchChat from 'components/TwitchChat';
+import { setItem, getItem, DRAWER_RIGHT_WIDTH } from 'utils/localStorage';
 
 import Header from './styles/Header';
 import Wrapper from './styles/Wrapper';
 import ChatFieldContainer from './styles/ChatFieldContainer';
 import ChatSelector from './ChatSelector';
 import HiddableContainer from './styles/HiddableContainer';
+import ResizeHandle from './ResizeHandle';
 
 const MATCH_TWITCH_CHANNEL_URL = /(?:www\.|go\.)?twitch\.tv\/([a-z0-9_]+)($|\?)/;
+
+const getDrawerWidth = () => {
+  const value = getItem(DRAWER_RIGHT_WIDTH);
+  return value ? parseInt(value, 10) : 550;
+};
 
 const FeaturePageRight = ({
   currentlyPlaying,
@@ -38,6 +46,7 @@ const FeaturePageRight = ({
   changeName,
   isMobile,
 }) => {
+  const [width, setWidth] = useState(getDrawerWidth());
   const [chatChannel, setChatChannel] = useState('default');
 
   const handleSend = message => sendMessage(message);
@@ -59,8 +68,15 @@ const FeaturePageRight = ({
     return currentlyPlaying.channel;
   };
 
+  const handleResize = newWidth => {
+    const clampedWidth = clamp(600, 350, newWidth);
+    setItem(DRAWER_RIGHT_WIDTH, clampedWidth);
+    setWidth(clampedWidth);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper width={width}>
+      <ResizeHandle width={width} onChange={handleResize} />
       <Header>
         <Viewers />
         <ChatSelector

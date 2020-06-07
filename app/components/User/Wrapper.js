@@ -10,18 +10,19 @@ const svgColor = p =>
 
 const Wrapper = styled.div`
   background-color: ${backgroundColor};
-  border-radius: 5px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px 6px 6px;
+  padding: 8px 10px 8px 10px;
   color: ${color};
   margin: 0 6px 6px 0;
+  line-height: 1;
   animation: ${fadeAndSlideInFromLeft} 200ms;
 
   & svg {
     flex-shrink: 0;
-    margin-right: 6px;
+    margin-right: 4px;
     width: 14px;
     height: 14px;
     color: ${svgColor};

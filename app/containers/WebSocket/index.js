@@ -54,6 +54,10 @@ import saga from './saga';
 
 export class WebSocket extends React.Component {
   componentDidMount() {
+    if (this.socket) {
+      return;
+    }
+
     this.socket = socketIO.connect(this.createPath(), this.createAuthObject());
     this.socket.on('connect', this.bindSocketActions);
   }

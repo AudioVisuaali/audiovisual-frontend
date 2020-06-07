@@ -17,7 +17,6 @@ import {
 } from 'containers/WebSocket/selectors';
 import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import QueueItem from 'components/QueueItem';
-import BigLabel from 'components/BigLabel';
 import DollyEmpty from 'svgs/DollyEmpty';
 
 import messages from './messages';
@@ -57,9 +56,6 @@ export function History({ addVideo, history }) {
         : amountOfVideosNotShown;
     return (
       <>
-        <BigLabel>
-          <FormattedMessage {...messages.title} />
-        </BigLabel>
         {showingVideos.map(video => (
           <QueueItem
             key={video.unique}

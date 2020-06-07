@@ -4,29 +4,23 @@ import device from 'styles/device';
 const mediaScreenBackgroundColor = p =>
   p.theme.isDark ? p.theme.dark[200] : p.theme.grey[400];
 
-export default styled.div`
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 400px;
-  height: 100%;
-  border-left: 1px solid
-    ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
-  background-color: ${p =>
-    p.theme.isDark ? p.theme.dark[300] : p.theme.light[100]};
-  display: flex;
-  flex-direction: column;
+export default styled.div(p => ({
+  flexShrink: 0,
+  maxWidth: 600,
+  minWidth: 300,
+  height: '100%',
+  borderLeft: `1px solid ${
+    p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500]
+  }`,
+  backgroundColor: p.theme.isDark ? p.theme.dark[300] : p.theme.light[100],
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'relative',
+  width: p.width,
 
-  @media screen and (${device.laptopL}) {
-    max-width: 350px;
-  }
-
-  @media screen and (${device.laptop}) {
-    max-width: 300px;
-  }
-
-  @media screen and (${device.tablet}) {
-    max-width: none;
-    height: auto;
-    background-color: ${mediaScreenBackgroundColor};
-  }
-`;
+  [`@media screen and (${device.tablet})`]: {
+    maxWidth: 'none',
+    height: 'auto',
+    backgroundColor: mediaScreenBackgroundColor,
+  },
+}));

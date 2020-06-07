@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import device from 'styles/device';
 
-export default styled.div`
-  flex-grow: 1;
-  height: 100%;
-
-  @media screen and (${device.tablet}) {
-    height: auto;
-  }
-`;
+export default styled.div(props => ({
+  flexGrow: 1,
+  height: '100%',
+  backgorundColor: props.theme.isDark
+    ? props.theme.dark[500]
+    : props.theme.grey[200],
+}));

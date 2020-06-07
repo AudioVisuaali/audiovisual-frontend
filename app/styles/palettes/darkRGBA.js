@@ -3,6 +3,7 @@ const transparencyDark = percent => `rgba(0,0,0,${percent})`;
 const dark = {
   10: transparencyDark(0.1),
   20: transparencyDark(0.2),
+  25: transparencyDark(0.25),
   30: transparencyDark(0.3),
   40: transparencyDark(0.4),
   50: transparencyDark(0.5),

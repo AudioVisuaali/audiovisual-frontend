@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
+
 import Wrapper from './styles/Wrapper';
 import Indicator from './styles/Indicator';
 
@@ -18,7 +22,7 @@ const Tabs = React.forwardRef(function Tabs(props, ref) {
 
   useEffect(() => {
     setTab(value);
-  }, [value]);
+  }, [value, props.locale]);
 
   const setTab = v => {
     const tabsNode = childrensRef.current;
@@ -64,6 +68,11 @@ Tabs.propTypes = {
   children: PropTypes.node,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any,
+  locale: PropTypes.string,
 };
 
-export default Tabs;
+const mapStateToProps = createSelector(makeSelectLocale(), locale => ({
+  locale,
+}));
+
+export default connect(mapStateToProps)(Tabs);

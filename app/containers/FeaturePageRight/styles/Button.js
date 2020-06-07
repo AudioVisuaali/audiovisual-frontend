@@ -1,30 +1,40 @@
 import styled from 'styled-components';
 
-const rotation = props =>
-  props.active
-    ? `
-  transform: rotate(30deg);
-`
-    : `
-  transform: rotate(0deg);
-`;
+import ButtonRound from 'components/ButtonRound';
 
-const Button = styled.button`
-  outline: 0;
-  border: none;
-  background-color: transparent;
-  color: ${p => (p.theme.isDark ? p.theme.light[50] : p.theme.dark[500])};
+const Button = styled(ButtonRound)(p => ({
+  margin: 0,
 
-  & svg {
-    transition: all 100ms;
-    width: 20px;
+  ':after': {
+    transform: 'scale(0.5)',
 
-    ${rotation}
+    ...(p.active && {
+      transform: 'scale(0.8)',
+    }),
+  },
 
-    &:hover {
-      transform: rotate(30deg);
-    }
-  }
-`;
+  ':hover': {
+    ':after': {
+      transform: 'scale(0.85)',
+    },
+  },
+
+  ':focus': {
+    ':after': {
+      transform: 'scale(0.9)',
+    },
+  },
+
+  svg: {
+    transition: 'all 200ms',
+    width: 20,
+
+    transform: `rotate(${p.active ? '30deg' : '0deg'})`,
+
+    ':hover': {
+      transform: 'rotate(30deg)',
+    },
+  },
+}));
 
 export default Button;

@@ -15,76 +15,31 @@ import FeaturePageRight from 'containers/FeaturePageRight';
 import FeaturePageLeft from 'containers/FeaturePageLeft';
 import { makeSelectEmit } from 'containers/WebSocket/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
+import CheckTimeDiff from 'containers/CheckTimeDiff';
 
 import Wrapper from './Wrapper';
 import LoadingContainer from './LoadingContainer';
 
-class FeaturePage extends React.Component {
-  constructor() {
-    super();
-    this.state = { isMobile: false };
-  }
-
-  componentDidMount() {
-    if (window.attachEvent) {
-      window.attachEvent('onresize', this.handleResize);
-    } else if (window.addEventListener) {
-      window.addEventListener('resize', this.handleResize, true);
-    }
-    this.handleResize();
-  }
-
-  componentWillUnmount() {
-    if (window.detachEvent) {
-      window.detachEvent('onresize', this.handleResize);
-    } else if (window.removeEventListener) {
-      window.removeEventListener('resize', this.handleResize);
-    }
-  }
-
-  handleResize = () => {
-    const isMobile = window.innerWidth <= 1024;
-    if (isMobile === this.state.isMobile) return;
-
-    this.setState({ isMobile });
-  };
-
-  featurePage = () => {
-    const { isConnected } = this.props;
-    const { isMobile } = this.state;
-
-    if (!isConnected) {
-      return (
-        <LoadingContainer>
-          <LoadingIndicator />
-        </LoadingContainer>
-      );
-    }
-
-    return (
+const FeaturePage = ({ isConnected }) => (
+  <>
+    <Helmet>
+      <title>Feature Page</title>
+      <meta name="description" content="Feature page" />
+    </Helmet>
+    <WebSocket />
+    {isConnected ? (
       <Wrapper>
-        <FeaturePageLeft isMobile={isMobile} />
-        {!isMobile && <FeaturePageRight />}
+        <FeaturePageLeft />
+        <FeaturePageRight />
+        <CheckTimeDiff />
       </Wrapper>
-    );
-  };
-
-  render() {
-    return (
-      <>
-        <Helmet>
-          <title>Feature Page</title>
-          <meta
-            name="description"
-            content="Feature page of React.js Boilerplate application"
-          />
-        </Helmet>
-        <WebSocket />
-        {this.featurePage()}
-      </>
-    );
-  }
-}
+    ) : (
+      <LoadingContainer>
+        <LoadingIndicator />
+      </LoadingContainer>
+    )}
+  </>
+);
 
 FeaturePage.propTypes = {
   isConnected: PropTypes.func,

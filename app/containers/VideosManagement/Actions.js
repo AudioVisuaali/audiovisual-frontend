@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -17,8 +18,7 @@ import {
   makeSelectPlayOrder,
   makeSelectCurrentlyPlaying,
 } from 'containers/WebSocket/selectors';
-import Tabs from 'components/Tabs';
-import Tab from 'components/Tab';
+import ButtonRound from 'components/ButtonRound';
 import ListSVG from 'svgs/List';
 import RandomSVG from 'svgs/Random';
 import ForwardSVG from 'svgs/Forward';
@@ -27,18 +27,8 @@ import messages from './messages';
 const PLAY_ORDER_LINEAR = 'linear';
 const PLAY_ORDER_RANDOM = 'random';
 
-const ForwardRef = React.forwardRef(function ForwardRef(
-  // eslint-disable-next-line react/prop-types
-  { title, SVG, ...rest },
-  ref,
-) {
-  return (
-    <Tooltip title={title} enterDelay={400} placement="bottom">
-      <Tab ref={ref} {...rest}>
-        <SVG />
-      </Tab>
-    </Tooltip>
-  );
+const CustomButton = styled(ButtonRound)({
+  margin: '6px 8px',
 });
 
 const Actions = props => {
@@ -51,10 +41,6 @@ const Actions = props => {
   };
 
   const handlePlayOrder = type => {
-    if (type === 0) {
-      return;
-    }
-
     if (type === playOrder) return;
 
     setPlayOrder(type);
@@ -62,33 +48,49 @@ const Actions = props => {
 
   // Can't use onChange event since Tabs are wrapped with ToolTip
   return (
-    <Tabs onChange={handlePlayOrder} value={playOrder}>
+    <>
+      <Tooltip
+        title={intl.formatMessage(messages.random)}
+        enterDelay={400}
+        placement="bottom"
+      >
+        <CustomButton
+          size={45}
+          onClick={() => handlePlayOrder(PLAY_ORDER_RANDOM)}
+          active={playOrder === PLAY_ORDER_RANDOM}
+        >
+          <RandomSVG />
+        </CustomButton>
+      </Tooltip>
+      <Tooltip
+        title={intl.formatMessage(messages.ordered)}
+        enterDelay={400}
+        placement="bottom"
+      >
+        <CustomButton
+          size={45}
+          onClick={() => handlePlayOrder(PLAY_ORDER_LINEAR)}
+          active={playOrder === PLAY_ORDER_LINEAR}
+        >
+          <ListSVG />
+        </CustomButton>
+      </Tooltip>
       {playing ? (
         <Tooltip
           title={intl.formatMessage(messages.skip)}
           enterDelay={400}
           placement="bottom"
         >
-          <Tab onClick={handleSkip}>
-            <ForwardSVG />
-          </Tab>
+          <CustomButton size={45} onClick={handleSkip}>
+            <ForwardSVG style={{ transform: 'translateX(1px)' }} />
+          </CustomButton>
         </Tooltip>
       ) : (
-        <Tab disabled onClick={handleSkip}>
+        <CustomButton size={45} disabled onClick={handleSkip}>
           <ForwardSVG />
-        </Tab>
+        </CustomButton>
       )}
-      <ForwardRef
-        title={intl.formatMessage(messages.ordered)}
-        value={PLAY_ORDER_LINEAR}
-        SVG={ListSVG}
-      />
-      <ForwardRef
-        title={intl.formatMessage(messages.random)}
-        value={PLAY_ORDER_RANDOM}
-        SVG={RandomSVG}
-      />
-    </Tabs>
+    </>
   );
 };
 

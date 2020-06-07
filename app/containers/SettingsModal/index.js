@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
+import Button from 'components/Button';
 import LocaleToggle from 'containers/LocaleToggle';
 import ThemeToggle from 'containers/ThemeToggle';
 import TextField from 'components/TextField';
 import Modal from 'components/Modal';
 import SyncSensitivity from './SyncSensitivity';
+import NextVideoSound from './NextVideoSound';
+import NameForm from './NameForm';
 
 import messages from './messages';
 import Label from './Label';
@@ -16,14 +19,18 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
   const [name, setName] = useState(currentUser ? currentUser.username : '');
 
   const handleInputField = e => setName(e.target.value);
-  const handleSave = () => onName(name);
 
   useEffect(() => setName(currentUser.username), [currentUser.username]);
+
+  const handleNameChange = e => {
+    e.preventDefault();
+    onName(name);
+  };
 
   return (
     <Modal
       title={intl.formatMessage(messages.title)}
-      onSave={handleSave}
+      hideSave
       onClose={onClose}
     >
       <Section>
@@ -49,9 +56,21 @@ const SettingsModal = ({ currentUser, intl, onClose, onName }) => {
 
       <Section>
         <Label>
+          <FormattedMessage {...messages.soundNextVideo} />
+        </Label>
+        <NextVideoSound />
+      </Section>
+
+      <Section>
+        <Label>
           <FormattedMessage {...messages.changeUsername} />
         </Label>
-        <TextField value={name} onChange={handleInputField} />
+        <NameForm onSubmit={handleNameChange}>
+          <TextField value={name} onChange={handleInputField} />
+          <Button type="submit" disabled={name === currentUser.username}>
+            <FormattedMessage {...messages.updateUsername} />
+          </Button>
+        </NameForm>
       </Section>
     </Modal>
   );

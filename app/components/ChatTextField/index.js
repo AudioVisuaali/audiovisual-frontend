@@ -52,7 +52,7 @@ function ChatTextField({ onSend, intl }) {
       />
       <Actions>
         <Logo href={pathHome}>
-          Visuals <Version>v. 1.4.2</Version>
+          Visuals <Version>v. 2.5.3</Version>
         </Logo>
         <Button
           type="submit"

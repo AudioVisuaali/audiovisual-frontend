@@ -30,6 +30,8 @@ import {
   EMIT_ROOM_MESSAGE,
   EMIT_ROOM_REORDER,
   EMIT_CURRENT_USER_CHANGE_USERNAME,
+  SET_OFFSET,
+  SET_CLIENT_SERVER_TIME_OFFSET,
 } from './constants';
 
 /**
@@ -171,8 +173,8 @@ export function setEmit(emit) {
  * Play or pause current video
  * @param {Boolean} isPlaying
  */
-export function emitRoomIsPlaying(isPlaying) {
-  return { type: EMIT_ROOM_IS_PLAYING, isPlaying };
+export function emitRoomIsPlaying(isPlaying, played) {
+  return { type: EMIT_ROOM_IS_PLAYING, isPlaying, played };
 }
 
 /**
@@ -217,8 +219,8 @@ export function emitRoomPlayOrder(playType) {
 /**
  * Request to play the next video
  */
-export function emitRoomNextVideo() {
-  return { type: EMIT_ROOM_NEXT_VIDEO };
+export function emitRoomNextVideo(currentVideoId) {
+  return { type: EMIT_ROOM_NEXT_VIDEO, currentVideoId };
 }
 
 /**
@@ -243,4 +245,23 @@ export function emitRoomReorder(order) {
  */
 export function emitUserChangeUsername(name) {
   return { type: EMIT_CURRENT_USER_CHANGE_USERNAME, name };
+}
+
+/**
+ *
+ *  Player actions
+ *    Sharing metadata
+ *
+ */
+
+/**
+ * Change users displayname
+ * @param {String} name
+ */
+export function setPlayerOffset(offset) {
+  return { type: SET_OFFSET, offset };
+}
+
+export function setClientServerTimeOffset(offset) {
+  return { type: SET_CLIENT_SERVER_TIME_OFFSET, offset };
 }

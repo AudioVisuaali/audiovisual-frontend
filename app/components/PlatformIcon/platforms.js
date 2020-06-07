@@ -11,6 +11,7 @@ import Film from 'svgs/Film';
 import Wistia from 'svgs/Wistia';
 import MixCloud from 'svgs/MixCloud';
 import Dailymotion from 'svgs/Dailymotion';
+import TikTok from 'svgs/TikTok';
 
 const svgColor = props =>
   props.theme.isDark ? props.theme.light[50] : props.theme.grey[800];
@@ -40,6 +41,7 @@ const platforms = {
   twitch: Twitch,
   'twitch-live': Twitch,
   'twitch-clip': Twitch,
+  'tik-tok': TikTok,
   vimeo: Vimeo,
   youtube: Youtube,
   soundcloud: SoundCloud,

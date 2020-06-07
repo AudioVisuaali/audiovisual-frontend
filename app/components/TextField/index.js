@@ -6,32 +6,30 @@
 
 import styled from 'styled-components';
 
-const borderColor = props =>
-  props.theme.isDark ? props.theme.dark[800] : props.theme.grey[500];
 const color = props =>
-  props.theme.isDark ? props.theme.light[700] : props.theme.grey[700];
+  props.theme.isDark ? props.theme.light[500] : props.theme.dark[200];
 const focusBackgroundColor = props =>
-  props.theme.isDark ? props.theme.darkRGBA[10] : props.theme.darkRGBA[10];
-const disabledBackgroundColor = props =>
-  props.theme.isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)';
+  props.theme.isDark ? props.theme.darkRGBA[40] : props.theme.darkRGBA[20];
 
 const TextField = styled.input`
-  background-color: transparent;
-  border: 1px solid ${borderColor};
+  background-color: ${p =>
+    p.theme.isDark ? p.theme.darkRGBA[25] : p.theme.darkRGBA[10]};
+  border: none;
   color: ${color};
-  padding: 8px 14px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 8px;
   width: 100%;
+  font-size: 12px;
+  line-height: 1.6;
 
-  transition: background-color 200ms;
+  transition: all 200ms;
 
   &:focus:not(:disabled) {
     background-color: ${focusBackgroundColor};
   }
 
   &:disabled {
-    opacity: 0.4;
-    background-color: ${disabledBackgroundColor};
+    opacity: 0.5;
   }
 `;
 export default TextField;

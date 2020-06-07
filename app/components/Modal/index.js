@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,12 +20,41 @@ import Content from './styles/Content';
 import Title from './styles/Title';
 import Background from './styles/Background';
 
-function Modal({ children, onClose, onSave, title }) {
+function Modal({
+  children,
+  onClose,
+  onSave,
+  saveText,
+  closeText,
+  disableSave,
+  focusSaveOnMount,
+  focusCancelOnMount,
+  title,
+  hideSave,
+}) {
   const [closing, setClosing] = useState(false);
+  const confirmRef = useRef(null);
+  const declineRef = useRef(null);
+
+  useEffect(() => {
+    if (focusSaveOnMount) {
+      confirmRef.current.focus();
+      return;
+    }
+
+    if (focusCancelOnMount) {
+      declineRef.current.focus();
+    }
+  }, []);
 
   const handleClose = () => {
     setClosing(true);
     setTimeout(onClose, 200);
+  };
+
+  const handleSave = () => {
+    setClosing(true);
+    setTimeout(onSave, 200);
   };
 
   return (
@@ -38,12 +67,18 @@ function Modal({ children, onClose, onSave, title }) {
         <Title>{title}</Title>
         <Content>{children}</Content>
         <Actions>
-          <Button onClick={handleClose}>
-            <FormattedMessage {...messages.close} />
+          <Button ref={declineRef} onClick={handleClose}>
+            {closeText || <FormattedMessage {...messages.close} />}
           </Button>
-          <Button onClick={onSave}>
-            <FormattedMessage {...messages.save} />
-          </Button>
+          {!hideSave && (
+            <Button
+              ref={confirmRef}
+              disabled={disableSave}
+              onClick={handleSave}
+            >
+              {saveText || <FormattedMessage {...messages.save} />}
+            </Button>
+          )}
         </Actions>
       </ModalWrapper>
     </Wrapper>
@@ -55,6 +90,12 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  disableSave: PropTypes.bool,
+  saveText: PropTypes.string,
+  closeText: PropTypes.string,
+  focusSaveOnMount: PropTypes.bool,
+  focusCancelOnMount: PropTypes.bool,
+  hideSave: PropTypes.bool,
 };
 
 export default Modal;

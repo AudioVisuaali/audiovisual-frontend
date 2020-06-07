@@ -4,9 +4,13 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import Add from 'containers/Add';
 import History from 'containers/History';
@@ -18,15 +22,23 @@ import {
   setItem,
   getItem,
 } from 'utils/localStorage';
+import { makeSelectThemeMode } from 'containers/ThemeProvider/selectors';
 
-import Shadow from './styles/Shadow';
 import Wrapper from './styles/Wrapper';
 import Contents from './styles/Contents';
 import MenusWrapper from './styles/MenusWrapper';
 import MenuWrapper from './styles/MenuWrapper';
+import MenuSpacer from './styles/MenuSpacer';
+import Shadow from './styles/Shadow';
 import messages from './messages';
 import Actions from './Actions';
 import FirstTimeTutorial from './FirstTimeTutorial';
+
+const CustomTab = styled(Tab)({
+  margin: '0 18px',
+  padding: '16px 0',
+  fontSize: 20,
+});
 
 function getLastTab() {
   const active = getItem(ACTIVE_VIDEO_MANAGEMENT_TAB);
@@ -40,7 +52,8 @@ function getLastTab() {
   return parsed;
 }
 
-const VideosManagement = ({ onRequestScroll }) => {
+const VideosManagement = ({ isRelativeMenu, onRequestScroll, theme }) => {
+  const stickyRef = useRef(null);
   const [activeTab, setActiveTab] = useState(getLastTab());
   const [activeTabShowing, setActiveTabShowing] = useState(getLastTab());
   const [showing, setShowing] = useState(true);
@@ -79,25 +92,31 @@ const VideosManagement = ({ onRequestScroll }) => {
 
   return (
     <Wrapper>
-      <MenusWrapper>
-        <MenuWrapper>
-          <Tabs value={activeTab} onChange={handleChange}>
-            <Tab>
-              <FormattedMessage {...messages.queue} />
-            </Tab>
-            <Tab>
-              <FormattedMessage {...messages.add} />
-            </Tab>
-            <Tab>
-              <FormattedMessage {...messages.history} />
-            </Tab>
-          </Tabs>
-        </MenuWrapper>
-        <MenuWrapper>
-          <Actions />
-        </MenuWrapper>
-        <FirstTimeTutorial onClick={handleRequestScroll} />
-        <Shadow />
+      <MenusWrapper
+        key={theme.toString()}
+        isSticky={isRelativeMenu}
+        ref={stickyRef}
+      >
+        <MenuSpacer showBorder={isRelativeMenu}>
+          {isRelativeMenu && <Shadow />}
+          <MenuWrapper>
+            <Tabs value={activeTab} onChange={handleChange}>
+              <CustomTab>
+                <FormattedMessage {...messages.queue} />
+              </CustomTab>
+              <CustomTab>
+                <FormattedMessage {...messages.add} />
+              </CustomTab>
+              <CustomTab>
+                <FormattedMessage {...messages.history} />
+              </CustomTab>
+            </Tabs>
+          </MenuWrapper>
+          <MenuWrapper>
+            <Actions />
+          </MenuWrapper>
+          <FirstTimeTutorial onClick={handleRequestScroll} />
+        </MenuSpacer>
       </MenusWrapper>
       <Contents showing={showing} key={activeTabShowing}>
         {getTab(activeTabShowing)}
@@ -108,6 +127,14 @@ const VideosManagement = ({ onRequestScroll }) => {
 
 VideosManagement.propTypes = {
   onRequestScroll: PropTypes.func,
+  isRelativeMenu: PropTypes.bool,
+  theme: PropTypes.bool,
 };
 
-export default VideosManagement;
+const mapStateToProps = createStructuredSelector({
+  theme: makeSelectThemeMode(),
+});
+
+const withConnect = connect(mapStateToProps);
+
+export default compose(withConnect)(VideosManagement);

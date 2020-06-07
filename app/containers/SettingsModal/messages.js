@@ -29,6 +29,10 @@ export default defineMessages({
     id: `${scope}.syncSensitivity`,
     defaultMessage: 'Video sync threshold',
   },
+  soundNextVideo: {
+    id: `${scope}.soundNextVideo`,
+    defaultMessage: 'Sound - Next video',
+  },
   realtime: {
     id: `${scope}.realtime`,
     defaultMessage: 'Realtime',
@@ -40,5 +44,9 @@ export default defineMessages({
   youmayExperienceStuttering: {
     id: `${scope}.youmayExperienceStuttering`,
     defaultMessage: 'You may experience extreme stuttering',
+  },
+  updateUsername: {
+    id: `${scope}.updateUsername`,
+    defaultMessage: 'Update',
   },
 });

@@ -55,3 +55,10 @@ export const EMIT_ROOM_MESSAGE = 'app/Websocket/EMIT_ROOM_MESSAGE';
 export const EMIT_ROOM_REORDER = 'app/Websocket/EMIT_ROOM_REORDER';
 export const EMIT_CURRENT_USER_CHANGE_USERNAME =
   'app/Websocket/EMIT_CURRENT_USER_CHANGE_USERNAME';
+
+/**
+ * Player Constants
+ */
+export const SET_OFFSET = 'app/Websocket/SET_OFFSET';
+export const SET_CLIENT_SERVER_TIME_OFFSET =
+  'app/Websocket/SET_CLIENT_SERVER_TIME_OFFSET';

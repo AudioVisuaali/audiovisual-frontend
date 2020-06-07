@@ -12,6 +12,7 @@ import PlaySVG from 'svgs/Play';
 import PauseSVG from 'svgs/Pause';
 import ExpandSVG from 'svgs/Expand';
 import CompressSVG from 'svgs/Compress';
+import EyeSlash from 'svgs/EyeSlash';
 import Slider from 'components/Slider';
 
 // import messages from './messages';
@@ -38,6 +39,8 @@ const Controls = ({
   isLive,
   muted,
   onMute,
+  video,
+  onHideControls,
 }) => {
   const [isUserSeeking, setIsUserSeeking] = useState(false);
   const [seeking, setSeeking] = useState(false);
@@ -62,7 +65,13 @@ const Controls = ({
       return;
     }
 
-    onSeek(seekingAt);
+    const parsed = parseFloat(seekingAt, 10);
+
+    if (Number.isNaN(parsed)) {
+      return;
+    }
+
+    onSeek(parsed);
   };
 
   const playedOrSeek = seeking ? seekingAt : played;
@@ -99,12 +108,16 @@ const Controls = ({
           />
           <Stats
             isLive={isLive}
+            video={video}
             played={playedOrSeek || 0}
             duration={duration}
           />
         </ControlLeft>
         <ControlRight>
           <FullScreenContainer>
+            <PlayButton onClick={onHideControls}>
+              <EyeSlash />
+            </PlayButton>
             <PlayButton onClick={onToggleFullscreen}>
               {isFullscreen ? <CompressSVG /> : <ExpandSVG />}
             </PlayButton>

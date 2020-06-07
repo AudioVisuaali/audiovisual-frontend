@@ -1,8 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
-import device from 'styles/device';
 
 const backgroundColor = props =>
-  props.theme.isDark ? props.theme.dark[200] : props.theme.grey[200];
+  props.theme.isDark ? props.theme.dark[500] : props.theme.grey[200];
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -12,20 +11,21 @@ const GlobalStyle = createGlobalStyle`
     margin: 0px;
     padding: 0px;
     overflow: hidden;
-    background-color: ${props => backgroundColor(props)};
+    background-color: ${backgroundColor};
   }
 
   body {
-    font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Overpass', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   body.fontLoaded {
-    font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Overpass', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   #app {
     height: 100vh;
     width: 100%;
+    min-width: 850px;
   }
 
   button {
@@ -41,16 +41,8 @@ const GlobalStyle = createGlobalStyle`
     outline-width: 0;
   }
 
-  @media screen and (${device.laptop}) {
-    html,
-    body {
-      height: auto;
-      overflow: visible;
-    }
-    
-    & #app {
-      height: auto;
-    }
+  .scroll-bars-fix:first-child > div:nth-child(3) {
+    z-index: 21;
   }
 `;
 

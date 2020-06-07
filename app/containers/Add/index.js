@@ -17,9 +17,6 @@ import Wrapper from './styles/Wrapper';
 
 const Add = () => (
   <Wrapper>
-    <BigLabel>
-      <FormattedMessage {...messages.title} />
-    </BigLabel>
     <AddForm />
 
     <BigLabel>

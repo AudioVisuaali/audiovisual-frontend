@@ -1,7 +1,9 @@
 const transparencyWhite = percent => `rgba(255,255,255,${percent})`;
 
 const whiteRGBA = {
+  5: transparencyWhite(0.05),
   10: transparencyWhite(0.1),
+  15: transparencyWhite(0.15),
   20: transparencyWhite(0.2),
   30: transparencyWhite(0.3),
   40: transparencyWhite(0.4),

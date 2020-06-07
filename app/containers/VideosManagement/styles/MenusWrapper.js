@@ -1,25 +1,23 @@
 import styled from 'styled-components';
-import device from 'styles/device';
 
-const MenusWrapper = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  border-bottom: 1px solid
-    ${p => (p.theme.isDark ? p.theme.dark[800] : p.theme.grey[500])};
-  background-color: ${p =>
-    p.theme.isDark ? p.theme.dark[300] : p.theme.light[50]};
-  justify-content: space-between;
-  padding: 0 16px;
+const MenusWrapper = styled.div(props => ({
+  position: 'sticky',
+  zIndex: 1,
+  top: -1,
+  transition: 'background-color 120ms',
 
-  @media screen and (${device.tablet}) {
-    padding: 0 10px;
-  }
+  backgroundColor: props.theme.isDark
+    ? props.theme.dark[500]
+    : props.theme.grey[200],
 
-  @media screen and (${device.mobileL}) {
-    padding: 0 4px;
-  }
-`;
+  ...(props.isSticky && {
+    borderBottom: `1px solid ${
+      props.theme.isDark ? props.theme.dark[800] : props.theme.grey[500]
+    }`,
+    backgroundColor: props.theme.isDark
+      ? props.theme.dark[400]
+      : props.theme.grey[400],
+  }),
+}));
 
 export default MenusWrapper;

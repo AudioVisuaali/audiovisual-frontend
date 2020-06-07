@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-const MenuWrapper = styled.div`
-  margin: 0 4px;
-`;
+const MenuWrapper = styled.div({});
 
 export default MenuWrapper;

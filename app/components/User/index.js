@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 
 import UserSVG from 'svgs/User';
 import Wrapper from './Wrapper';
+import Animation from './Animation';
 
 const User = ({ user }) => (
-  <Wrapper>
-    <UserSVG />
-    {user.username}
-  </Wrapper>
+  <Animation>
+    <Wrapper>
+      <UserSVG />
+      {user.username}
+    </Wrapper>
+  </Animation>
 );
 
 User.propTypes = {

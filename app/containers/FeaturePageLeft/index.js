@@ -12,17 +12,14 @@ import { createStructuredSelector } from 'reselect';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import Player from 'containers/Player';
+import PasteContainer from 'containers/PasteContainer';
 import VideosManagement from 'containers/VideosManagement';
 import { makeSelectCurrentlyPlaying } from 'containers/WebSocket/selectors';
-import FeaturePageRight from 'containers/FeaturePageRight';
 
 import VideoContainerPixelFix from './styles/VideoContainerPixelFix';
 import Wrapper from './styles/Wrapper';
 import VideoContainer from './styles/VideoContainer';
 import DynamicVideoContainer from './styles/DynamicVideoContainer';
-import PopUpSelector from './PopUpSelector';
-
-const smallPlayerOffset = 100;
 
 export class FeaturePageLeft extends React.Component {
   constructor() {
@@ -33,7 +30,7 @@ export class FeaturePageLeft extends React.Component {
       playerHeight: 0,
       isFixedPlayer: false,
       smallPlayer: false,
-      isVideoManagementSelected: true,
+      isRelativeMenu: false,
     };
   }
 
@@ -57,9 +54,15 @@ export class FeaturePageLeft extends React.Component {
   };
 
   handleScroll = e => {
-    const { smallPlayer, playerHeight, isFixedPlayer } = this.state;
-    const isLargePlayer = e.scrollTop > smallPlayerOffset;
+    const {
+      isRelativeMenu,
+      smallPlayer,
+      playerHeight,
+      isFixedPlayer,
+    } = this.state;
+    const isLargePlayer = e.scrollTop > playerHeight * 0.35;
     const newIsFixedPlayer = e.scrollTop > playerHeight;
+    const newIsRelativeMenu = e.scrollTop > playerHeight + 20;
 
     if (isLargePlayer !== smallPlayer) {
       this.setState({ smallPlayer: isLargePlayer });
@@ -67,6 +70,10 @@ export class FeaturePageLeft extends React.Component {
 
     if (newIsFixedPlayer !== isFixedPlayer) {
       this.setState({ isFixedPlayer: newIsFixedPlayer });
+    }
+
+    if (isRelativeMenu !== newIsRelativeMenu) {
+      this.setState({ isRelativeMenu: newIsRelativeMenu });
     }
   };
 
@@ -81,82 +88,47 @@ export class FeaturePageLeft extends React.Component {
     node.scrollTo(properties);
   };
 
-  handlePopUp = value => this.setState({ isVideoManagementSelected: value });
-
-  innerContent = () => {
-    const { isMobile, currentVideo } = this.props;
-    const {
-      isVideoManagementSelected,
-      smallPlayer,
-      playerHeight,
-      isFixedPlayer,
-    } = this.state;
+  render() {
+    const { currentVideo } = this.props;
+    const { smallPlayer, isFixedPlayer, isRelativeMenu } = this.state;
 
     const smallPlayerAndAllowed = currentVideo && smallPlayer;
-    const VideoPlayerStyle = { height: playerHeight };
-    const pixelFixStyle = { height: playerHeight - 1 };
+
     return (
       <>
-        <VideoContainerPixelFix style={pixelFixStyle}>
-          <VideoContainer style={VideoPlayerStyle}>
-            <DynamicVideoContainer
-              sticky={isFixedPlayer}
-              dynamic={smallPlayerAndAllowed}
-            >
-              <Player />
-            </DynamicVideoContainer>
-          </VideoContainer>
-        </VideoContainerPixelFix>
-        {!isMobile || (isMobile && isVideoManagementSelected) ? (
-          <VideosManagement onRequestScroll={this.handleRequestScroll} />
-        ) : (
-          <FeaturePageRight isMobile={isMobile} />
-        )}
+        <PasteContainer />
+        <Wrapper ref={this.playerContainer}>
+          <Scrollbars
+            className="scroll-bars-fix"
+            ref={this.scrollBars}
+            onUpdate={this.handleScroll}
+            autoHide
+            autoHideTimeout={200}
+            autoHideDuration={200}
+            universal
+          >
+            <VideoContainerPixelFix>
+              <VideoContainer>
+                <DynamicVideoContainer
+                  sticky={isFixedPlayer}
+                  dynamic={smallPlayerAndAllowed}
+                >
+                  <Player />
+                </DynamicVideoContainer>
+              </VideoContainer>
+            </VideoContainerPixelFix>
+            <VideosManagement
+              isRelativeMenu={isRelativeMenu}
+              onRequestScroll={this.handleRequestScroll}
+            />
+          </Scrollbars>
+        </Wrapper>
       </>
-    );
-  };
-
-  checkForMobile = () => {
-    const { isMobile } = this.props;
-
-    if (isMobile) {
-      return this.innerContent();
-    }
-
-    return (
-      <Scrollbars
-        ref={this.scrollBars}
-        onUpdate={this.handleScroll}
-        autoHide
-        autoHideTimeout={200}
-        autoHideDuration={200}
-        universal
-      >
-        {this.innerContent()}
-      </Scrollbars>
-    );
-  };
-
-  render() {
-    const { isMobile } = this.props;
-    const { isVideoManagementSelected } = this.state;
-
-    return (
-      <Wrapper ref={this.playerContainer}>
-        {isMobile && (
-          <PopUpSelector
-            chatSelected={isVideoManagementSelected}
-            onSelect={this.handlePopUp}
-          />
-        )}
-        {this.checkForMobile()}
-      </Wrapper>
     );
   }
 }
 
 FeaturePageLeft.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
   currentVideo: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),

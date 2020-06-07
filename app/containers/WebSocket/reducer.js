@@ -20,6 +20,8 @@ import {
   WS_SET_CURRENT_USER_USERNAME,
   WS_SET_REORDER,
   WS_SET_EMIT,
+  SET_OFFSET,
+  SET_CLIENT_SERVER_TIME_OFFSET,
 } from './constants';
 
 export const key = 'webSocket';
@@ -29,6 +31,13 @@ export const initialState = {
   currentUser: null,
   owner: null,
   unique: null,
+  timelineAction: {
+    timeStampType: '',
+    timeStamp: new Date().getTime(),
+    updatedAt: null,
+    seeked: 0,
+    playing: false,
+  },
   seek: {
     updatedAt: new Date().getTime(),
     seekTo: null,
@@ -43,6 +52,8 @@ export const initialState = {
   },
   viewers: [],
   messages: [],
+  offset: 0,
+  clientServerTimeOffset: 0,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -61,26 +72,35 @@ const webSocketReducer = (state = initialState, action) =>
         draft.viewers = action.room.viewers;
         draft.messages = action.room.messages;
         draft.timelineAction = action.room.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = '';
         break;
 
       case WS_SET_ROOM_IS_PLAYING:
         draft.playing = action.isPlaying;
         draft.timelineAction = action.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = '';
         break;
 
       case WS_SET_ROOM_TIMELINE:
         draft.seek.seekTo = action.seek;
         draft.seek.updatedAt = new Date().getTime();
         draft.timelineAction = action.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = '';
         break;
 
       case WS_SET_ROOM_SKIP:
-        draft.videos.history = state.videos.playing;
+        draft.videos.history = [...state.videos.history, state.videos.playing];
         draft.videos.playing = action.playing;
         draft.videos.playlist = state.videos.playlist.filter(
           video => video.unique !== action.playing.unique,
         );
         draft.timelineAction = action.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = '';
+        draft.offset = 0;
         break;
 
       case WS_ADD_ROOM_VIDEO:
@@ -90,15 +110,20 @@ const webSocketReducer = (state = initialState, action) =>
           draft.videos.playing = action.video;
         }
         draft.timelineAction = action.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = '';
         break;
 
       case WS_SET_ROOM_NEXT_VIDEO:
-        draft.videos.history = state.videos.playing;
+        draft.videos.history = [...state.videos.history, state.videos.playing];
         draft.videos.playing = action.playing;
         draft.videos.playlist = state.videos.playlist.filter(
-          video => video.unique !== action.video.unique,
+          video => video.unique !== action.playing.unique,
         );
         draft.timelineAction = action.timelineAction;
+        draft.timelineAction.timeStamp = new Date().getTime();
+        draft.timelineAction.timeStampType = 'next-video';
+        draft.offset = 0;
         break;
 
       case WS_DEL_ROOM_VIDEO:
@@ -153,6 +178,13 @@ const webSocketReducer = (state = initialState, action) =>
         draft.videos.playlist.splice(action.newIndex, 0, video[0]);
         break;
       }
+
+      case SET_OFFSET:
+        draft.offset = action.offset;
+        break;
+
+      case SET_CLIENT_SERVER_TIME_OFFSET:
+        draft.clientServerTimeOffset = action.offset;
     }
   });
 

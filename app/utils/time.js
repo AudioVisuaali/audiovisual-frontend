@@ -24,14 +24,14 @@ export function dateToDoublePercision(date) {
   )}`;
 }
 
-export function getSeeked(timelineAction) {
+export function getSeeked(timelineAction, offset = 0) {
   const { seeked, updatedAt, playing } = timelineAction;
   let totalTime = seeked;
 
   // If video is playing we need to calculate time from start to now
   if (playing) {
     const date1 = new Date(updatedAt);
-    const date2 = new Date();
+    const date2 = new Date(Date.now() + offset);
     const diffTime = Math.abs(date2 - date1); // ? TODO
     const diffSeconds = diffTime / 1000;
 

@@ -31,23 +31,23 @@ export function* setUserMetadata({ user }) {
   setItem(TOKEN, user.token);
 }
 
-export function* isPlaying({ isPlaying: isP_ }) {
+export function* isPlaying({ isPlaying: isP_, played }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_IS_PLAYING, isP_);
+  emit(WS_ACTION_IS_PLAYING, { isPlaying: isP_, played });
 }
 
 export function* seek({ seconds }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_SEEK, seconds);
+  emit(WS_ACTION_SEEK, { seekToSeconds: seconds });
 }
 
 export function* skip() {
   const emit = yield select(makeSelectEmit());
   const playing = yield select(makeSelectCurrentlyPlaying());
 
-  emit(WS_ACTION_SKIP, playing.unique);
+  emit(WS_ACTION_SKIP, { currentlyPlayingVideoUnique: playing.unique });
 }
 
 export function* addVideo({ video }) {
@@ -59,38 +59,37 @@ export function* addVideo({ video }) {
 export function* delVideo({ video }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_REMOVE_VIDEO, video.unique);
+  emit(WS_ACTION_REMOVE_VIDEO, { videoUnique: video.unique });
 }
 
 export function* playOrder({ playType }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_PLAY_ORDER, playType);
+  emit(WS_ACTION_PLAY_ORDER, { order: playType });
 }
 
-export function* next() {
+export function* next({ currentVideoId }) {
   const emit = yield select(makeSelectEmit());
-  const playing = yield select(makeSelectCurrentlyPlaying());
 
-  emit(WS_ACTION_NEXT_VIDEO, playing.unique);
+  emit(WS_ACTION_NEXT_VIDEO, { currentlyPlayingVideoUnique: currentVideoId });
 }
 
 export function* sendMessage({ message }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_USER_MESSAGE, message);
+  emit(WS_ACTION_USER_MESSAGE, { message });
 }
 
 export function* reorder({ order }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_REORDER, order);
+  emit(WS_ACTION_REORDER, { reorder: order });
 }
 
 export function* changeUsername({ name }) {
   const emit = yield select(makeSelectEmit());
 
-  emit(WS_ACTION_USER_USERNAME_CHANGE, name);
+  emit(WS_ACTION_USER_USERNAME_CHANGE, { newName: name });
 }
 
 /**

@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import device from 'styles/device';
 
-const Wrapper = styled.div`
-  @media screen and (${device.tablet}) {
-    box-shadow: none;
-  }
-`;
+const Wrapper = styled.div({
+  padding: '10px 0',
+  width: '100%',
+});
 
 export default Wrapper;
