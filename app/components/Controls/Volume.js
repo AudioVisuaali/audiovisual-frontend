@@ -78,6 +78,7 @@ const Volume = ({ volume, muted, onMute, onVolume }) => {
       <div style={{ overflow: 'hidden' }}>
         <SliderContainer>
           <Slider
+            disableTheme
             value={currentVolume}
             onChange={onSliderVolume}
             type="range"

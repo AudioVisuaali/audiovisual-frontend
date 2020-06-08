@@ -5,6 +5,7 @@ const showMove = css`
 `;
 
 const Wrapper = styled.div`
+  z-index: 222;
   width: 100%;
   display: flex;
   padding: 10px 0;

@@ -26,7 +26,7 @@ const Button = styled(ButtonRound)(p => ({
   },
 
   svg: {
-    transition: 'all 200ms',
+    transition: 'transform 200ms',
     width: 20,
 
     transform: `rotate(${p.active ? '30deg' : '0deg'})`,

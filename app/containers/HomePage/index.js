@@ -10,9 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import uuid from 'uuid/v4';
 
 import LocaleToggle from 'containers/LocaleToggle';
-import { getItem, setItem, USERNAME } from 'utils/localStorage';
 import history from 'utils/history';
-import { generateName } from 'utils/name';
 import { generatePathRoom } from 'utils/paths';
 import CodedWithLove from 'components/CodedWithLove';
 
@@ -27,21 +25,20 @@ import Description from './styles/Description';
 
 const FullWidth = { width: '100%' };
 
+const generateRandomRoom = () => uuid().substring(0, 8);
+
 export const HomePage = () => {
-  const [username, setUsername] = useState(getItem(USERNAME) || generateName());
+  const [roomUnique, setRoomUnique] = useState(generateRandomRoom());
   const [isTransparent, setIsTransparent] = useState(false);
 
   const redirectToRoom = () => {
     setIsTransparent(true);
-    const unique = uuid().substring(0, 8);
-    const roomURL = generatePathRoom(unique);
+    const roomURL = generatePathRoom(roomUnique);
     setTimeout(() => history.push(roomURL), 200);
   };
 
   const handleUsernameChange = e => {
-    const { value } = e.target;
-    setUsername(value);
-    setItem(USERNAME, value);
+    setRoomUnique(e.target.value);
   };
 
   return (
@@ -56,12 +53,12 @@ export const HomePage = () => {
           <FormattedMessage {...messages.description} />
         </Description>
         <Label>
-          <FormattedMessage {...messages.displayNameLabel} />
+          <FormattedMessage {...messages.displayRoomLabel} />
         </Label>
         <TextField
           type="text"
           spellCheck="false"
-          value={username}
+          value={roomUnique}
           style={FullWidth}
           onChange={handleUsernameChange}
         />

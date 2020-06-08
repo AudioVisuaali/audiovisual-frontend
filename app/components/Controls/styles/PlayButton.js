@@ -5,7 +5,7 @@ import ButtonRound from 'components/ButtonRound';
 export default styled(ButtonRound)({
   width: 40,
   height: 40,
-  padding: 10,
+  padding: 6,
   flexShrink: 0,
 
   svg: {

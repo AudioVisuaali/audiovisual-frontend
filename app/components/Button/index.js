@@ -25,6 +25,7 @@ const Button = styled.button`
   border: 1px solid transparent;
   border-radius: 8px;
   background-color: ${backgroundColor};
+  user-select: none;
 
   transition: all 200ms;
 

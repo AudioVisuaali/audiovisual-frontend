@@ -29,6 +29,11 @@ const PLAY_ORDER_RANDOM = 'random';
 
 const CustomButton = styled(ButtonRound)({
   margin: '6px 8px',
+  padding: 10,
+
+  svg: {
+    width: 17,
+  },
 });
 
 const Actions = props => {

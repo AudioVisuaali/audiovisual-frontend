@@ -21,6 +21,7 @@ const Button = styled.button`
   font-weight: 500;
   color: ${color};
   padding: 14px 22px;
+  user-select: none;
 
   transition-property: background-color, color;
   transition-duration: 200ms;

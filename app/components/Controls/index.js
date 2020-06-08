@@ -81,6 +81,7 @@ const Controls = ({
       {!isLive && (
         <SliderContainer>
           <Slider
+            disableTheme
             type="range"
             min="0"
             max={duration}
@@ -97,7 +98,7 @@ const Controls = ({
       )}
       <ControlWrapper>
         <ControlLeft>
-          <PlayButton onClick={onPlay}>
+          <PlayButton disableTheme onClick={onPlay}>
             {playing ? <PauseSVG /> : <PlaySVG />}
           </PlayButton>
           <Volume
@@ -115,10 +116,10 @@ const Controls = ({
         </ControlLeft>
         <ControlRight>
           <FullScreenContainer>
-            <PlayButton onClick={onHideControls}>
+            <PlayButton disableTheme onClick={onHideControls}>
               <EyeSlash />
             </PlayButton>
-            <PlayButton onClick={onToggleFullscreen}>
+            <PlayButton disableTheme onClick={onToggleFullscreen}>
               {isFullscreen ? <CompressSVG /> : <ExpandSVG />}
             </PlayButton>
           </FullScreenContainer>

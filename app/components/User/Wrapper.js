@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   margin: 0 6px 6px 0;
   line-height: 1;
   animation: ${fadeAndSlideInFromLeft} 200ms;
+  user-select: none;
 
   & svg {
     flex-shrink: 0;

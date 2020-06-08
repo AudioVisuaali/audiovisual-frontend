@@ -7,7 +7,7 @@ const VideoHeaderContent = styled.div`
   color: #fff;
   font-weight: 500;
   font-size: 1.25em;
-  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
 
   & a {
     width: 100%;

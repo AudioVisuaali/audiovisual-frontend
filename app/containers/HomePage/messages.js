@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scope}.displayNameLabel`,
     defaultMessage: 'Display name',
   },
+  displayRoomLabel: {
+    id: `${scope}.displayRoomLabel`,
+    defaultMessage: 'Room name',
+  },
   createRoomButton: {
     id: `${scope}.createRoomButton`,
     defaultMessage: 'Create Room',

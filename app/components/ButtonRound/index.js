@@ -15,7 +15,8 @@ const ButtonRounded = styled.button(p => ({
   height: p.size,
   margin: 8,
 
-  color: p.theme.isDark ? p.theme.light[50] : p.theme.dark[100],
+  color:
+    p.disableTheme || p.theme.isDark ? p.theme.light[50] : p.theme.dark[100],
   fontWeight: '500',
   border: '0 solid transparent',
   borderRadius: '100%',
@@ -31,7 +32,8 @@ const ButtonRounded = styled.button(p => ({
   },
 
   ...(p.active && {
-    color: p.theme.isDark ? p.theme.light[50] : p.theme.light[200],
+    color:
+      p.disableTheme || p.theme.isDark ? p.theme.light[50] : p.theme.light[200],
   }),
 
   ':after': {
@@ -48,7 +50,10 @@ const ButtonRounded = styled.button(p => ({
     left: 0,
     borderRadius: '100%',
     pointerEvents: 'none',
-    backgroundColor: p.theme.isDark ? p.theme.whiteRGBA[10] : p.theme.grey[700],
+    backgroundColor:
+      p.disableTheme || p.theme.isDark
+        ? p.theme.whiteRGBA[10]
+        : p.theme.grey[700],
 
     ...(p.active && {
       transform: 'scale(1)',
@@ -58,13 +63,17 @@ const ButtonRounded = styled.button(p => ({
 
   ...(!p.disabled && {
     ':hover': {
-      color: p.theme.isDark ? p.theme.light[50] : p.theme.light[200],
+      color:
+        p.disableTheme || p.theme.isDark
+          ? p.theme.light[50]
+          : p.theme.light[200],
       ':after': {
         opacity: 1,
         transform: 'scale(1.05)',
-        backgroundColor: p.theme.isDark
-          ? p.theme.whiteRGBA[20]
-          : p.theme.grey[800],
+        backgroundColor:
+          p.disableTheme || p.theme.isDark
+            ? p.theme.whiteRGBA[20]
+            : p.theme.grey[800],
       },
     },
 
