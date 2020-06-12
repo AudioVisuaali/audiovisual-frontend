@@ -51,8 +51,6 @@
   "app.containers.Chat.welcomeText": "Bienvenue dans la chambre",
   "app.containers.History.chatRooms": "Salles de discussions",
   "app.containers.History.createRoomButton": "Créer une chambre",
-  "app.containers.History.description": "Regardez des vidéos ensemble. Nulle part. N'importe où.",
-  "app.containers.History.displayNameLabel": "Afficher un nom",
   "app.containers.History.noVideosText": "Aucune vidéo dans l'histoire",
   "app.containers.History.room": "Pièce",
   "app.containers.History.showMoreLabel": "Montre plus",
@@ -88,6 +86,9 @@
   "app.containers.VideosManagement.videoMenu.queue": "Queue",
   "app.containers.VideosManagement.videoMenu.random": "Au hasard",
   "app.containers.VideosManagement.videoMenu.skip": "Sauter",
+  "app.containers.homePage.createRoomButton": "Créer une chambre",
+  "app.containers.homePage.description": "Regardez des vidéos ensemble. Nulle part. N'importe où.",
+  "app.containers.homePage.displayRoomLabel": "Nom de la salle",
   "app.containers.modal.close": "Annuler",
   "app.containers.modal.save": "Sauvegarder"
 }

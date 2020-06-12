@@ -51,8 +51,6 @@
   "app.containers.Chat.welcomeText": "Tervetuloa keskusteluun",
   "app.containers.History.chatRooms": "Keskustelu huoneet",
   "app.containers.History.createRoomButton": "Luo huone",
-  "app.containers.History.description": "Katso videoita yhdessä. Missä tahansa. Milloin tahansa.",
-  "app.containers.History.displayNameLabel": "Käyttäjänimi",
   "app.containers.History.noVideosText": "Video historia on tyhjä",
   "app.containers.History.room": "Huone",
   "app.containers.History.showMoreLabel": "Näytä lisää",
@@ -88,6 +86,9 @@
   "app.containers.VideosManagement.videoMenu.queue": "Soittolista",
   "app.containers.VideosManagement.videoMenu.random": "Satunnainen",
   "app.containers.VideosManagement.videoMenu.skip": "Seuraava",
+  "app.containers.homePage.createRoomButton": "Luo huone",
+  "app.containers.homePage.description": "Katso videoita yhdessä. Missä tahansa. Milloin tahansa.",
+  "app.containers.homePage.displayRoomLabel": "Huoneen nimi",
   "app.containers.modal.close": "Sulje",
   "app.containers.modal.save": "Tallenna"
 }

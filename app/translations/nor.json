@@ -51,8 +51,6 @@
   "app.containers.Chat.welcomeText": "Velkommen til rommet!",
   "app.containers.History.chatRooms": "Chatterom",
   "app.containers.History.createRoomButton": "Opprett rom",
-  "app.containers.History.description": "Se videoer sammen. Hvor som helst. Når som helst.",
-  "app.containers.History.displayNameLabel": "Visningsnavn",
   "app.containers.History.noVideosText": "Ingen videoer",
   "app.containers.History.room": "Rom",
   "app.containers.History.showMoreLabel": "Vis mer",
@@ -88,6 +86,9 @@
   "app.containers.VideosManagement.videoMenu.queue": "Kø",
   "app.containers.VideosManagement.videoMenu.random": "Tilfeldig",
   "app.containers.VideosManagement.videoMenu.skip": "Hoppe",
+  "app.containers.homePage.createRoomButton": "Skape rom",
+  "app.containers.homePage.description": "Se videoer sammen. Hvor som helst. Når som helst.",
+  "app.containers.homePage.displayRoomLabel": "Romnavn",
   "app.containers.modal.close": "Lukk",
   "app.containers.modal.save": "Lagre"
 }

@@ -51,8 +51,6 @@
   "app.containers.Chat.welcomeText": "Welcome to the chat",
   "app.containers.History.chatRooms": "Chat rooms",
   "app.containers.History.createRoomButton": "Create Room",
-  "app.containers.History.description": "Watch videos together. Anywhere. Whenever.",
-  "app.containers.History.displayNameLabel": "Display name",
   "app.containers.History.noVideosText": "Video history is empty",
   "app.containers.History.room": "Room",
   "app.containers.History.showMoreLabel": "Show more",
@@ -88,6 +86,9 @@
   "app.containers.VideosManagement.videoMenu.queue": "Queue",
   "app.containers.VideosManagement.videoMenu.random": "Random",
   "app.containers.VideosManagement.videoMenu.skip": "Skip",
+  "app.containers.homePage.createRoomButton": "Create Room",
+  "app.containers.homePage.description": "Watch videos together. Anywhere. Whenever.",
+  "app.containers.homePage.displayRoomLabel": "Room name",
   "app.containers.modal.close": "Close",
   "app.containers.modal.save": "Save"
 }

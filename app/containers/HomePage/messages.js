@@ -6,16 +6,12 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.History';
+export const scope = 'app.containers.homePage';
 
 export default defineMessages({
   description: {
     id: `${scope}.description`,
     defaultMessage: 'Watch videos together. Anywhere. Whenever.',
-  },
-  displayNameLabel: {
-    id: `${scope}.displayNameLabel`,
-    defaultMessage: 'Display name',
   },
   displayRoomLabel: {
     id: `${scope}.displayRoomLabel`,

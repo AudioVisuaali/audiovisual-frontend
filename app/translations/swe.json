@@ -51,8 +51,6 @@
   "app.containers.Chat.welcomeText": "Välkommen till chatten",
   "app.containers.History.chatRooms": "Chattrum",
   "app.containers.History.createRoomButton": "Skapa rum",
-  "app.containers.History.description": "Se videor tillsammans. Var som helst. Närhelst.",
-  "app.containers.History.displayNameLabel": "Visa namn",
   "app.containers.History.noVideosText": "Videohistoriken är tom",
   "app.containers.History.room": "Rum",
   "app.containers.History.showMoreLabel": "Visa mer",
@@ -88,6 +86,9 @@
   "app.containers.VideosManagement.videoMenu.queue": "Kö",
   "app.containers.VideosManagement.videoMenu.random": "Slumpmässig",
   "app.containers.VideosManagement.videoMenu.skip": "Hoppa",
+  "app.containers.homePage.createRoomButton": "Skapa rum",
+  "app.containers.homePage.description": "Se videor tillsammans. Var som helst. Närhelst.",
+  "app.containers.homePage.displayRoomLabel": "Rumsnamn",
   "app.containers.modal.close": "Stänga",
   "app.containers.modal.save": "Spara"
 }
