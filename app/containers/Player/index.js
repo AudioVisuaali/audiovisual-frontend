@@ -68,6 +68,11 @@ class Player extends React.Component {
     clearTimeout(this.hideControlsTimeout);
   }
 
+  handleError = async () => {
+    await this.handleMute();
+    this.handleInitialPlay();
+  };
+
   // eslint-disable-next-line camelcase
   async UNSAFE_componentWillReceiveProps(nextProps) {
     const { seek, currentVideo, playing } = this.props;
@@ -226,6 +231,14 @@ class Player extends React.Component {
     this.props.seekTo(seconds);
   };
 
+  handleInitialPlay = async () => {
+    this.setState({ playing: false });
+
+    await this.forceUpdate();
+
+    this.handlePlayerPlay();
+  };
+
   handlePlayerPlay = async () => {
     this.setState({ playing: true });
 
@@ -264,10 +277,10 @@ class Player extends React.Component {
     addSubtitle(currentVideo, player);
   };
 
-  handleMute = () => {
+  handleMute = async () => {
     const { muted } = this.state;
     setItem(MUTED, !muted);
-    this.setState({ muted: !muted });
+    await this.setState({ muted: !muted });
   };
 
   handleVolume = volume => {
@@ -338,6 +351,7 @@ class Player extends React.Component {
           playing={playing}
           url={video.url}
           volume={playerVolume}
+          onError={this.handleError}
         />
         <Hotkeys
           onToggleFullscreen={toggleFullscreen}

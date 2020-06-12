@@ -47,9 +47,11 @@ const CheckTimeDiff = ({ setDiffOffset }) => {
         });
         const timeDiffToServer = currentTime - new Date().getTime();
         const diffWithPing = timeDiffToServer + pingTime;
-        setDiffOffset(diffWithPing);
+        setDiffOffset(diffWithPing || 0);
       })
-      .catch(console.log);
+      .catch(() => {
+        setDiffOffset(0);
+      });
   };
 
   return null;
