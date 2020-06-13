@@ -16,6 +16,7 @@ import Message from 'components/Message';
 import ArrowDown from 'components/ArrowToDown';
 import { makeSelectRoomMessages } from 'containers/WebSocket/selectors';
 
+import { isMatchingTypes } from './isMatchingTypes';
 import getTypeVariables from './getTypeVariables';
 import messages from './messages';
 import Welcome from './styles/Welcome';
@@ -100,6 +101,8 @@ export function Chat({ roomMessages }) {
     scrollToBottomSmooth();
   };
 
+  const messagesToShow = roomMessages.slice(-41);
+
   return (
     <Container>
       <ArrowDown onClick={resumeAutoScroll} active={isAutoScroll} />
@@ -126,7 +129,7 @@ export function Chat({ roomMessages }) {
         universal
       >
         <Messages>
-          {roomMessages.length < 40 ? (
+          {messagesToShow.length < 40 ? (
             <Welcome>
               <FormattedMessage {...messages.welcomeText} />
             </Welcome>
@@ -134,10 +137,17 @@ export function Chat({ roomMessages }) {
             <Gradient />
           )}
           <div ref={refMessages}>
-            {roomMessages.slice(-40).map(msg => {
+            {messagesToShow.map((msg, i) => {
               const { icon, content, userContent } = getTypeVariables(msg);
+              const prevMessage = messagesToShow[i - 1];
+
+              const isMatchingAction = prevMessage
+                ? isMatchingTypes(msg, prevMessage)
+                : false;
+
               return (
                 <Message
+                  showMessageOnly={isMatchingAction}
                   boxed={userContent}
                   key={msg.unique}
                   message={msg}

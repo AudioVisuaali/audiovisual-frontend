@@ -1,25 +1,37 @@
 import styled from 'styled-components';
 
-const UserSVGContainer = styled.div`
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const UserSVGContainer = styled.div(
+  p => ({
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 
-  border-radius: 100%;
-  overflow: hidden;
-  background-color: ${p =>
-    p.theme.isDark ? p.theme.darkRGBA[20] : p.theme.darkRGBA[60]};
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    fontSize: 10,
+    marginTop: 2,
+    lineHeight: 2,
+    color: p.theme.isDark ? p.theme.whiteRGBA[40] : p.theme.light[50],
 
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
+    borderRadius: '100%',
+    overflow: 'hidden',
+    backgroundColor: p.theme.isDark
+      ? p.theme.darkRGBA[20]
+      : p.theme.darkRGBA[60],
 
-  & svg {
-    color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[40] : p.theme.light[50])};
-    width: 18px;
-    height: 18px;
-  }
-`;
-
+    svg: {
+      color: p.theme.isDark ? p.theme.whiteRGBA[40] : p.theme.light[50],
+      width: 18,
+      height: 18,
+    },
+  }),
+  ({ hideIcon }) =>
+    hideIcon && {
+      backgroundColor: 'transparent',
+      height: '100%',
+      opacity: 0,
+    },
+);
 export default UserSVGContainer;

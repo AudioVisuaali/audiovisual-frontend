@@ -10,15 +10,19 @@ import Username from './styles/Username';
 import Time from './styles/Time';
 import MessageContent from './styles/MessageContent';
 
-const Message = ({ boxed, icon, message, children }) => (
+const Message = ({ showMessageOnly, boxed, icon, message, children }) => (
   <Wrapper boxed={boxed}>
-    <InnerWrapper boxed={boxed}>
-      <UserSVGContainer>{icon()}</UserSVGContainer>
+    <InnerWrapper disablePadding={showMessageOnly} boxed={boxed}>
+      <UserSVGContainer hideIcon={showMessageOnly}>
+        {showMessageOnly ? dateToDoublePercision(message.createdAt) : icon()}
+      </UserSVGContainer>
       <MessageContainer centered={!children}>
-        <Username>
-          {message.user && message.user.username}{' '}
-          <Time>@{dateToDoublePercision(message.createdAt)}</Time>
-        </Username>
+        {!showMessageOnly && (
+          <Username>
+            {message.user && message.user.username}{' '}
+            <Time>@{dateToDoublePercision(message.createdAt)}</Time>
+          </Username>
+        )}
         <MessageContent>{children}</MessageContent>
       </MessageContainer>
     </InnerWrapper>
@@ -27,6 +31,7 @@ const Message = ({ boxed, icon, message, children }) => (
 
 Message.propTypes = {
   boxed: PropTypes.bool,
+  showMessageOnly: PropTypes.bool,
   children: PropTypes.node,
   icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   message: PropTypes.shape({
