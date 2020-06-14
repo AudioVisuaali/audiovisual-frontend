@@ -6,6 +6,13 @@ const checkOpacity = ({ show }) =>
     cursor: 'default',
   };
 
+const checkCursor = ({ show }) =>
+  !show && {
+    'input:hover': {
+      cursor: 'none',
+    },
+  };
+
 const Wrapper = styled.div(
   {
     position: 'absolute',
@@ -24,6 +31,7 @@ const Wrapper = styled.div(
     transition: 'opacity 100ms',
   },
   checkOpacity,
+  checkCursor,
 );
 
 export default Wrapper;

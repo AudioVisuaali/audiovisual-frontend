@@ -41,13 +41,18 @@ export const HomePage = () => {
     setRoomUnique(e.target.value);
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    redirectToRoom();
+  };
+
   return (
     <Wrapper transparent={isTransparent}>
       <Helmet>
         <title>Home Page</title>
         <meta name="description" content="Visuals application homepage" />
       </Helmet>
-      <Container>
+      <Container onSubmit={handleSubmit}>
         <Logo>Visuals</Logo>
         <Description>
           <FormattedMessage {...messages.description} />
@@ -63,7 +68,7 @@ export const HomePage = () => {
           onChange={handleUsernameChange}
         />
 
-        <Button style={FullWidth} onClick={redirectToRoom}>
+        <Button type="submit" style={FullWidth} onClick={redirectToRoom}>
           <FormattedMessage {...messages.createRoomButton} />
         </Button>
         <LocaleToggle centered />

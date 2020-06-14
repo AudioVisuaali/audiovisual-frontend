@@ -6,16 +6,17 @@ class ShowOnHover extends React.Component {
   constructor() {
     super();
     this.wrapperRef = React.createRef();
-    this.state = { showByHover: false };
+    this.state = { showByHover: false, initalShow: true };
   }
 
   componentDidMount() {
-    this.onMouseMove(null, 3000);
     this.handleMouseEnter();
+    setTimeout(() => {
+      this.setState({ initalShow: false });
+    }, 3000);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
     document.removeEventListener('mousemove', this.onMouseMove, true);
   }
 
@@ -30,25 +31,29 @@ class ShowOnHover extends React.Component {
       width,
       height,
     } = this.wrapperRef.current.getBoundingClientRect();
-    const { screenX, screenY } = e;
+    const { clientX, clientY } = e;
 
-    if (screenX < left || screenX > left + width) {
+    if (clientX < left || clientX > left + width) {
       return false;
     }
 
-    if (screenY < top || screenY > top + height) {
+    if (clientY < top || clientY > top + height) {
       return false;
     }
 
     return true;
   };
 
-  onMouseMove = (e, timeout = 1000) => {
+  onMouseMove = e => {
     if (!this.isCursorInDiv(e)) {
       this.handleMouseLeave();
       return;
     }
 
+    this.moveMouse();
+  };
+
+  moveMouse = (timeout = 2000) => {
     this.setState({ showByHover: true });
     clearTimeout(this.timeout);
     this.timeout = setTimeout(
@@ -69,15 +74,14 @@ class ShowOnHover extends React.Component {
 
   render() {
     const { children, show } = this.props;
-    const { showByHover } = this.state;
+    const { showByHover, initalShow } = this.state;
     const events = {
       onMouseOver: this.onMouseMove,
       onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: this.handleMouseLeave,
       onTouchStart: this.handleMouseEnter,
     };
 
-    const showChildren = show || showByHover;
+    const showChildren = show || showByHover || initalShow;
 
     return (
       <Wrapper ref={this.wrapperRef} show={showChildren} {...events}>
