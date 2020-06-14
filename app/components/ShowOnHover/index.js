@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Wrapper from './styles/Wrapper';
 
@@ -11,9 +11,11 @@ class ShowOnHover extends React.Component {
 
   componentDidMount() {
     this.onMouseMove(null, 3000);
+    this.handleMouseEnter();
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timeout);
     document.removeEventListener('mousemove', this.onMouseMove, true);
   }
 
@@ -30,11 +32,11 @@ class ShowOnHover extends React.Component {
     } = this.wrapperRef.current.getBoundingClientRect();
     const { screenX, screenY } = e;
 
-    if (screenX < left && screenX > left + width) {
+    if (screenX < left || screenX > left + width) {
       return false;
     }
 
-    if (screenY < top && screenY > top + height) {
+    if (screenY < top || screenY > top + height) {
       return false;
     }
 
@@ -43,6 +45,7 @@ class ShowOnHover extends React.Component {
 
   onMouseMove = (e, timeout = 1000) => {
     if (!this.isCursorInDiv(e)) {
+      this.handleMouseLeave();
       return;
     }
 
