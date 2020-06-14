@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const NowPlayingWrapper = styled.div`
-  margin-bottom: 30px;
-`;
+const NowPlayingWrapper = styled.div({
+  marginBottom: 30,
+});
 
 export default NowPlayingWrapper;

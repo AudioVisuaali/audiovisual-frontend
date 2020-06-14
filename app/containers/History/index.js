@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { motion } from 'framer-motion';
 
 import {
   makeSelectPlaylistHistory,
@@ -17,13 +18,24 @@ import {
 } from 'containers/WebSocket/selectors';
 import { emitRoomAddVideo } from 'containers/WebSocket/actions';
 import QueueItem from 'components/QueueItem';
+import OnVisible from 'components/OnVisible';
 import DollyEmpty from 'svgs/DollyEmpty';
 
 import messages from './messages';
 import Empty from './styles/Empty';
-import ShowMore from './styles/ShowMore';
+import OddPosition from './styles/OddPosition';
 
 const SHOW_MORE_MAX_VALUE = 10;
+
+const variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function History({ addVideo, history }) {
   const [showMax, setShowMax] = useState(10);
@@ -47,28 +59,21 @@ export function History({ addVideo, history }) {
       .reverse()
       .slice(0, showMax);
 
-    // Calculates How many videos are available in the history
-    //   value caps at SHOW_MORE_MAX_VALUE
-    const amountOfVideosNotShown = history.length - showingVideos.length;
-    const showMoreAmount =
-      amountOfVideosNotShown > SHOW_MORE_MAX_VALUE
-        ? SHOW_MORE_MAX_VALUE
-        : amountOfVideosNotShown;
     return (
       <>
-        {showingVideos.map(video => (
-          <QueueItem
-            key={video.unique}
-            onRepeat={handleRepeat}
-            video={video}
-            user={video.addedBy}
-          />
-        ))}
-        {!!showMoreAmount && (
-          <ShowMore onClick={handleAddShowMax}>
-            <FormattedMessage {...messages.showMoreLabel} /> ({showMoreAmount})
-          </ShowMore>
-        )}
+        <motion.div variants={variants} initial="hidden" animate="show">
+          {showingVideos.map(video => (
+            <QueueItem
+              key={video.unique}
+              onRepeat={handleRepeat}
+              video={video}
+              user={video.addedBy}
+            />
+          ))}
+        </motion.div>
+        <OddPosition>
+          <OnVisible onVisible={handleAddShowMax} />
+        </OddPosition>
       </>
     );
   };

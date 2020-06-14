@@ -3,6 +3,7 @@ import device from 'styles/device';
 
 const SortableContainerUl = styled.ul`
   cursor: grabbing;
+  padding-left: 0;
 
   @media screen and (${device.laptopL}) {
     padding-left: 0;

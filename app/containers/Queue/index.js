@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import {
   makeSelectPlaylist,
@@ -31,6 +32,93 @@ import messages from './messages';
 import EmptyQueue from './EmptyQueue';
 import NowPlaying from './NowPlaying';
 import SortableContainerUl from './styles/SortableContainerUl';
+
+const variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const QueueItems = ({
+  useTemp, // eslint-disable-line react/prop-types
+  tempQue, // eslint-disable-line react/prop-types
+  queue, // eslint-disable-line react/prop-types
+  isPlayOrderLinear, // eslint-disable-line react/prop-types
+  handleDelete, // eslint-disable-line react/prop-types
+  handleRepeat, // eslint-disable-line react/prop-types
+  handleSortEnd, // eslint-disable-line react/prop-types
+}) => (
+  <>
+    <BigLabel>
+      <FormattedMessage {...messages.title} />
+    </BigLabel>
+    <SortableList
+      transitionDuration={150}
+      lockAxis="y"
+      onSortEnd={handleSortEnd}
+      useTemp={useTemp}
+      tempQue={tempQue}
+      queue={queue}
+      isPlayOrderLinear={isPlayOrderLinear}
+      handleDelete={handleDelete}
+      handleRepeat={handleRepeat}
+    />
+  </>
+);
+
+const SortableItem = SortableElement(
+  ({ handleDelete, handleRepeat, isPlayOrderLinear, nth, video }) => (
+    <QueueItem
+      showPlacement
+      placement={isPlayOrderLinear ? nth + 1 : null}
+      video={video}
+      showMove
+      onDelete={handleDelete}
+      onRepeat={handleRepeat}
+      user={video.addedBy}
+    />
+  ),
+);
+
+const SortableList = SortableContainer(
+  ({
+    useTemp,
+    tempQue,
+    queue,
+    isPlayOrderLinear,
+    handleDelete,
+    handleRepeat,
+  }) => {
+    const selectedQue = useTemp ? tempQue : queue;
+
+    return (
+      <SortableContainerUl>
+        <motion.div
+          variants={variants}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
+          {selectedQue.map((video, index) => (
+            <SortableItem
+              handleDelete={handleDelete}
+              handleRepeat={handleRepeat}
+              isPlayOrderLinear={isPlayOrderLinear}
+              key={video.unique}
+              index={index}
+              nth={index}
+              video={video}
+            />
+          ))}
+        </motion.div>
+      </SortableContainerUl>
+    );
+  },
+);
 
 const Queue = ({
   addVideo,
@@ -74,47 +162,6 @@ const Queue = ({
     setUseTemp(true);
   };
 
-  const SortableItem = SortableElement(({ nth, video }) => (
-    <QueueItem
-      showPlacement
-      placement={isPlayOrderLinear ? nth + 1 : null}
-      video={video}
-      showMove
-      onDelete={handleDelete}
-      onRepeat={handleRepeat}
-      user={video.addedBy}
-    />
-  ));
-
-  const SortableList = SortableContainer(() => {
-    const selectedQue = useTemp ? tempQue : queue;
-    return (
-      <SortableContainerUl>
-        {selectedQue.map((video, index) => (
-          <SortableItem
-            key={video.unique}
-            index={index}
-            nth={index}
-            video={video}
-          />
-        ))}
-      </SortableContainerUl>
-    );
-  });
-
-  const QueueItems = () => (
-    <>
-      <BigLabel>
-        <FormattedMessage {...messages.title} />
-      </BigLabel>
-      <SortableList
-        transitionDuration={150}
-        lockAxis="y"
-        onSortEnd={handleSortEnd}
-      />
-    </>
-  );
-
   return (
     <>
       {currentlyPlaying && (
@@ -124,7 +171,19 @@ const Queue = ({
           onRepeat={handleRepeat}
         />
       )}
-      {queue.length ? <QueueItems /> : <EmptyQueue />}
+      {queue.length ? (
+        <QueueItems
+          handleSortEnd={handleSortEnd}
+          useTemp={useTemp}
+          tempQue={tempQue}
+          queue={queue}
+          isPlayOrderLinear={isPlayOrderLinear}
+          handleDelete={handleDelete}
+          handleRepeat={handleRepeat}
+        />
+      ) : (
+        <EmptyQueue />
+      )}
     </>
   );
 };

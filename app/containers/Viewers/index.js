@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { AnimatePresence } from 'framer-motion';
 
 import { makeSelectViewers } from 'containers/WebSocket/selectors';
 import User from 'components/User';
@@ -25,9 +26,11 @@ export const UsersInformation = ({ viewers }) => (
       <FormattedMessage {...messages.viewers} />
     </Label>
     <Users>
-      {viewers.map(v => (
-        <User key={v.unique} user={v} />
-      ))}
+      <AnimatePresence>
+        {viewers.map(v => (
+          <User key={v.unique} user={v} />
+        ))}
+      </AnimatePresence>
     </Users>
   </Wrapper>
 );

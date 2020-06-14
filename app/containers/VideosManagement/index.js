@@ -52,7 +52,12 @@ function getLastTab() {
   return parsed;
 }
 
-const VideosManagement = ({ isRelativeMenu, onRequestScroll, theme }) => {
+const VideosManagement = ({
+  isRelativeMenu,
+  onTabChange,
+  onRequestScroll,
+  theme,
+}) => {
   const stickyRef = useRef(null);
   const [activeTab, setActiveTab] = useState(getLastTab());
   const [activeTabShowing, setActiveTabShowing] = useState(getLastTab());
@@ -74,6 +79,7 @@ const VideosManagement = ({ isRelativeMenu, onRequestScroll, theme }) => {
     setTimeout(() => {
       setShowing(true);
       setActiveTabShowing(value);
+      onTabChange();
     }, 80);
     setItem(ACTIVE_VIDEO_MANAGEMENT_TAB, value);
   };
@@ -126,6 +132,7 @@ const VideosManagement = ({ isRelativeMenu, onRequestScroll, theme }) => {
 };
 
 VideosManagement.propTypes = {
+  onTabChange: PropTypes.func,
   onRequestScroll: PropTypes.func,
   isRelativeMenu: PropTypes.bool,
   theme: PropTypes.bool,

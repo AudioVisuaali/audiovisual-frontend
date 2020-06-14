@@ -25,6 +25,7 @@ import ChatTextField from 'components/ChatTextField';
 import TwitchChat from 'components/TwitchChat';
 import { setItem, getItem, DRAWER_RIGHT_WIDTH } from 'utils/localStorage';
 
+import BGImage from './styles/BGImage';
 import Header from './styles/Header';
 import Wrapper from './styles/Wrapper';
 import ChatFieldContainer from './styles/ChatFieldContainer';
@@ -78,6 +79,7 @@ const FeaturePageRight = ({
     <Wrapper width={width}>
       <ResizeHandle width={width} onChange={handleResize} />
       <Header>
+        <BGImage />
         <Viewers />
         <ChatSelector
           onUsername={handleUsername}

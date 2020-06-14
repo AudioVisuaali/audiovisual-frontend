@@ -88,6 +88,14 @@ export class FeaturePageLeft extends React.Component {
     node.scrollTo(properties);
   };
 
+  onTabChange = () => {
+    const node = this.scrollBars.current.container.firstChild;
+    const scrollFromTop = node.scrollTop;
+
+    this.scrollBars.current.scrollTop(0);
+    node.scrollTo({ top: scrollFromTop });
+  };
+
   render() {
     const { currentVideo } = this.props;
     const { smallPlayer, isFixedPlayer, isRelativeMenu } = this.state;
@@ -101,7 +109,7 @@ export class FeaturePageLeft extends React.Component {
           <Scrollbars
             className="scroll-bars-fix"
             ref={this.scrollBars}
-            onUpdate={this.handleScroll}
+            onScrollFrame={this.handleScroll}
             autoHide
             autoHideTimeout={200}
             autoHideDuration={200}
@@ -120,6 +128,7 @@ export class FeaturePageLeft extends React.Component {
             <VideosManagement
               isRelativeMenu={isRelativeMenu}
               onRequestScroll={this.handleRequestScroll}
+              onTabChange={this.onTabChange}
             />
           </Scrollbars>
         </Wrapper>

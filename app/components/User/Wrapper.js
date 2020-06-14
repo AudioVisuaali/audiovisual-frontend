@@ -14,12 +14,15 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   padding: 8px 10px 8px 10px;
   color: ${color};
   margin: 0 6px 6px 0;
   line-height: 1;
   animation: ${fadeAndSlideInFromLeft} 200ms;
   user-select: none;
+  width: auto;
 
   & svg {
     flex-shrink: 0;
