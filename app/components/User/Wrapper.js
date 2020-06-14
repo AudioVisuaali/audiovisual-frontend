@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import fadeAndSlideInFromLeft from 'styles/animations/fadeAndSlideInFromLeft';
 
 const backgroundColor = p =>
   p.theme.isDark ? p.theme.darkRGBA[30] : p.theme.darkRGBA[50];
@@ -20,7 +19,6 @@ const Wrapper = styled.div`
   color: ${color};
   margin: 0 6px 6px 0;
   line-height: 1;
-  animation: ${fadeAndSlideInFromLeft} 200ms;
   user-select: none;
   width: auto;
 

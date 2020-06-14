@@ -32,6 +32,8 @@ const UserSVGContainer = styled.div(
       backgroundColor: 'transparent',
       height: '100%',
       opacity: 0,
+      borderRadius: 0,
+      userSelect: 'none',
     },
 );
 export default UserSVGContainer;

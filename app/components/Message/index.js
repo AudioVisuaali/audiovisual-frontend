@@ -20,7 +20,7 @@ const Message = ({ showMessageOnly, boxed, icon, message, children }) => (
         {!showMessageOnly && (
           <Username>
             {message.user && message.user.username}{' '}
-            <Time>@{dateToDoublePercision(message.createdAt)}</Time>
+            <Time>{dateToDoublePercision(message.createdAt)}</Time>
           </Username>
         )}
         <MessageContent>{children}</MessageContent>
