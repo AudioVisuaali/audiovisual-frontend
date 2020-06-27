@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import device from 'styles/device';
 
-const Time = styled.span`
-  color: ${p => (p.theme.isDark ? p.theme.whiteRGBA[20] : p.theme.grey[800])};
-  font-size: 10px;
-  font-weight: 300;
+const Time = styled.span(props => ({
+  color: props.theme.isDark ? props.theme.whiteRGBA[20] : props.theme.grey[800],
+  fontSize: 10,
+  fontWeight: 300,
 
-  @media screen and (${device.tablet}) {
-    font-size: 8px;
-  }
-`;
+  [`@media screen and (${device.tablet})`]: {
+    fontSize: 8,
+  },
+}));
 
 export default Time;

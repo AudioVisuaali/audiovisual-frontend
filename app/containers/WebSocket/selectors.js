@@ -71,3 +71,6 @@ export const makeSelectClientServerTimeOffset = () =>
     selectWebSocketDomain,
     substate => substate.clientServerTimeOffset,
   );
+
+export const makeSelectPlayerDimensions = () =>
+  createSelector(selectWebSocketDomain, substate => substate.player.dimensions);

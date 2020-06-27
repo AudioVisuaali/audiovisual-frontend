@@ -14,7 +14,10 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import Player from 'containers/Player';
 import PasteContainer from 'containers/PasteContainer';
 import VideosManagement from 'containers/VideosManagement';
-import { makeSelectCurrentlyPlaying } from 'containers/WebSocket/selectors';
+import {
+  makeSelectCurrentlyPlaying,
+  makeSelectPlayerDimensions,
+} from 'containers/WebSocket/selectors';
 
 import VideoContainerPixelFix from './styles/VideoContainerPixelFix';
 import Wrapper from './styles/Wrapper';
@@ -97,7 +100,7 @@ export class FeaturePageLeft extends React.Component {
   };
 
   render() {
-    const { currentVideo } = this.props;
+    const { currentVideo, playerDimensions } = this.props;
     const { smallPlayer, isFixedPlayer, isRelativeMenu } = this.state;
 
     const smallPlayerAndAllowed = currentVideo && smallPlayer;
@@ -115,7 +118,7 @@ export class FeaturePageLeft extends React.Component {
             autoHideDuration={200}
             universal
           >
-            <VideoContainerPixelFix>
+            <VideoContainerPixelFix dimension={playerDimensions}>
               <VideoContainer>
                 <DynamicVideoContainer
                   sticky={isFixedPlayer}
@@ -141,10 +144,15 @@ FeaturePageLeft.propTypes = {
   currentVideo: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),
+  playerDimensions: PropTypes.shape({
+    height: PropTypes.number,
+    width: PropTypes.number,
+  }),
 };
 
 const mapStateToProps = createStructuredSelector({
   currentVideo: makeSelectCurrentlyPlaying(),
+  playerDimensions: makeSelectPlayerDimensions(),
 });
 
 const withConnect = connect(mapStateToProps);

@@ -32,6 +32,7 @@ import {
   EMIT_CURRENT_USER_CHANGE_USERNAME,
   SET_OFFSET,
   SET_CLIENT_SERVER_TIME_OFFSET,
+  SET_PLAYER_DIMENSIONS,
 } from './constants';
 
 /**
@@ -264,4 +265,8 @@ export function setPlayerOffset(offset) {
 
 export function setClientServerTimeOffset(offset) {
   return { type: SET_CLIENT_SERVER_TIME_OFFSET, offset };
+}
+
+export function setPlayerDimensions(dimension) {
+  return { type: SET_PLAYER_DIMENSIONS, dimension };
 }

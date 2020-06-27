@@ -11,18 +11,21 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+import styled from 'styled-components';
 
 import Message from 'components/Message';
 import ArrowDown from 'components/ArrowToDown';
 import { makeSelectRoomMessages } from 'containers/WebSocket/selectors';
+import { dateToDoublePercision } from 'utils/time';
+import Time from 'components/Message/styles/Time';
 
-import { isMatchingTypes } from './isMatchingTypes';
 import getTypeVariables from './getTypeVariables';
 import messages from './messages';
 import Welcome from './styles/Welcome';
 import Messages from './styles/Messages';
 import Gradient from './styles/Gradient';
 import Container from './styles/Container';
+import { groupMessages } from './groupMessages';
 
 function checkNode(ref) {
   if (!ref || !ref.current || !ref.current.container) {
@@ -37,6 +40,31 @@ const observerConfig = {
   characterData: false,
   subtree: false,
 };
+
+const TimeLabel = styled(Time)({
+  opacity: 0,
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  right: '100%',
+  whiteSpace: 'nowrap',
+  lineHeight: 2,
+  paddingRight: 14,
+  paddingLeft: 10,
+});
+
+const MessageContainer = styled.div({
+  position: 'relative',
+  marginBottom: 6,
+
+  ':hover': {
+    [TimeLabel]: { opacity: 1 },
+  },
+
+  ':last-child': {
+    marginBottom: 0,
+  },
+});
 
 export function Chat({ roomMessages }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -102,6 +130,7 @@ export function Chat({ roomMessages }) {
   };
 
   const messagesToShow = roomMessages.slice(-41);
+  const groupedMessages = groupMessages(messagesToShow);
 
   return (
     <Container>
@@ -137,23 +166,18 @@ export function Chat({ roomMessages }) {
             <Gradient />
           )}
           <div ref={refMessages}>
-            {messagesToShow.map((msg, i) => {
-              const { icon, content, userContent } = getTypeVariables(msg);
-              const prevMessage = messagesToShow[i - 1];
-
-              const isMatchingAction = prevMessage
-                ? isMatchingTypes(msg, prevMessage)
-                : false;
+            {groupedMessages.map(msg => {
+              const lastMessage = msg.messages[msg.messages.length - 1];
+              const { icon, userContent } = getTypeVariables(lastMessage);
 
               return (
                 <Message
-                  showMessageOnly={isMatchingAction}
                   boxed={userContent}
-                  key={msg.unique}
-                  message={msg}
+                  key={lastMessage.unique}
+                  message={lastMessage}
                   icon={icon}
                 >
-                  {content && content({ message: msg })}
+                  {msg.messages.map(MessageContents)}
                 </Message>
               );
             })}
@@ -163,6 +187,23 @@ export function Chat({ roomMessages }) {
     </Container>
   );
 }
+
+const MessageContents = (msg, i) => {
+  const { content } = getTypeVariables(msg);
+
+  if (!content) {
+    return null;
+  }
+
+  return (
+    content && (
+      <MessageContainer>
+        {!!i && <TimeLabel>{dateToDoublePercision(msg.createdAt)}</TimeLabel>}
+        {content({ message: msg })}
+      </MessageContainer>
+    )
+  );
+};
 
 Chat.propTypes = {
   roomMessages: PropTypes.array.isRequired,

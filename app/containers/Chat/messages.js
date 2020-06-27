@@ -61,4 +61,12 @@ export default defineMessages({
     id: `${scope}.nowPlaying`,
     defaultMessage: 'now playing',
   },
+  continuedVideo: {
+    id: `${scope}.continuedVideo`,
+    defaultMessage: 'continued video',
+  },
+  pausedVideo: {
+    id: `${scope}.pausedVideo`,
+    defaultMessage: 'paused',
+  },
 });

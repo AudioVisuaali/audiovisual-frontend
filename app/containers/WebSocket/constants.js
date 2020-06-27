@@ -62,3 +62,4 @@ export const EMIT_CURRENT_USER_CHANGE_USERNAME =
 export const SET_OFFSET = 'app/Websocket/SET_OFFSET';
 export const SET_CLIENT_SERVER_TIME_OFFSET =
   'app/Websocket/SET_CLIENT_SERVER_TIME_OFFSET';
+export const SET_PLAYER_DIMENSIONS = 'app/Websocket/SET_PLAYER_DIMENSIONS';

@@ -22,12 +22,16 @@ import {
   WS_SET_EMIT,
   SET_OFFSET,
   SET_CLIENT_SERVER_TIME_OFFSET,
+  SET_PLAYER_DIMENSIONS,
 } from './constants';
 
 export const key = 'webSocket';
 
 export const initialState = {
   emit: null,
+  player: {
+    dimensions: null,
+  },
   currentUser: null,
   owner: null,
   unique: null,
@@ -185,6 +189,10 @@ const webSocketReducer = (state = initialState, action) =>
 
       case SET_CLIENT_SERVER_TIME_OFFSET:
         draft.clientServerTimeOffset = action.offset;
+        break;
+
+      case SET_PLAYER_DIMENSIONS:
+        draft.player.dimensions = action.dimension;
     }
   });
 

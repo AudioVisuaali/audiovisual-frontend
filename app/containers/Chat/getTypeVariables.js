@@ -29,6 +29,8 @@ import {
   MESSAGE_REORDER,
 } from './constants';
 import MessageUser from './content/MessageUser';
+import MessageVideoPaused from './content/MessageVideoPaused';
+import MessageVideoContinuedPlaying from './content/MessageVideoContinuedPlaying';
 import MessageVideoSeek from './content/MessageVideoSeek';
 import MessageVideoSkip from './content/MessageVideoSkip';
 import MessageVideoNext from './content/MessageVideoNext';
@@ -49,7 +51,12 @@ export const getTypeVariables = msg => {
         userContent: true,
       };
     case MESSAGE_VIDEO_IS_PLAYING:
-      return { icon: msg.content ? PlaySVG : PauseSVG };
+      return {
+        icon: msg.content ? PlaySVG : PauseSVG,
+        content: msg.content
+          ? MessageVideoContinuedPlaying
+          : MessageVideoPaused,
+      };
     case MESSAGE_VIDEO_SEEK:
       return { icon: SearchSVG, content: MessageVideoSeek };
     case MESSAGE_VIDEO_SKIP:

@@ -21,8 +21,8 @@ import {
   emitRoomSeek,
   emitRoomIsPlaying,
   emitRoomNextVideo,
-  emitRoomAddVideo,
   setPlayerOffset,
+  setPlayerDimensions,
 } from 'containers/WebSocket/actions';
 import Hotkeys from 'containers/Hotkeys';
 import Controls from 'components/Controls';
@@ -200,6 +200,27 @@ class Player extends React.Component {
   handleDuration = duration => {
     this.setState({ played: 0, duration });
     this.setSubtitle();
+    this.checkDimensions();
+  };
+
+  checkDimensions = () => {
+    if (!this.playerRef.getInternalPlayer) {
+      this.props.setPlayerDimensions();
+      return;
+    }
+
+    const player = this.playerRef.getInternalPlayer();
+
+    if (!player.videoWidth || !player.videoHeight) {
+      this.props.setPlayerDimensions();
+      return;
+    }
+
+    const dimensions = player
+      ? { width: player.videoWidth, height: player.videoHeight }
+      : null;
+
+    this.props.setPlayerDimensions(dimensions);
   };
 
   handlePlay = () => {
@@ -404,7 +425,7 @@ Player.propTypes = {
   timelineAction: PropTypes.object,
   currentVideo: PropTypes.object,
   playing: PropTypes.bool,
-  addVideo: PropTypes.func.isRequired,
+  setPlayerDimensions: PropTypes.func.isRequired,
   clientServerTimeOffset: PropTypes.number,
   seek: PropTypes.shape({
     updatedAt: PropTypes.number.isRequired,
@@ -424,9 +445,9 @@ const mapDispatchToProps = dispatch => ({
   setIsPlaying: (isPlaying, played) =>
     dispatch(emitRoomIsPlaying(isPlaying, played)),
   seekTo: evt => dispatch(emitRoomSeek(evt)),
-  addVideo: evt => dispatch(emitRoomAddVideo(evt)),
   nextVideo: evt => dispatch(emitRoomNextVideo(evt)),
   setPlayerOffset: evt => dispatch(setPlayerOffset(evt)),
+  setPlayerDimensions: evt => dispatch(setPlayerDimensions(evt)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
